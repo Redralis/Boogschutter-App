@@ -12,6 +12,7 @@ const loginUser = async (req: any, res: any) => {
     const { email, password } = req.body;
     // if the request contains required body data store them as variables
 
+
     try {
       const data = await prisma.user.findUnique({
         where: {
@@ -28,7 +29,7 @@ const loginUser = async (req: any, res: any) => {
       // find a unique user that has the required email
 
       if (data !== null) {
-        bcrypt.compare(password, data.password, function (err, result) {
+        bcrypt.compare(password, data.password, (err, result) => {
           if (err) throw err;
 
           if (!result) {
@@ -43,19 +44,17 @@ const loginUser = async (req: any, res: any) => {
               privateKey,
               (err: any, token: any) => {
                 // sign a token if the password is correct
-                if (err !== null){
+                if (err !== null) {
                   res.status(400).json({
                     status: 400,
                     error: "Something went wrong",
-                  })
-                }else {
+                  });
+                } else {
                   res.status(200).json({
                     status: 200,
                     token,
                   });
                 }
-                console.log(err);
-                console.log(token);
               }
             );
           }
@@ -67,7 +66,12 @@ const loginUser = async (req: any, res: any) => {
           error: "email not found",
         });
       }
-    } catch (err) {}
+    } catch (err) {
+      res.status(400).json({
+        status: 400,
+        error: "Something went wrong",
+      });
+    }
   } else {
     res.status(400).json({
       status: 400,
