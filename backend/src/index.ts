@@ -1,11 +1,12 @@
 
 import express from 'express'
 import { loginRouter } from './routes/login.routes'
+import { validateJWTToken } from './controllers/auth.controller'
 const app = express()
 app.use(express.json())
 const port = 3000
 
-app.get('/', (req, res) => {
+app.get('/',validateJWTToken,  (req, res) => {
   res.send('Hello World!')
 })
 
