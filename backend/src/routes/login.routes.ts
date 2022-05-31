@@ -4,4 +4,4 @@ const router = express.Router();
 
 router.post("/", loginUser);
 
-export { router };
+export { router as loginRouter };
