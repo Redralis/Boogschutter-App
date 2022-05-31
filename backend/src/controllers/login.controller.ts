@@ -1,17 +1,33 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import { User } from "@prisma/client";
 import bcrypt from "bcrypt";
-const saltRounds = 10;
 import jwt from "jsonwebtoken";
 require("dotenv").config();
 const privateKey = process.env.PRIVATEKEY || "geheim";
+import { validationResult } from "express-validator";
+
+const loginErrorHandler = async (req: any, res: any, next: any) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    
+    const errorFieldParam = errors.array()[0].param;
+    switch (errorFieldParam) {
+      case "email":
+        res.status(400).json({ errors: "invalid email" });
+        break;
+      case "password":
+        res.status(400).json({ errors: "password must be provided" });
+        break;
+    }
+  }
+  next();
+  
+};
 
 const loginUser = async (req: any, res: any) => {
   if (req.body !== null) {
     const { email, password } = req.body;
     // if the request contains required body data store them as variables
-
 
     try {
       const data = await prisma.user.findUnique({
@@ -80,4 +96,4 @@ const loginUser = async (req: any, res: any) => {
   }
 };
 
-export { loginUser };
+export { loginErrorHandler, loginUser };

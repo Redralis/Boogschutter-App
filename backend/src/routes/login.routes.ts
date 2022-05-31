@@ -1,7 +1,8 @@
 import express from "express";
-import {loginUser } from "../controllers/login.controller";
+import { loginErrorHandler, loginUser } from "../controllers/login.controller";
 const router = express.Router();
+import { body } from "express-validator";
 
-router.post("/", loginUser);
+router.post("/", body("email").isEmail(),body("password").notEmpty, loginErrorHandler, loginUser);
 
 export { router as loginRouter };
