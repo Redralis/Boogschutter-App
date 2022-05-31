@@ -10,6 +10,7 @@ const loginErrorHandler = async (req: any, res: any, next: any) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const errorFieldParam = errors.array()[0].param;
+    // store the first found error by the validator in a variable
     switch (errorFieldParam) {
       case "email":
         res.status(400).json({ status: 400, error: "Invalid email" });
@@ -21,6 +22,7 @@ const loginErrorHandler = async (req: any, res: any, next: any) => {
         });
         break;
     }
+    // switch case to determine the required error
   } else {
     next();
   }
