@@ -9,19 +9,21 @@ import { validationResult } from "express-validator";
 const loginErrorHandler = async (req: any, res: any, next: any) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    
     const errorFieldParam = errors.array()[0].param;
     switch (errorFieldParam) {
       case "email":
-        res.status(400).json({ errors: "invalid email" });
+        res.status(400).json({ status: 400, error: "Invalid email" });
         break;
       case "password":
-        res.status(400).json({ errors: "password must be provided" });
+        res.status(400).json({
+          status: 400,
+          error: "Password must be provided and must be of type string.",
+        });
         break;
     }
+  } else {
+    next();
   }
-  next();
-  
 };
 
 const loginUser = async (req: any, res: any) => {
