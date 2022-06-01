@@ -1,6 +1,6 @@
 import express from "express";
 import { loginRouter } from "./routes/login.routes";
-import { registerRouter } from "./routes/registratie.route";
+import { registerRouter } from "./routes/register.routes";
 import { validateJWTToken } from "./controllers/auth.controller";
 import { router } from "./routes/resetPassword.routes";
 const app = express();
