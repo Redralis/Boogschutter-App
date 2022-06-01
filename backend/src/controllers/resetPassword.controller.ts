@@ -63,22 +63,23 @@ const sendEmailForReset = async (req: any, res: any) => {
         const mailOptions = {
             from: 'boogschuttervereniging@gmail.com',
             to: req.body.email,
-            subject: 'Invoices due',
+            subject: 'Hold! Hands up!',
             text: 'Dudes, we really need your money.'
         };
 
         transporter.sendMail(mailOptions, function(error: any, info: { response: string; }){
             if (error) {
                 console.log(error);
+                res.status(400).json({status:400, response: error})
             } else {
                 console.log('Email sent: ' + info.response);
+                res.status(200).json(
+                    {
+                        status: 200,
+                        response: info.response
+                    })
             }
         });
-
-        res.status(200).json({
-            status: 200,
-            response: "sent mail, Check your mailbox"
-        })
     }
 }
 
