@@ -3,10 +3,9 @@ build
 .env
 dev.db
 dev.db-journal
-
-
-package.json
-package-lock.json
 Boogschutter_APP.iml
 modules.xml
 vcs.xml
+package.json
+package-lock.json
+
