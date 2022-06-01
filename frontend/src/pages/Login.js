@@ -30,7 +30,11 @@ export function Login() {
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password"></input>
               </div>
               
-              <Link to="/contacts"><button class="w-100 btn btn-lg " type="submit">Log in</button></Link>
+              <Link to="/contacts">
+                <div className="loginButton">
+                  <button class="w-100 btn btn-lg " type="submit">Log in</button>
+                </div>
+              </Link>
 
             </form>
           </main>

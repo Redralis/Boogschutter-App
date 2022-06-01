@@ -34,14 +34,14 @@
   color: #ccc;
 }
 
-button {
+.loginButton button {
   height: 50px;
   background-color: #0F6E0F;
   color: white;
   border-radius: 10px;
 }
 
-button:hover {
+.loginButton button:hover {
   background-color: #148814;
   transition: 200ms;
 }
