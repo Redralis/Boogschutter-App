@@ -21,5 +21,6 @@ model User {
   isAdmin Boolean
   isTrainer Boolean
   isMatchLeader Boolean
+  phoneNumber String?
 
 }
