@@ -1,4 +1,3 @@
-import './styles/App.css';
 import { Link } from "react-router-dom";
 
 function App() {
@@ -6,7 +5,7 @@ function App() {
     <div>
       <h1>Login</h1>
       <button>
-        <Link to="/chats">Chats</Link>
+        <Link to="/contacts">Contacts</Link>
       </button>
     </div>
   );
