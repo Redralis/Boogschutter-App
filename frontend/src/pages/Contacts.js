@@ -8,7 +8,6 @@ import ContactList from '../components/ContactList'
 export default function Chats() {
     return (
       <>
-
         <Navbar />
         <Header />
         <AddContact />
