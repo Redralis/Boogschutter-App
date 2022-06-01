@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './styles/index.css';
-import Chats from "./routes/chats"
+import Chats from "./pages/chats"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
