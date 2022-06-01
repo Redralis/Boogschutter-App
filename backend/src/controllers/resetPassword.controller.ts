@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import { User } from "@prisma/client";
+const nodemailer = require('nodemailer');
 
 const resetPassword = async (req: any, res: any) => {
     console.log(req.body)
@@ -46,4 +47,44 @@ const resetPassword = async (req: any, res: any) => {
     // return;
 };
 
-export { resetPassword };
+
+
+const sendEmailForReset = async (req: any, res: any) => {
+    console.log("Trying to send email.")
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'boogschuttervereniging@gmail.com',
+            pass: 'qwerty@123'
+        }
+    });
+
+    if (req.body.email !== undefined) {
+        const mailOptions = {
+            from: 'boogschuttervereniging@gmail.com',
+            to: req.body.email,
+            subject: 'Invoices due',
+            text: 'Dudes, we really need your money.'
+        };
+
+        transporter.sendMail(mailOptions, function(error: any, info: { response: string; }){
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+
+        res.status(200).json({
+            status: 200,
+            response: "sent mail, Check your mailbox"
+        })
+    }
+}
+
+
+
+
+
+
+export { resetPassword ,sendEmailForReset};
