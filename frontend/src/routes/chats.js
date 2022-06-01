@@ -1,4 +1,4 @@
-import '../styles/App';
+import '../styles/app.css';
 
 export default function chats() {
     return (
