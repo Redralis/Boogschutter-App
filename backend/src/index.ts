@@ -1,6 +1,7 @@
 
 import express from 'express'
 import { loginRouter } from './routes/login.routes'
+import { registerRouter } from './routes/registratie.route'
 import { validateJWTToken } from './controllers/auth.controller'
 import {router} from "./routes/resetPassword.routes";
 const app = express()
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 })
 
 app.use("/login/", loginRouter)
+app.use("/register/", registerRouter)
 
 
 
