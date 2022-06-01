@@ -22,25 +22,32 @@ const resetPassword = async (req: any, res: any) => {
 
         if (password !== undefined && email !== undefined) {
             console.log("entered query")
-            const updateUser = await prisma.user.update({
-                where: {
-                    email: email,
-                },
-                data: {
-                    password: password,
-                },
-            })
 
             const user = await prisma.user.findUnique({
                 where: {
                     email: email,
                 },
             })
-
-            res.status(200).json({
-                status: 200,
-                password: user
-            })
+            console.log(user, "user info")
+            if (user == undefined) {
+                res.status(200).json({
+                    status: 400,
+                    password: "Can not find this email in the database."
+                })
+            }else {
+                const updateUser = await prisma.user.update({
+                    where: {
+                        email: email,
+                    },
+                    data: {
+                        password: password,
+                    },
+                })
+                res.status(200).json({
+                    status: 200,
+                    password: user
+                })
+            }
         }
     } catch (err) {}
 
