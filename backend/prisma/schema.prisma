@@ -6,20 +6,47 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-
-
 model User {
-  email   String   @id @unique
-  password    String
-  firstName String
-  lastName String
-  bondNumber Int?
-  isAdmin Boolean
-  isTrainer Boolean
+  email         String              @id @unique
+  password      String
+  firstName     String
+  lastName      String
+  bondNumber    Int?
+  isAdmin       Boolean
+  isTrainer     Boolean
   isMatchLeader Boolean
+  phoneNumber   String?
+  events        eventParticipants[]
+  eventEventId  Int?
+}
 
+model eventParticipants {
+  user      User   @relation(fields: [userEmail], references: [email])
+  userEmail String 
+
+  event   Event @relation(fields: [eventId], references: [eventId])
+  eventId Int
+  isAssistent Boolean
+  @@id([userEmail,eventId])
+
+}
+
+model Event {
+  eventId           Int                 @id @default(autoincrement())
+  eventParticipants eventParticipants[]
+  eventName String
+  date DateTime
+  description String
+  maxParticipants Int?
+  type eventType
+}
+
+enum eventType {
+  matchAssistant
+  schietavond
+  training
 }

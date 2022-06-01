@@ -1,31 +1,20 @@
+import express from "express";
+import { loginRouter } from "./routes/login.routes";
+import { registerRouter } from "./routes/registratie.route";
+import { validateJWTToken } from "./controllers/auth.controller";
+import { router } from "./routes/resetPassword.routes";
+const app = express();
+app.use(express.json());
+const port = 3000;
 
-import express from 'express'
-import { loginRouter } from './routes/login.routes'
-import { registerRouter } from './routes/registratie.route'
-import { validateJWTToken } from './controllers/auth.controller'
-import {router} from "./routes/resetPassword.routes";
-const app = express()
-app.use(express.json())
-const port = 3000
-app.use(express.json())
+app.use("/api", router);
 
-app.get('/',validateJWTToken,  (req, res) => {
-app.all("*", (req, res, next) => {
-  const method = req.method;
-  console.log(`Method ${method} is aangeroepen`, req.url);
-  next();
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
-app.use('/api', router)
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.use("/login/", loginRouter)
-app.use("/register/", registerRouter)
-
-
+app.use("/login/", loginRouter);
+app.use("/register/", registerRouter);
 
 app.all("*", (req, res) => {
   res.status(401).json({
@@ -35,6 +24,5 @@ app.all("*", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on http://localhost:${port}`)
-})
-
+  console.log(`Example app listening on http://localhost:${port}`);
+});

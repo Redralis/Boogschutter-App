@@ -61,7 +61,7 @@ const loginUser = async (req: any, res: any) => {
             const { email, isAdmin, isTrainer, isMatchLeader } = data;
             jwt.sign(
               { email, isAdmin, isTrainer, isMatchLeader },
-              privateKey,
+              privateKey,{ expiresIn: '1d' },
               (err: any, token: any) => {
                 // sign a token if the password is correct
                 if (err !== null) {
