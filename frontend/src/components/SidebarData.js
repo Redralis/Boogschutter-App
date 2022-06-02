@@ -3,8 +3,8 @@ import * as BsIcons from 'react-icons/bs'
 
 export const SidebarData = [
     {
-        title: 'Chats',
-        path: '/chats',
+        title: 'Contacts',
+        path: '/tempfirebaselogin',
         icon: <BsIcons.BsFillChatLeftTextFill />,
         cName: 'nav-text'
     },
