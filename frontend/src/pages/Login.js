@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import logo from '../images/Logo.png'
+import logo from '../Images/Logo.png'
 import '../styles/Login.css'
+import resetPassword from './ResetPassword'
 
 export function Login() {
   return (
@@ -33,6 +34,14 @@ export function Login() {
               <Link to="/contacts">
                 <div className="loginButton">
                   <button class="w-100 btn btn-lg " type="submit">Log in</button>
+                </div>
+              </Link>
+
+              <Link to="/ResetPassword">
+                <div className="passwordLink">
+                  <label>
+                    Wachtwoord vergeten?
+                  </label>
                 </div>
               </Link>
 
