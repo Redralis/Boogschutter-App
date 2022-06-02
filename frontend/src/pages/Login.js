@@ -8,11 +8,9 @@ export function Login() {
       <head>
         {/* Start of Bootstrap imports */}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-        </link>
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"/>
         {/* End of Bootstrap imports */}
       </head>
-
       <body className="loginScreen">
         <div className='container '>
           <main class="form-signin">
@@ -30,7 +28,7 @@ export function Login() {
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password"></input>
               </div>
               
-              <Link to="/contacts">
+              <Link to="/TempFirebaseLogin">
                 <div className="loginButton">
                   <button class="w-100 btn btn-lg " type="submit">Log in</button>
                 </div>
