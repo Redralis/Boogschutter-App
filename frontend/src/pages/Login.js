@@ -5,26 +5,37 @@ import resetPassword from './ResetPassword'
 
 export function Login() {
   return (
-    <div>
-      <head>
-        {/* Start of Bootstrap imports */}
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-        </link>
-        {/* End of Bootstrap imports */}
-      </head>
+    <>
+      <div className="container ">
+        <main className="form-signin">
+          <form>
+            <img className="mb-4" src={logo} alt="" width="72" height="57"></img>
+            <h1 className="h3 mb-3 fw-normal">Log in bij uw account</h1>
 
-      <body className="loginScreen">
-        <div className='container '>
-          <main class="form-signin">
-            <form>
-              <img class="mb-4" src={logo} alt="" width="72" height="57"></img>
-              <h1 class="h3 mb-3 fw-normal">Log in bij uw account</h1>
+            <div className="form-floating">
+              <label for="floatingInput">Email address</label>
+              <input
+                type="email"
+                className="form-control"
+                id="floatingInput"
+                placeholder="naam@voorbeeld.nl"
+              ></input>
+            </div>
+            <div className="form-floating">
+              <label for="floatingPassword">Wachtwoord</label>
+              <input
+                type="password"
+                className="form-control"
+                id="floatingPassword"
+                placeholder="Wachtwoord"
+              ></input>
+            </div>
 
-              <div class="form-floating">
-                <label for="floatingInput">Email address</label>
-                <input type="email" class="form-control" id="floatingInput" placeholder="naam@voorbeeld.nl"></input>
-
+            <Link to="/contacts">
+              <div className="loginButton">
+                <button className="w-100 btn btn-lg " type="submit">
+                  Log in
+                </button>
               </div>
               <div class="form-floating">
                 <label for="floatingPassword">Wachtwoord</label>
