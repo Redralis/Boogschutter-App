@@ -3,8 +3,13 @@ import { loginRouter } from "./routes/login.routes";
 import { registerRouter } from "./routes/register.routes";
 import { validateJWTToken } from "./controllers/auth.controller";
 import { router } from "./routes/resetPassword.routes";
+import cors from "cors";
+
 const app = express();
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:3001'
+}));
 const port = 3000;
 
 app.use("/api", router);

@@ -1,47 +1,92 @@
-import { Link } from "react-router-dom";
 import logo from "../Images/Logo.png";
 import "../styles/Login.css";
+import axios from "axios";
+import React from "react";
+axios.defaults.baseURL = 'https://localhost:300';
 
-export function Login() {
-  return (
-    <>
-      <div className="container ">
-        <main className="form-signin">
-          <form>
-            <img className="mb-4" src={logo} alt="" width="72" height="57"></img>
-            <h1 className="h3 mb-3 fw-normal">Log in bij uw account</h1>
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { email: "", password: "" };
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-            <div className="form-floating">
-              <label for="floatingInput">Email address</label>
-              <input
-                type="email"
-                className="form-control"
-                id="floatingInput"
-                placeholder="naam@voorbeeld.nl"
-              ></input>
-            </div>
-            <div className="form-floating">
-              <label for="floatingPassword">Wachtwoord</label>
-              <input
-                type="password"
-                className="form-control"
-                id="floatingPassword"
-                placeholder="Wachtwoord"
-              ></input>
-            </div>
+  handleEmailChange(event) {
+    this.setState({ email: event.target.value });
+  }
 
-            <Link to="/contacts">
-              <div className="loginButton">
-                <button className="w-100 btn btn-lg " type="submit">
-                  Log in
-                </button>
+  handlePasswordChange(event) {
+    this.setState({ password: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    axios.post('/login/', {
+      email: this.state.email,
+      password: this.state.password
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  render() {
+    return (
+      <div className="loginScreen">
+        <div className="container ">
+          <main className="form-signin">
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              <img
+                className="mb-4"
+                src={logo}
+                alt=""
+                width="72"
+                height="57"
+              ></img>
+              <h1 className="h3 mb-3 fw-normal">Log in bij uw account</h1>
+
+              <div className="form-floating">
+                <label for="floatingInput">Email address</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="floatingInput"
+                  placeholder="naam@voorbeeld.nl"
+                  value={this.state.email}
+                  onChange={this.handleEmailChange}
+                ></input>
               </div>
-            </Link>
-          </form>
-        </main>
+              <div className="form-floating">
+                <label for="floatingPassword">Wachtwoord</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="floatingPassword"
+                  placeholder="Wachtwoord"
+                  value={this.state.password}
+                  onChange={this.handlePasswordChange}
+                ></input>
+              </div>
+
+              <div className="">
+                <input
+                  type="submit"
+                  value="Log in"
+                  className="w-100 btn btn-lg loginButton"
+                />
+              </div>
+            </form>
+          </main>
+        </div>
       </div>
-    </>
-  );
+    );
+  }
 }
 
 export default Login;
