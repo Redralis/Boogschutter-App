@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logo from '../images/Logo.png'
 import '../styles/Login.css'
 
-export function Login() {
+export function Register() {
   return (
     <div>
       <head>
@@ -18,21 +18,21 @@ export function Login() {
           <main class="form-signin">
             <form>
               <img class="mb-4" src={logo} alt="" width="72" height="57"></img>
-              <h1 class="h3 mb-3 fw-normal">Log in bij uw account</h1>
+              <h1 class="h3 mb-3 fw-normal">Registreer een nieuw account</h1>
 
               <div class="form-floating">
-                <label for="floatingInput">Email address</label>
+                <label for="floatingInput">Voor uw email address in</label>
                 <input type="email" class="form-control" id="floatingInput" placeholder="naam@voorbeeld.nl"></input>
 
               </div>
               <div class="form-floating">
-                <label for="floatingPassword">Wachtwoord</label>
+                <label for="floatingPassword">Maak een nieuw wachtwoord aan</label>
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Wachtwoord"></input>
               </div>
               
               <Link to="/contacts">
                 <div className="loginButton">
-                  <button class="w-100 btn btn-lg " type="submit">Log in</button>
+                  <button class="w-100 btn btn-lg " type="submit">Maak account aan</button>
                 </div>
               </Link>
 
@@ -55,4 +55,4 @@ export function Login() {
   );
 }
 
-export default Login;
+export default Register;
