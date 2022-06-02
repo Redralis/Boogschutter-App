@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from '../images/Logo.png'
+import logo from '../Images/Logo.png'
 import '../styles/Login.css'
 
 export function Register() {

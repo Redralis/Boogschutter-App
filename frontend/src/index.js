@@ -4,6 +4,7 @@ import App from './App';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Contacts from "./pages/Contacts";
 import Register from './pages/Register';
+import External_links from "./pages/external_links";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,5 +13,6 @@ root.render(
     <Route path="/" element={<App />} />
     <Route path="Contacts" element={<Contacts />} />
     <Route path="Register" element={<Register />} />
+    <Route path="links" element={<External_links />} />
   </Routes>
 </BrowserRouter>);
