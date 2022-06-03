@@ -30,11 +30,6 @@ class Login extends React.Component {
       });
       this.setState({ credentialError: 200 });
     } catch (err) {
-      console.error("Error response:");
-      console.error(err.response.data); // ***
-      console.error(err.response.status); // ***
-      console.error(err.response.headers);
-
       if (err.request.status === 404) {
         this.setState({ credentialError: 404 });
       } else if (err.request.status === 400) {
