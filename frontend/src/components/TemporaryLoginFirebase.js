@@ -2,9 +2,10 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { auth } from '../firebase/firebase.js'
 import React, { useState } from "react";
+
 //import { setSelectedChat } from './Chat.js';
 
-function SignIn() {
+function TemporaryLoginFirebase() {
   function registerEandP() {
     auth.createUserWithEmailAndPassword(email, password)
       .catch((error) => {
@@ -79,4 +80,4 @@ function SignIn() {
   )
 }
 
-export default SignIn
+export default TemporaryLoginFirebase

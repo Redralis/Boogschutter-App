@@ -1,8 +1,28 @@
 import { Link } from "react-router-dom";
 import logo from '../images/Logo.png'
 import '../styles/Login.css'
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import { auth } from '../firebase/firebase.js'
+import React, { useState } from "react";
 
 export function Login() {
+  function signInEandP() {
+//    setSelectedChat("")
+    auth.signInWithEmailAndPassword(email, password)
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode, errorMessage)
+        console.log(email, password)
+      });
+  }
+  const loginSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   return (
     <div>
       <head>
@@ -14,23 +34,23 @@ export function Login() {
       <body className="loginScreen">
         <div className='container '>
           <main class="form-signin">
-            <form>
+            <form onSubmit={loginSubmit}>
               <img class="mb-4" src={logo} alt="" width="72" height="57"></img>
               <h1 class="h3 mb-3 fw-normal">Log in bij uw account</h1>
 
               <div class="form-floating">
                 <label for="floatingInput">Email address</label>
-                <input type="email" class="form-control" id="floatingInput" placeholder="naam@voorbeeld.nl"></input>
+                <input type="email" class="form-control" id="floatingInput" placeholder="naam@voorbeeld.nl" onChange={(event) => setEmail(event.target.value)}></input>
 
               </div>
               <div class="form-floating">
                 <label for="floatingPassword">Wachtwoord</label>
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"></input>
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" onChange={(event) => setPassword(event.target.value)}></input>
               </div>
               
               <Link to="/TempFirebaseLogin">
                 <div className="loginButton">
-                  <button class="w-100 btn btn-lg " type="submit">Log in</button>
+                  <button class="w-100 btn btn-lg " type="submit" onClick={signInEandP}>Log in</button>
                 </div>
               </Link>
 

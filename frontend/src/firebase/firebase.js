@@ -3,7 +3,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
 const firebaseApp = firebase.initializeApp({
-  apiKey: "AIzaSyBbUmk_hA9Wa3OlzmOq5wxlL9_F5CU24FU",
+    apiKey: "AIzaSyBbUmk_hA9Wa3OlzmOq5wxlL9_F5CU24FU",
   authDomain: "firechat-5a319.firebaseapp.com",
   projectId: "firechat-5a319",
   storageBucket: "firechat-5a319.appspot.com",

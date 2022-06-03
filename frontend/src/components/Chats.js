@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react'
 import { auth, db } from '../firebase/firebase.js'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import person from '../images/Person.png'
-
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import { Link } from 'react-router-dom'
+import SignOut from './SignOut.js';
 
+var selectedChat = "";
+function getCurrentChatId() {
+  return selectedChat;
+}
+function setSelectedChat(chatId) {
+    selectedChat = chatId;
+  }
 function Chats() {
     const [user] = useAuthState(auth);
     const [chats, setChats] = useState([])
@@ -33,8 +41,11 @@ function Chats() {
                 <div className="card-body contacts_body">
                     <ui className="contacts">
                         <li className="active">
-                            {chats.map(({ id, name, users }) => (
-                                <div className="list-group-flush">
+                            {chats.map(({ id, name}) => (
+                                <Link to="chat">
+                                <div className="list-group-flush" onClick={function (e) {
+                                    setSelectedChat(id);
+                                  }}>
                                     <div className="contact d-flex bd-highlight list-group-item list-group-item-action">
                                         <div className="img_cont">
                                             <img src={person} className="rounded-circle user_img" />
@@ -46,13 +57,16 @@ function Chats() {
                                         </div>
                                     </div>
                                 </div>
+                                </Link>
                             ))}
                         </li>
                     </ui>
                 </div>
             </div>
+            <SignOut/>
         </div>
     )
 }
 
+export { getCurrentChatId, setSelectedChat }
 export default Chats
