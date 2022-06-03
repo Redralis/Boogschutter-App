@@ -2,7 +2,7 @@ import logo from "../Images/Logo.png";
 import "../styles/Login.css";
 import axios from "axios";
 import React from "react";
-axios.defaults.baseURL = 'https://localhost:300';
+axios.defaults.baseURL = "http://localhost:3000";
 
 class Login extends React.Component {
   constructor(props) {
@@ -21,19 +21,17 @@ class Login extends React.Component {
     this.setState({ password: event.target.value });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-
-    axios.post('/login/', {
-      email: this.state.email,
-      password: this.state.password
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    try {
+      const resp = await axios.post("/login", {
+        email: this.state.email,
+        email: this.state.password,
+      });
+      console.log(resp.data);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   render() {
