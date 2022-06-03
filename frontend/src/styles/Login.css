@@ -82,3 +82,7 @@
 .form-signin input[type="password"] {
   margin-bottom: 10px;
 }
+
+.credentialErrorButton {
+  margin-top: 10px;
+}

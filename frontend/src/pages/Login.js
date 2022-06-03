@@ -2,12 +2,11 @@ import logo from "../Images/Logo.png";
 import "../styles/Login.css";
 import axios from "axios";
 import React from "react";
-axios.defaults.baseURL = "http://localhost:3000";
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { email: "", password: "" };
+    this.state = { email: "", password: "", credentialError: 0 };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,14 +22,24 @@ class Login extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
+
     try {
-      const resp = await axios.post("/login", {
+      const resp = await axios.post("http://localhost:3000/login", {
         email: this.state.email,
-        email: this.state.password,
+        password: this.state.password,
       });
-      console.log(resp.data);
+      this.setState({ credentialError: 200 });
     } catch (err) {
-      console.error(err);
+      console.error("Error response:");
+      console.error(err.response.data); // ***
+      console.error(err.response.status); // ***
+      console.error(err.response.headers);
+
+      if (err.request.status === 404) {
+        this.setState({ credentialError: 404 });
+      } else if (err.request.status === 400) {
+        this.setState({ credentialError: 400 });
+      }
     }
   }
 
@@ -48,9 +57,8 @@ class Login extends React.Component {
                 height="57"
               ></img>
               <h1 className="h3 mb-3 fw-normal">Log in bij uw account</h1>
-
               <div className="form-floating">
-                <label for="floatingInput">Email address</label>
+                <label htmlFor="floatingInput">Email address</label>
                 <input
                   type="email"
                   className="form-control"
@@ -61,7 +69,7 @@ class Login extends React.Component {
                 ></input>
               </div>
               <div className="form-floating">
-                <label for="floatingPassword">Wachtwoord</label>
+                <label htmlFor="floatingPassword">Wachtwoord</label>
                 <input
                   type="password"
                   className="form-control"
@@ -71,7 +79,6 @@ class Login extends React.Component {
                   onChange={this.handlePasswordChange}
                 ></input>
               </div>
-
               <div className="">
                 <input
                   type="submit"
@@ -79,6 +86,30 @@ class Login extends React.Component {
                   className="w-100 btn btn-lg loginButton"
                 />
               </div>
+              {this.state.credentialError === 404 && (
+                <div
+                  className=" credentialErrorButton alert alert-danger"
+                  role="alert"
+                >
+                  Email/wachtwoord incorrect.
+                </div>
+              )}
+              {this.state.credentialError === 400 && (
+                <div
+                  className=" credentialErrorButton alert alert-danger"
+                  role="alert"
+                >
+                  Er is iets mis gegaan
+                </div>
+              )}
+              {this.state.credentialError === 200 && (
+                <div
+                  className=" credentialErrorButton alert alert-success"
+                  role="alert"
+                >
+                  Succesvol ingelogd
+                </div>
+              )}
             </form>
           </main>
         </div>
