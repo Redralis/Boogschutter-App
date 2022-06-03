@@ -5,17 +5,22 @@ import '../styles/ResetPassword.css'
 import {queryToUpdatePassword, sendEmailToResetPassword} from '../ApiServices/ResetPassword'
 
 export default function ResetPassword() {
+    let userValue;
 
 // onChange Handler function
     const getInputValue = (event)=>{
         // show the user input value to console
-        const userValue = event.target.value;
-        sendEmailToResetPassword(userValue).then(respone => {
-            console.log(respone)
-
-        })
+        userValue = event.target.value;
         console.log(userValue);
     };
+
+    //On click
+    function sendValueToAPI() {
+        console.log('test')
+        sendEmailToResetPassword(userValue).then(res => {
+            console.log(res.data)
+        })
+    }
 
     return (
         <div>
@@ -40,7 +45,7 @@ export default function ResetPassword() {
 
                         </div>
                             <div className="sendEmailButton">
-                                <button class="w-100 btn btn-lg " type="submit">Verstuur me een mail</button>
+                                <button class="w-100 btn btn-lg " type="submit" onClick={sendValueToAPI}>Verstuur me een mail</button>
                             </div>
                     </form>
                 </main>

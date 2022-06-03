@@ -12,6 +12,10 @@ export async function queryToUpdatePassword(data) {
 }
 
 export async function sendEmailToResetPassword(data) {
-    const response = await axios.get(`/api/sendMailReset`, {email: data});
+    console.log(data , 'aofdsnjfsdafds')
+    const response = await axios.post('/api/sendMailReset', {
+        data: data
+    })
+
     return response.data;
 }
