@@ -17,8 +17,7 @@ const getMemberList = async (req: any, res: any) => {
           email: true,
           firstName: true,
           lastName: true,
-          bondNumber: true,
-          phoneNumber: true,
+          bondNumber: true
         },
       });
       data.values;
@@ -43,8 +42,7 @@ const getMemberList = async (req: any, res: any) => {
           email: true,
           firstName: true,
           lastName: true,
-          bondNumber: true,
-          phoneNumber: true,
+          bondNumber: true
         },
       });
       data.values;
@@ -66,8 +64,7 @@ const getMemberList = async (req: any, res: any) => {
           email: true,
           firstName: true,
           lastName: true,
-          bondNumber: true,
-          phoneNumber: true,
+          bondNumber: true
         },
       });
       data.values;
