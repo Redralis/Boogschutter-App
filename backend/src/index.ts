@@ -5,7 +5,7 @@ import { validateJWTToken } from "./controllers/auth.controller";
 import { router } from "./routes/resetPassword.routes";
 const app = express();
 app.use(express.json());
-const port = 3000;
+const port = 3060;
 
 app.use("/api", router);
 

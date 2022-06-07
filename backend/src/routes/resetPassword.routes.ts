@@ -5,7 +5,7 @@ const router = express.Router();
 console.log("Searching through Router")
 
 
-router.get('/sendMailReset', sendEmailForReset);
+router.post('/sendMailReset', sendEmailForReset);
 router.put('/resetPassword', resetPassword);
 
 
