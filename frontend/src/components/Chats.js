@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import { auth, db } from '../firebase/firebase.js'
-import { useAuthState } from 'react-firebase-hooks/auth'
 import person from '../images/Person.png'
-
+import { Link } from 'react-router-dom'
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
+var selectedChat = "";
+
+function getCurrentChatId() {
+    return selectedChat;
+}
+
+function setSelectedChat(chatId) {
+    selectedChat = chatId;
+}
+
 function Chats() {
-    const [user] = useAuthState(auth);
     const [chats, setChats] = useState([])
 
     useEffect(() => {
-        db.collection('chats').where("users", "array-contains", user.email).onSnapshot(snapshot => {
+        db.collection('chats').where("users", "array-contains", auth.currentUser.email).onSnapshot(snapshot => {
             setChats(snapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             })))
         })
     }, [])
-
-
 
     return (
         <div>
@@ -33,18 +39,22 @@ function Chats() {
                 <div className="card-body contacts_body">
                     <ui className="contacts">
                         <li className="active">
-                            {chats.map(({ id, name, users }) => (
-                                <div className="list-group-flush">
-                                    <div className="contact d-flex bd-highlight list-group-item list-group-item-action">
-                                        <div className="img_cont">
-                                            <img src={person} className="rounded-circle user_img" />
-                                            <span className="online_icon"></span>
+                            {chats.map(({ id, name }) => (
+                                <div className="list-group-flush" onClick={function (e) {
+                                    setSelectedChat(id);
+                                }}>
+                                    <Link to="chat" style={{ textDecoration: 'none' }}>
+                                        <div className="contact d-flex bd-highlight list-group-item list-group-item-action">
+                                            <div className="img_cont">
+                                                <img src={person} alt="PFP" className="rounded-circle user_img" />
+                                                <span className="online_icon"></span>
+                                            </div>
+                                            <div className="user_info">
+                                                <span>{name}</span>
+                                                <p>Laatst gestuurde message</p>
+                                            </div>
                                         </div>
-                                        <div className="user_info">
-                                            <span>{name}</span>
-                                            <p>Laatst gestuurde message</p>
-                                        </div>
-                                    </div>
+                                    </Link>
                                 </div>
                             ))}
                         </li>
@@ -55,4 +65,5 @@ function Chats() {
     )
 }
 
+export { getCurrentChatId, setSelectedChat }
 export default Chats
