@@ -34,14 +34,14 @@
   color: #ccc;
 }
 
-.loginButton button {
+.loginButton {
   height: 50px;
   background-color: #0F6E0F;
   color: white;
   border-radius: 10px;
 }
 
-.loginButton button:hover {
+.loginButton:hover {
   background-color: #148814;
   transition: 200ms;
 }
@@ -83,6 +83,6 @@
   margin-bottom: 10px;
 }
 
-.passwordLink {
-  opacity: 0.5;
+.credentialErrorButton {
+  margin-top: 10px;
 }
