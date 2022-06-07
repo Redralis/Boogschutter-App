@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
 import React from "react";
-import logo from '../Images/Logo.png'
-import pdf from '../pdf/boogschutter.pdf'
 import '../styles/Documents.css'
 import Navbar from "../components/Navbar";
 
