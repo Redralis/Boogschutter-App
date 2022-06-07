@@ -1,4 +1,4 @@
-import logo from "../Images/Logo.png";
+import logo from "../images/Logo.png";
 import "../styles/Login.css";
 import axios from "axios";
 import React, { useState } from "react";
@@ -74,14 +74,16 @@ function Login() {
               ></input>
             </div>
             <div className="">
+              <Link to="/contacts">
               <input
                 type="submit"
                 value="Log in"
                 className="w-100 btn btn-lg loginButton"
               />
+              </Link>
             </div>
 
-            <Link to="/ResetPassword">
+            <Link to="/resetpassword">
                 <div className="passwordLink">
                   <label>
                     Wachtwoord vergeten?

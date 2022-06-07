@@ -1,17 +1,19 @@
-import React from 'react';
-import '../styles/Contacts.css';
+import TemporaryLoginFirebase from '../components/TemporaryLoginFirebase';
+import {auth} from '../firebase/firebase.js'
+import {useAuthState} from  'react-firebase-hooks/auth'
+import Chats from '../components/Chats';
 import Navbar from '../components/Navbar'
-import Header from '../components/Header'
-import AddContact from '../components/AddContact'
-import ContactList from '../components/ContactList'
+import '../styles/Contacts.css';
 
-export default function Chats() {
-    return (
-      <>
-        <Navbar />
-        <Header />
-        <AddContact />
-        {/* <ContactList /> */}
-      </>
-    );
+function App() {
+  const [user] = useAuthState(auth);
+  
+  return (
+    <>
+    <Navbar />
+    {user ? <Chats/> : <TemporaryLoginFirebase /> }
+    </>
+  );
+  
 }
+export default App;
