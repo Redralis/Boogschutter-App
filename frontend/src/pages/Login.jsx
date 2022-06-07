@@ -2,6 +2,7 @@ import logo from "../Images/Logo.png";
 import "../styles/Login.css";
 import axios from "axios";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Login() {
   
@@ -79,6 +80,16 @@ function Login() {
                 className="w-100 btn btn-lg loginButton"
               />
             </div>
+
+            <Link to="/ResetPassword">
+                <div className="passwordLink">
+                  <label>
+                    Wachtwoord vergeten?
+                  </label>
+                </div>
+              </Link>
+
+
             {credentialError === 404 && (
               <div
                 className=" credentialErrorButton alert alert-danger"

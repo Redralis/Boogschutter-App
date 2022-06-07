@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 
-function external_links() {
+function External_links() {
   return (
     <>
       <Navbar />
@@ -23,4 +23,4 @@ function external_links() {
   );
 }
 
-export default external_links;
+export default External_links;
