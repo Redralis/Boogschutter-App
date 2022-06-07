@@ -3,8 +3,12 @@ import "../styles/Login.css";
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import cookie from "cookie"
+import jwtContext from "../components/context";
 
 function Login() {
+
+  const jwtContext = createContext("");
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +20,10 @@ function Login() {
 
   function handlePasswordChange(event) {
     setPassword(event.target.value);
+  }
+
+  function createCookie(jwt){
+    cookie.serialize("jwt",jwt)
   }
 
   async function handleSubmit(event) {
