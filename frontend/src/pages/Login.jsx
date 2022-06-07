@@ -74,14 +74,16 @@ function Login() {
               ></input>
             </div>
             <div className="">
+              <Link to="/contacts">
               <input
                 type="submit"
                 value="Log in"
                 className="w-100 btn btn-lg loginButton"
               />
+              </Link>
             </div>
 
-            <Link to="/ResetPassword">
+            <Link to="/resetpassword">
                 <div className="passwordLink">
                   <label>
                     Wachtwoord vergeten?
