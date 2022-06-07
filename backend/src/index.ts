@@ -3,6 +3,7 @@ import { loginRouter } from "./routes/login.routes";
 import { registerRouter } from "./routes/register.routes";
 import { validateJWTToken } from "./controllers/auth.controller";
 import { router } from "./routes/resetPassword.routes";
+import { eventRouter } from "./routes/event.routes";
 const app = express();
 app.use(express.json());
 const port = 3000;
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
 
 app.use("/login/", loginRouter);
 app.use("/register/", registerRouter);
+app.use("/event/", eventRouter);
 
 app.all("*", (req, res) => {
   res.status(401).json({
