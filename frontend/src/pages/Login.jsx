@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useState,createContext } from "react";
 import { Link } from "react-router-dom";
 import cookie from "cookie"
-import jwtContext from "../components/context";
+import jwtContext from "../components/jwtContext";
 
 function Login() {
 
@@ -28,15 +28,14 @@ function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-    console.log(email, password);
     try {
       const resp = await axios.post("http://localhost:3000/login", {
         email,
         password,
       });
       setCredentialError(200);
-      console.log(resp.data)
+      jwtContext = resp.data.token
+      
     } catch (err) {
       if (err.request.status === 404) {
         setCredentialError(404);
@@ -82,13 +81,13 @@ function Login() {
               ></input>
             </div>
             <div className="">
-              <Link to="/contacts">
+              {/* <Link to="/contacts"> */}
               <input
                 type="submit"
                 value="Log in"
                 className="w-100 btn btn-lg loginButton"
               />
-              </Link>
+              {/* </Link> */}
             </div>
 
             <Link to="/resetpassword">
