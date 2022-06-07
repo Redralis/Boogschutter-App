@@ -21,7 +21,6 @@ model User {
   isMatchLeader Boolean
   phoneNumber   String?
   events        eventParticipants[]
-  eventEventId  Int?
 }
 
 model eventParticipants {
