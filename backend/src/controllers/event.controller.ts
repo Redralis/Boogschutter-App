@@ -17,6 +17,14 @@ console.log(date);
 console.log(datetest);
 console.log(datumNL);
 
+var qwert: {
+  eventParticipants: eventParticipants[];
+  eventName: string;
+  date: Date;
+  description: string;
+  maxParticipants: number | null;
+}[][] = [];
+
 const makeEvent = async (req: any, res: any) => {
   var { name, description, maxParticipants, type } = req.body;
   const date = new Date();
@@ -42,13 +50,6 @@ const makeEvent = async (req: any, res: any) => {
   }
 };
 
-var qwert: {
-  eventParticipants: eventParticipants[];
-  eventName: string;
-  date: Date;
-  description: string;
-  maxParticipants: number | null;
-}[][] = [];
 const getEvents = async (req: any, res: any) => {
   try {
     const datelist = await prisma.event.findMany({
