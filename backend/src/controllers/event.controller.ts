@@ -1,21 +1,25 @@
-import { PrismaClient } from "@prisma/client";
+import { eventParticipants, PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import { User } from "@prisma/client";
 import { Event } from "@prisma/client";
 import bcrypt from "bcrypt";
-import { EmitFlags, transform } from "typescript";
+import { EmitFlags, transform, WatchDirectoryFlags } from "typescript";
 require("dotenv").config();
 
-const date2 = new Date();
-let dag = date2.getDate();
-let maand = date2.getMonth() + 1;
-let datum = dag + "-" + maand;
-const datetest = new Date(datum);
-console.log(date2);
+const date = new Date();
+let dag = date.getDate() + 1;
+let maand = date.getMonth() + 1;
+let jaar = date.getFullYear();
+let datum = jaar + "-" + maand + "-" + dag;
+let datumNL = dag - 1 + "-" + maand + "-" + jaar;
+const datetest = new Date(datum).toLocaleString();
+console.log(date);
+console.log(datetest);
+console.log(datumNL);
 
 const makeEvent = async (req: any, res: any) => {
-  var { name, description, date, maxParticipants, type } = req.body;
-  date = new Date(date);
+  var { name, description, maxParticipants, type } = req.body;
+  const date = new Date();
   try {
     const newEvent = await prisma.event.create({
       data: {
@@ -38,24 +42,52 @@ const makeEvent = async (req: any, res: any) => {
   }
 };
 
+var qwert: {
+  eventParticipants: eventParticipants[];
+  eventName: string;
+  date: Date;
+  description: string;
+  maxParticipants: number | null;
+}[][] = [];
 const getEvents = async (req: any, res: any) => {
   try {
-    const eventList = await prisma.event.findUnique({
-      where: {
-        // date: datetest,
-      },
+    const datelist = await prisma.event.findMany({
       select: {
-        eventName: true,
         date: true,
-        maxParticipants: true,
-        description: true,
-        type: true,
-        eventParticipants: true,
       },
     });
+    for (var u = 0; u < datelist.length; u++) {
+      let date = datelist[u];
+      let cDate = date.date;
+      let sDate = cDate.toLocaleString();
+      if (sDate.includes(datumNL)) {
+        try {
+          const eventList = await prisma.event.findMany({
+            where: {
+              date: cDate,
+            },
+            select: {
+              eventId: true,
+              eventName: true,
+              date: true,
+              maxParticipants: true,
+              description: true,
+              type: true,
+              eventParticipants: true,
+            },
+          });
+          qwert.push(eventList);
+        } catch (error) {
+          res.status(400).json({
+            status: 400,
+            error: "Something went wrong",
+          });
+        }
+      }
+    }
     res.status(200).json({
       status: 200,
-      result: "gelukt",
+      result: qwert,
     });
   } catch (error) {
     res.status(400).json({
@@ -63,6 +95,7 @@ const getEvents = async (req: any, res: any) => {
       error: "Something went wrong",
     });
   }
+  qwert = [];
 };
 
 export { makeEvent, getEvents };
