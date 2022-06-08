@@ -1,18 +1,19 @@
 import logo from "../images/Logo.png";
 import "../styles/Login.css";
 import axios from "axios";
-import React, { useState,createContext } from "react";
+import React, { useState, createContext } from "react";
 import { Link } from "react-router-dom";
-import cookie from "cookie"
+import cookie from "cookie";
 import jwtContext from "../components/jwtContext";
+import { Navigate } from "react-router-dom";
 
 function Login() {
-
   const jwtContext = createContext("");
-  
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [credentialError, setCredentialError] = useState(0);
+  const [redirect, setRedirect] = useState(false);
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -22,8 +23,8 @@ function Login() {
     setPassword(event.target.value);
   }
 
-  function createCookie(jwt){
-    cookie.serialize("jwt",jwt)
+  function createCookie(jwt) {
+    cookie.serialize("jwt", jwt);
   }
 
   async function handleSubmit(event) {
@@ -34,12 +35,18 @@ function Login() {
         password,
       });
       setCredentialError(200);
-      jwtContext = resp.data.token
-      
-    } catch (err) {
-      if (err.request.status === 404) {
+      jwtContext = resp.data.token;
+      setRedirect(true);
+    } catch (error) {
+      if (
+        typeof error.response.data.error !== "undefined" &&
+        error.response.data.error === 404
+      ) {
         setCredentialError(404);
-      } else if (err.request.status === 400) {
+      } else if (
+        typeof error.response.data.error !== "undefined" &&
+        error.response.data.error === 400
+      ) {
         setCredentialError(400);
       }
     }
@@ -91,13 +98,10 @@ function Login() {
             </div>
 
             <Link to="/resetpassword">
-                <div className="passwordLink">
-                  <label>
-                    Wachtwoord vergeten?
-                  </label>
-                </div>
-              </Link>
-
+              <div className="passwordLink">
+                <label>Wachtwoord vergeten?</label>
+              </div>
+            </Link>
 
             {credentialError === 404 && (
               <div
@@ -126,6 +130,7 @@ function Login() {
           </form>
         </main>
       </div>
+      {redirect ? <Navigate push to="/contacts" /> : null}
     </div>
   );
 }
