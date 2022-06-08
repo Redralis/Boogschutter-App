@@ -61,7 +61,7 @@ const sendEmailForReset = async (req: any, res: any) => {
 
   //Generate a random token thats used to reset password
   require("crypto").randomBytes(
-    20,
+    3,
     async function (err: any, buffer: { toString: (arg0: string) => any }) {
       token = buffer.toString("hex");
       console.log(token, "token");
@@ -73,7 +73,7 @@ const sendEmailForReset = async (req: any, res: any) => {
           subject: "verander je wachtwoord!",
           text:
             "kopieer deze code en gebruik deze bij het updaten van je wachtwoord " +
-            "code:" +
+            "code: " +
             token,
         };
 
