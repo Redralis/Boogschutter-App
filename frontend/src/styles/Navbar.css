@@ -1,9 +1,6 @@
 .navbar {
     background-color: darkgreen;
     height: 80px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
 }
 
 .menu-bars {
