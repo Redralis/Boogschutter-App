@@ -9,7 +9,6 @@ CREATE TABLE `User` (
     `isTrainer` BOOLEAN NOT NULL,
     `isMatchLeader` BOOLEAN NOT NULL,
     `phoneNumber` VARCHAR(191) NULL,
-    `eventEventId` INTEGER NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`email`)
@@ -31,8 +30,18 @@ CREATE TABLE `Event` (
     `date` DATETIME(3) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
     `maxParticipants` INTEGER NULL,
+    `type` ENUM('matchAssistant', 'schietavond', 'training') NOT NULL,
 
     PRIMARY KEY (`eventId`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `forgotPassword` (
+    `ForgotPasswordUserEmail` VARCHAR(191) NOT NULL,
+    `token` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `forgotPassword_token_key`(`token`),
+    PRIMARY KEY (`token`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
@@ -40,3 +49,6 @@ ALTER TABLE `eventParticipants` ADD CONSTRAINT `eventParticipants_userEmail_fkey
 
 -- AddForeignKey
 ALTER TABLE `eventParticipants` ADD CONSTRAINT `eventParticipants_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`eventId`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `forgotPassword` ADD CONSTRAINT `forgotPassword_ForgotPasswordUserEmail_fkey` FOREIGN KEY (`ForgotPasswordUserEmail`) REFERENCES `User`(`email`) ON DELETE RESTRICT ON UPDATE CASCADE;

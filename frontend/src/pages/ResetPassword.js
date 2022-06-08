@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import logo from '../Images/Logo.png'
 import '../styles/ResetPassword.css'
 import {queryToUpdatePassword, sendEmailToResetPassword} from '../ApiServices/ResetPassword'
@@ -8,7 +8,7 @@ export default function ResetPassword() {
     let userValue;
 
 // onChange Handler function
-    const getInputValue = (event)=>{
+    const getInputValue = (event) => {
         // show the user input value to console
         userValue = event.target.value;
         console.log(userValue);
@@ -18,7 +18,8 @@ export default function ResetPassword() {
     function sendValueToAPI() {
         console.log('test')
         sendEmailToResetPassword(userValue).then(res => {
-            console.log(res.data)
+            localStorage.setItem('mail', userValue)
+            console.log(userValue, 'email first page');
         })
     }
 
@@ -27,7 +28,8 @@ export default function ResetPassword() {
             <head>
                 {/* Start of Bootstrap imports */}
                 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-                      integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+                      integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+                      crossorigin="anonymous">
                 </link>
                 {/* End of Bootstrap imports */}
             </head>
@@ -41,12 +43,19 @@ export default function ResetPassword() {
 
                         <div class="form-floating">
                             <label for="floatingInput">Email address</label>
-                            <input type="email" class="form-control" id="floatingInput" placeholder="naam@voorbeeld.nl" onChange={getInputValue}></input>
+                            <input type="email" class="form-control" id="floatingInput" placeholder="naam@voorbeeld.nl"
+                                   onChange={getInputValue}>
 
+                            </input>
                         </div>
+
+                        <Link to="/UpdatePassword">
                             <div className="sendEmailButton">
-                                <button class="w-100 btn btn-lg " type="submit" onClick={sendValueToAPI}>Verstuur me een mail</button>
+                                <button class="w-100 btn btn-lg " type="submit" onClick={sendValueToAPI}>Verstuur me een
+                                    mail
+                                </button>
                             </div>
+                        </Link>
                     </form>
                 </main>
             </div>
