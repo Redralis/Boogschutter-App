@@ -9,15 +9,15 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
-        title: 'Test1',
-        path: '/',
-        icon: <BsIcons.BsAlarm />,
+        title: 'Agenda',
+        path: '/agenda',
+        icon: <BsIcons.BsFillCalendarDateFill />,
         cName: 'nav-text'
     },
     {
-        title: 'Test2',
-        path: '/',
-        icon: <BsIcons.BsSnapchat />,
+        title: 'Documenten en Links',
+        path: '/documents',
+        icon: <BsIcons.BsFillBookFill />,
         cName: 'nav-text'
     }
 ]

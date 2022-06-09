@@ -6,7 +6,6 @@ import Chat from "./pages/Chat";
 import Contacts from "./pages/Contacts"
 import ResetPassword from "./pages/ResetPassword"
 import Documents from './pages/Documents';
-import ExternalLinks from './pages/ExternalLinks';
 import Agenda from './pages/Agenda';
 import Register from './pages/Register';
 import UpdatePassword from "./pages/UpdatePassword"
@@ -20,12 +19,10 @@ root.render(
     <Route path="/" element={<App />} />
     <Route path="Contacts" element={<Contacts />} />
     <Route path="Contacts/Chat" element={<Chat />} />
-    <Route path="links" element={<ExternalLinks />} />
     <Route path="Documents" element={<Documents />} />
     <Route path="ResetPassword" element={<ResetPassword/>} /> 
     <Route path="Agenda" element={<Agenda/>} />
     <Route path="Register" element={<Register/>} />
-    
     <Route path="UpdatePassword" element={<UpdatePassword/>} />
     <Route path="Login" element={<Login/>}/>
   </Routes>
