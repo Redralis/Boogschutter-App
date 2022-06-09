@@ -1,13 +1,16 @@
 import React from "react";
-import {Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 function AuthChecker() {
   return (
-    <>
-      {typeof localStorage.getItem("token") === "undefined" && (
-        <Navigate to="/" />
-      )}
-    </>
+    <div>
+      
+      {typeof localStorage.getItem("token") !== "string" && (
+        <Navigate to="/" ></Navigate>
+      )}{
+        console.log(localStorage.getItem("token"))
+      }
+    </div>
   );
 }
 

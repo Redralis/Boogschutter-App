@@ -8,10 +8,7 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { auth } from "../firebase/firebase.js";
 
-
-
 function Login() {
-
   const jwtContext = createContext("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,8 +40,7 @@ function Login() {
       });
       setCredentialError(200);
       firebaseSignIn(email, password);
-      localStorage.setItem("token",resp.data.token)
-      console.log(resp.data.token);
+      localStorage.setItem("token", resp.data.token);
     } catch (err) {
       if (err.request.status === 404) {
         setCredentialError(404);
