@@ -1,18 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { auth, db } from '../firebase/firebase'
 import { getCurrentChatId } from './Chats'
 import SendMessage from './SendMessage'
-
+import "../styles/Chat.css"
 function ChatRoom() {
-    const scroll = useRef()
     function loadMessages() {
-        db.collection('messages').where("chatId", "==", getCurrentChatId()).orderBy('createdAt').limit(50).onSnapshot(snapshot => {
+        db.collection('messages').where("chatId", "==", getCurrentChatId()).orderBy('createdAt').onSnapshot(snapshot => {
             setMessages(snapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             })))
         })
+
+
     }
+
     const [messages, setMessages] = useState([])
     useEffect(() => {
         loadMessages();
@@ -20,18 +22,27 @@ function ChatRoom() {
 
     return (
         <div>
-            <div className="msgs">
-                {messages.map(({ id, text, photoURL, email }) => (
-                    <div>
-                        <div key={id} className={`msg ${email === auth.currentUser.email ? 'sent' : 'received'}`}>
-                            <img src={photoURL} alt="" />
-                            <p>{text}</p>
+
+            {messages.map(({ id, text, email, createdAt }) => (
+                <div className="msgs">
+                    <div className='container'>
+                        <div className='row '>
+                            <p style={email === auth.currentUser.email ? { textAlign: 'right' } : { textAlign: 'left' }} className='col-12 emailP'>{email}</p>
                         </div>
+                        <div key={id} className={`row`}>
+                            <div className={`msg  ${email === auth.currentUser.email ? 'sent' : 'received'}`}>
+                            <p className={'chatP col-12 '}>{text}</p>
+                            </div>
+                            <div className='col-12 dateP' style={email === auth.currentUser.email ? { textAlign: 'right' } : { textAlign: 'left' }}>{createdAt}</div>
+                        </div>
+                        
+
                     </div>
-                ))}
-            </div>
-            <SendMessage scroll={scroll} />
-            <div ref={scroll}></div>
+                </div>
+
+            ))}
+
+            <SendMessage />
         </div>
     )
 }
