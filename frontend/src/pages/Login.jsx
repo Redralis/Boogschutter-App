@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useState, createContext } from "react";
 import { Link } from "react-router-dom";
 import cookie from "cookie";
-import jwtContext from "../components/jwtContext";
+import { jwtContext } from "../components/jwtContext";
 import { Navigate } from "react-router-dom";
 
 function Login() {
@@ -23,10 +23,6 @@ function Login() {
     setPassword(event.target.value);
   }
 
-  function createCookie(jwt) {
-    cookie.serialize("jwt", jwt);
-  }
-
   async function handleSubmit(event) {
     event.preventDefault();
     try {
@@ -35,9 +31,9 @@ function Login() {
         password,
       });
       setCredentialError(200);
-      jwtContext = resp.data.token;
       setRedirect(true);
     } catch (error) {
+      console.log(error);
       if (
         typeof error.response.data.error !== "undefined" &&
         error.response.data.error === 404
