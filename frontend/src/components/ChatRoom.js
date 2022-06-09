@@ -5,7 +5,7 @@ import SendMessage from './SendMessage'
 import "../styles/Chat.css"
 function ChatRoom() {
     function loadMessages() {
-        db.collection('messages').where("chatId", "==", getCurrentChatId()).orderBy('createdAt').onSnapshot(snapshot => {
+        db.collection('messages').where("chatId", "==", getCurrentChatId()).orderBy('sortBy').onSnapshot(snapshot => {
             setMessages(snapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
