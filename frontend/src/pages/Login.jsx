@@ -3,12 +3,24 @@ import "../styles/Login.css";
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import { auth } from "../firebase/firebase.js";
 
 function Login() {
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [credentialError, setCredentialError] = useState(0);
+
+  function firebaseSignIn() {
+    //    setSelectedChat("")
+    auth.signInWithEmailAndPassword(email, password).catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      console.log(email, password);
+    });
+  }
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -21,14 +33,14 @@ function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    console.log(email, password);
     try {
       const resp = await axios.post("http://localhost:3000/login", {
         email,
         password,
       });
       setCredentialError(200);
-      console.log(resp.data)
+      firebaseSignIn(email,password);
+      console.log(resp.data);
     } catch (err) {
       if (err.request.status === 404) {
         setCredentialError(404);
@@ -74,23 +86,18 @@ function Login() {
               ></input>
             </div>
             <div className="">
-              <Link to="/contacts">
-              <input
-                type="submit"
-                value="Log in"
-                className="w-100 btn btn-lg loginButton"
-              />
-              </Link>
+                <input
+                  type="submit"
+                  value="Log in"
+                  className="w-100 btn btn-lg loginButton"
+                />
             </div>
 
             <Link to="/resetpassword">
-                <div className="passwordLink">
-                  <label>
-                    Wachtwoord vergeten?
-                  </label>
-                </div>
-              </Link>
-
+              <div className="passwordLink">
+                <label>Wachtwoord vergeten?</label>
+              </div>
+            </Link>
 
             {credentialError === 404 && (
               <div
