@@ -30,27 +30,21 @@ export default function ResetPassword() {
                     <main class="form-signin">
                         <form>
                             <img class="mb-4" src={logo} alt="" width="72" height="57"></img>
-                            <h1 class="h3 mb-3 fw-normal">Reset je password hier</h1>
-
+                            <h1 class="h3 mb-3 fw-normal">Vraag resetcode aan</h1>
                             <div class="form-floating">
                                 <label for="floatingInput">Email address</label>
-                                <input type="email" class="form-control" id="floatingInput" placeholder="naam@voorbeeld.nl" onChange={getInputValue}></input>
-
-                            </div>
-                            <div class="form-floating">
-                                <label for="floatingInput">Email address</label>
-                                <input type="email" class="form-control" id="floatingInput" placeholder="naam@voorbeeld.nl"
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    id="floatingInput"
+                                    placeholder="naam@voorbeeld.nl"
                                     onChange={getInputValue}>
-
                                 </input>
-                            </div>
-
-                            <Link to="/UpdatePassword">
-                                <div className="sendEmailButton">
-                                    <button class="w-100 btn btn-lg " type="submit" onClick={sendValueToAPI}>Verstuur me een
-                                        mail
-                                    </button>
-                                </div>
+                            </div> 
+                            <Link to="/updatepassword">
+                                <button className="w-100 btn btn-lg agenda-buttons topMargin" type="submit" onClick={sendValueToAPI}>Verstuur me een
+                                    mail
+                                </button>
                             </Link>
                         </form>
                     </main>

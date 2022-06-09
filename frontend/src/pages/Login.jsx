@@ -54,7 +54,7 @@ function Login() {
     <div className="loginScreen">
       <div className="container ">
         <main className="form-signin">
-          <form onSubmit={handleSubmit.bind(this)}>
+          <form className="boogschutterLogo" onSubmit={handleSubmit.bind(this)}>
             <img
               className="mb-4"
               src={logo}
@@ -74,19 +74,19 @@ function Login() {
                 onChange={handleEmailChange}
               ></input>
             </div>
-            <div className="form-floating">
+            <div className="form-floating topMargin">
               <label htmlFor="floatingPassword">Wachtwoord</label>
               <input
                 type="password"
                 className="form-control"
                 id="floatingPassword"
-                placeholder="Wachtwoord"
+                placeholder="wachtwoord"
                 value={password}
                 onChange={handlePasswordChange}
               ></input>
             </div>
             <div className="">
-              <Link to="/contacts">
+              <Link to="/contacten">
               <input
                 type="submit"
                 value="Log in"

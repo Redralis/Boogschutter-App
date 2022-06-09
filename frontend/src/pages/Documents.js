@@ -7,7 +7,7 @@ export function Documents() {
   return (
     <>
       <Navbar />
-      <div className="loginScreen">
+      <div className="documentsScreen">
         <div className="container float-center">
 
 

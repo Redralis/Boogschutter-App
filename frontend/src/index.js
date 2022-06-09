@@ -17,8 +17,8 @@ root.render(
 <BrowserRouter>
   <Routes>
     <Route path="/" element={<App />} />
-    <Route path="Contacts" element={<Contacts />} />
-    <Route path="Contacts/Chat" element={<Chat />} />
+    <Route path="Contacten" element={<Contacts />} />
+    <Route path="Contacten/Chat" element={<Chat />} />
     <Route path="Documents" element={<Documents />} />
     <Route path="ResetPassword" element={<ResetPassword/>} /> 
     <Route path="Agenda" element={<Agenda/>} />
