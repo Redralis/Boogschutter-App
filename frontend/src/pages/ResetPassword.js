@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import logo from '../images/Logo.png'
 import '../styles/ResetPassword.css'
 import { queryToUpdatePassword, sendEmailToResetPassword } from '../ApiServices/ResetPassword'
@@ -17,7 +18,8 @@ export default function ResetPassword() {
     function sendValueToAPI() {
         console.log('test')
         sendEmailToResetPassword(userValue).then(res => {
-            console.log(res.data)
+            localStorage.setItem('mail', userValue)
+            console.log(userValue, 'email first page');
         })
     }
 
@@ -35,9 +37,21 @@ export default function ResetPassword() {
                                 <input type="email" class="form-control" id="floatingInput" placeholder="naam@voorbeeld.nl" onChange={getInputValue}></input>
 
                             </div>
-                            <div className="sendEmailButton">
-                                <button class="w-100 btn btn-lg " type="submit" onClick={sendValueToAPI}>Verstuur me een mail</button>
+                            <div class="form-floating">
+                                <label for="floatingInput">Email address</label>
+                                <input type="email" class="form-control" id="floatingInput" placeholder="naam@voorbeeld.nl"
+                                    onChange={getInputValue}>
+
+                                </input>
                             </div>
+
+                            <Link to="/UpdatePassword">
+                                <div className="sendEmailButton">
+                                    <button class="w-100 btn btn-lg " type="submit" onClick={sendValueToAPI}>Verstuur me een
+                                        mail
+                                    </button>
+                                </div>
+                            </Link>
                         </form>
                     </main>
                 </div>

@@ -11,7 +11,7 @@ function Navbar() {
     const closeSidebar = () => setSidebar(!sidebar)
     return (
         <>
-            <div className="navbar">
+            <div className="navbar sticky-top">
                 <Link to="#" className='menu-bars'>
                     <FaIcons.FaBars onClick={showSidebar} />
                 </Link>

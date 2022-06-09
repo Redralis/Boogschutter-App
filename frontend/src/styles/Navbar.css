@@ -1,9 +1,7 @@
 .navbar {
     background-color: darkgreen;
     height: 80px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    z-index: 10;
 }
 
 .menu-bars {
@@ -25,13 +23,13 @@
     top: 0;
     left: -150%;
     transition: 1600ms;
-    z-index: 10;
+    z-index: 2000;
 }
 
 .nav-menu.active {
     left: 0;
     transition: 500ms;
-    z-index: 10;
+    z-index: 2000;
 }
 
 .nav-text {

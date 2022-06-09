@@ -2,8 +2,9 @@ const axios = require('axios');
 
 export async function queryToUpdatePassword(data) {
     try{
-        const response = await axios.get('/api/sendMailReset',{email:data});
-        console.log('response  ', response)
+        const response = await axios.put('/api/resetPassword',{
+            data: data
+        });
         return response.data;
     } catch(error) {
         return [];

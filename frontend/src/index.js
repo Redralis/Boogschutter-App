@@ -9,6 +9,8 @@ import Documents from './pages/Documents';
 import ExternalLinks from './pages/ExternalLinks';
 import Agenda from './pages/Agenda';
 import Register from './pages/Register';
+import UpdatePassword from "./pages/UpdatePassword"
+import Login from "./pages/Login"
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -24,5 +26,7 @@ root.render(
     <Route path="Agenda" element={<Agenda/>} />
     <Route path="Register" element={<Register/>} />
     
+    <Route path="UpdatePassword" element={<UpdatePassword/>} />
+    <Route path="Login" element={<Login/>}/>
   </Routes>
 </BrowserRouter>);
