@@ -4,6 +4,8 @@
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
+  text-align: center;
+  display: flex;
 }
 
 .boogschutterlogo {
@@ -34,17 +36,20 @@
   color: #ccc;
 }
 
-.loginButton {
-  height: 50px;
+.agenda-buttons {
   background-color: #0F6E0F;
   color: white;
   border-radius: 10px;
+  width: 27%;
+  margin: auto;
 }
 
-.loginButton:hover {
+.agenda-buttons:hover {
   background-color: #148814;
   transition: 200ms;
 }
+
+
 
 .sideline:before,
 .sideline:after {
@@ -85,4 +90,8 @@
 
 .credentialErrorButton {
   margin-top: 10px;
+}
+
+.card {
+  border: 3px solid black;
 }

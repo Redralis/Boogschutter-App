@@ -46,7 +46,7 @@ function Login() {
             <img
               className="mb-4"
               src={logo}
-              alt=""
+              alt="Logo boog"
               width="72"
               height="57"
             ></img>
@@ -78,7 +78,7 @@ function Login() {
               <input
                 type="submit"
                 value="Log in"
-                className="w-100 btn btn-lg loginButton"
+                className="w-100 btn btn-lg agenda-buttons"
               />
               </Link>
             </div>

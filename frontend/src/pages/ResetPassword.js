@@ -2,7 +2,6 @@ import React from 'react';
 import logo from '../images/Logo.png'
 import '../styles/ResetPassword.css'
 import { queryToUpdatePassword, sendEmailToResetPassword } from '../ApiServices/ResetPassword'
-import {sendEmailToResetPassword} from '../ApiServices/ResetPassword'
 
 export default function ResetPassword() {
     let userValue;
