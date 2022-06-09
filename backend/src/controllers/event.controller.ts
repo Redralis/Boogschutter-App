@@ -21,7 +21,7 @@ var events: {
   maxParticipants: number | null;
 }[][] = [];
 
-const getEvents = async (req: any, res: any) => {
+const getEventsDay = async (req: any, res: any) => {
   try {
     const datelist = await prisma.event.findMany({
       select: {
@@ -70,4 +70,29 @@ const getEvents = async (req: any, res: any) => {
   events = [];
 };
 
-export { getEvents };
+const getAllEvents = async (req: any, res: any) => {
+  try {
+    const allEvents = await prisma.event.findMany({
+      select: {
+        eventId: true,
+        eventName: true,
+        date: true,
+        maxParticipants: true,
+        description: true,
+        type: true,
+        eventParticipants: true,
+      },
+    });
+    res.status(200).json({
+      status: 200,
+      result: allEvents,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 400,
+      error: "Something went wrong",
+    });
+  }
+};
+
+export { getEventsDay, getAllEvents };
