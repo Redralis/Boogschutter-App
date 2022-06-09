@@ -1,10 +1,10 @@
 import React from "react";
 import {Navigate } from "react-router-dom";
 
-function AuthChecker(props) {
+function AuthChecker() {
   return (
     <>
-      {typeof props.token === "undefined" && (
+      {typeof localStorage.getItem("token") === "undefined" && (
         <Navigate to="/" />
       )}
     </>

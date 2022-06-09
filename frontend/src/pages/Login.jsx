@@ -3,8 +3,6 @@ import "../styles/Login.css";
 import axios from "axios";
 import React, { useState, createContext } from "react";
 import { Link } from "react-router-dom";
-import cookie from "cookie";
-import { jwtContext } from "../components/jwtContext";
 import { Navigate } from "react-router-dom";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -21,12 +19,10 @@ function Login() {
   const [redirect, setRedirect] = useState(false);
 
   function firebaseSignIn() {
-    //    setSelectedChat("")
     auth.signInWithEmailAndPassword(email, password).catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode, errorMessage);
-      console.log(email, password);
     });
   }
 
@@ -47,7 +43,8 @@ function Login() {
       });
       setCredentialError(200);
       firebaseSignIn(email, password);
-      console.log(resp.data);
+      localStorage.setItem("token",resp.data.token)
+      console.log(resp.data.token);
     } catch (err) {
       if (err.request.status === 404) {
         setCredentialError(404);

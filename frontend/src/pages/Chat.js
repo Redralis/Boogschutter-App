@@ -12,7 +12,7 @@ function Chat() {
 
   return (
     <>
-      <AuthChecker token={jwtContext} ></AuthChecker>
+      <AuthChecker  ></AuthChecker>
       <Navbar />
       <ChatRoom />
     </>

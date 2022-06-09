@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-      <AuthChecker token={jwtContext}></AuthChecker>
+      <AuthChecker></AuthChecker>
       <Navbar />
       {user ? <Chats /> : <TemporaryLoginFirebase />}
     </>
