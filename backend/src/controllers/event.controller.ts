@@ -7,48 +7,19 @@ import { EmitFlags, transform, WatchDirectoryFlags } from "typescript";
 require("dotenv").config();
 
 const date = new Date();
-let dag = date.getDate() + 1;
-let maand = date.getMonth() + 1;
-let jaar = date.getFullYear();
-let datum = jaar + "-" + maand + "-" + dag;
-let datumNL = dag - 1 + "-" + maand + "-" + jaar;
-const datetest = new Date(datum).toLocaleString();
-console.log(date);
-console.log(datetest);
-console.log(datumNL);
+const dag = date.getDate();
+const maand = date.getMonth();
+const uur = date.getHours();
+const jaar = date.getFullYear();
+const datumNu = dag + "-" + (maand + 1) + "-" + jaar;
 
-var qwert: {
+var events: {
   eventParticipants: eventParticipants[];
   eventName: string;
   date: Date;
   description: string;
   maxParticipants: number | null;
 }[][] = [];
-
-const makeEvent = async (req: any, res: any) => {
-  var { name, description, maxParticipants, type } = req.body;
-  const date = new Date();
-  try {
-    const newEvent = await prisma.event.create({
-      data: {
-        eventName: name,
-        description: description,
-        date: date,
-        maxParticipants: maxParticipants,
-        type: type,
-      },
-    });
-    res.status(200).json({
-      status: 200,
-      result: "New event added",
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 400,
-      error: "Something went wrong",
-    });
-  }
-};
 
 const getEvents = async (req: any, res: any) => {
   try {
@@ -61,7 +32,7 @@ const getEvents = async (req: any, res: any) => {
       let date = datelist[u];
       let cDate = date.date;
       let sDate = cDate.toLocaleString();
-      if (sDate.includes(datumNL)) {
+      if (sDate.includes(datumNu)) {
         try {
           const eventList = await prisma.event.findMany({
             where: {
@@ -77,7 +48,7 @@ const getEvents = async (req: any, res: any) => {
               eventParticipants: true,
             },
           });
-          qwert.push(eventList);
+          events.push(eventList);
         } catch (error) {
           res.status(400).json({
             status: 400,
@@ -88,7 +59,7 @@ const getEvents = async (req: any, res: any) => {
     }
     res.status(200).json({
       status: 200,
-      result: qwert,
+      result: events,
     });
   } catch (error) {
     res.status(400).json({
@@ -96,7 +67,7 @@ const getEvents = async (req: any, res: any) => {
       error: "Something went wrong",
     });
   }
-  qwert = [];
+  events = [];
 };
 
-export { makeEvent, getEvents };
+export { getEvents };
