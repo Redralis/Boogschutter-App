@@ -15,6 +15,7 @@ function SignIn() {
         console.log(email, password)
       });
   }
+  
   function signInEandP() {
 //    setSelectedChat("")
     auth.signInWithEmailAndPassword(email, password)
@@ -25,6 +26,7 @@ function SignIn() {
         console.log(email, password)
       });
   }
+
   const loginSubmit = (e) => {
     e.preventDefault();
   };

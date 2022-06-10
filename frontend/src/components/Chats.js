@@ -51,7 +51,7 @@ function Chats() {
                                             </div>
                                             <div className="user_info">
                                                 <span>{name}</span>
-                                                <p>Laatst gestuurde message</p>
+                                                <p>Laatst gestuurde bericht</p>
                                             </div>
                                         </div>
                                     </Link>

@@ -3,12 +3,24 @@ import "../styles/Login.css";
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import { auth } from "../firebase/firebase.js";
 
 function Login() {
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [credentialError, setCredentialError] = useState(0);
+
+  function firebaseSignIn() {
+    //    setSelectedChat("")
+    auth.signInWithEmailAndPassword(email, password).catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      console.log(email, password);
+    });
+  }
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -21,14 +33,14 @@ function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    console.log(email, password);
     try {
-      const resp = await axios.post("http://localhost:3000/login", {
+      const resp = await axios.post("http://localhost:5000/login", {
         email,
         password,
       });
       setCredentialError(200);
-      console.log(resp.data)
+      firebaseSignIn(email,password);
+      console.log(resp.data);
     } catch (err) {
       if (err.request.status === 404) {
         setCredentialError(404);
@@ -42,11 +54,11 @@ function Login() {
     <div className="loginScreen">
       <div className="container ">
         <main className="form-signin">
-          <form onSubmit={handleSubmit.bind(this)}>
+          <form className="boogschutterLogo" onSubmit={handleSubmit.bind(this)}>
             <img
               className="mb-4"
               src={logo}
-              alt=""
+              alt="Logo boog"
               width="72"
               height="57"
             ></img>
@@ -62,35 +74,32 @@ function Login() {
                 onChange={handleEmailChange}
               ></input>
             </div>
-            <div className="form-floating">
+            <div className="form-floating topMargin">
               <label htmlFor="floatingPassword">Wachtwoord</label>
               <input
                 type="password"
                 className="form-control"
                 id="floatingPassword"
-                placeholder="Wachtwoord"
+                placeholder="wachtwoord"
                 value={password}
                 onChange={handlePasswordChange}
               ></input>
             </div>
             <div className="">
-              <Link to="/contacts">
+              <Link to="/contacten">
               <input
                 type="submit"
                 value="Log in"
-                className="w-100 btn btn-lg loginButton"
+                className="w-100 btn btn-lg agenda-buttons"
               />
               </Link>
             </div>
 
             <Link to="/resetpassword">
-                <div className="passwordLink">
-                  <label>
-                    Wachtwoord vergeten?
-                  </label>
-                </div>
-              </Link>
-
+              <div className="passwordLink">
+                <label>Wachtwoord vergeten?</label>
+              </div>
+            </Link>
 
             {credentialError === 404 && (
               <div
