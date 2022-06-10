@@ -5,20 +5,21 @@ import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import '../styles/Navbar.css'
 
+
 function Navbar() {
     const [sidebar, setSidebar] = useState(false)
     const showSidebar = () => setSidebar(!sidebar)
     const closeSidebar = () => setSidebar(!sidebar)
     return (
         <>
-            <div className="navbar">
+            <div className="navbar sticky-top">
                 <Link to="#" className='menu-bars'>
                     <FaIcons.FaBars onClick={showSidebar} />
                 </Link>
             </div>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-                <ul className='nav-menu-items'>
-                    <li className='navbar-toggle'>
+                <ul className="navbarList">
+                    <li className='navbar-toggle navbarList'>
                         <Link to="#" className='menu-bars'>
                             <AiIcons.AiOutlineClose onClick={closeSidebar} />
                         </Link>
@@ -28,7 +29,7 @@ function Navbar() {
                             <li key={index} className={item.cName}>
                                 <Link to={item.path}>
                                     {item.icon}
-                                    <span>{item.title}</span>
+                                    <span className="navbarItemText">{item.title}</span>
                                 </Link>
                             </li>
                         )

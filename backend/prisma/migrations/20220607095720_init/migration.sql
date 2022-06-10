@@ -9,7 +9,6 @@ CREATE TABLE `User` (
     `isTrainer` BOOLEAN NOT NULL,
     `isMatchLeader` BOOLEAN NOT NULL,
     `phoneNumber` VARCHAR(191) NULL,
-    `eventEventId` INTEGER NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`email`)
@@ -31,6 +30,7 @@ CREATE TABLE `Event` (
     `date` DATETIME(3) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
     `maxParticipants` INTEGER NULL,
+    `type` ENUM('matchAssistant', 'schietavond', 'training') NOT NULL,
 
     PRIMARY KEY (`eventId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

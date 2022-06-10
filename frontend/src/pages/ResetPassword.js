@@ -1,14 +1,25 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import logo from '../Images/Logo.png'
 import '../styles/ResetPassword.css'
 import {queryToUpdatePassword, sendEmailToResetPassword} from '../ApiServices/ResetPassword'
+=======
+import logo from '../images/Logo.png'
+import '../styles/ResetPassword.css'
+import { queryToUpdatePassword, sendEmailToResetPassword } from '../ApiServices/ResetPassword'
+>>>>>>> fb9e5569e58f5526d820c79b429be4cf4b6c40e7
 
 export default function ResetPassword() {
     let userValue;
 
+<<<<<<< HEAD
 // onChange Handler function
     const getInputValue = (event)=>{
+=======
+    // onChange Handler function
+    const getInputValue = (event) => {
+>>>>>>> fb9e5569e58f5526d820c79b429be4cf4b6c40e7
         // show the user input value to console
         userValue = event.target.value;
         console.log(userValue);
@@ -18,11 +29,17 @@ export default function ResetPassword() {
     function sendValueToAPI() {
         console.log('test')
         sendEmailToResetPassword(userValue).then(res => {
+<<<<<<< HEAD
             console.log(res.data)
+=======
+            localStorage.setItem('mail', userValue)
+            console.log(userValue, 'email first page');
+>>>>>>> fb9e5569e58f5526d820c79b429be4cf4b6c40e7
         })
     }
 
     return (
+<<<<<<< HEAD
         <div>
             <head>
                 {/* Start of Bootstrap imports */}
@@ -63,5 +80,34 @@ export default function ResetPassword() {
                     crossorigin="anonymous"></script>
             </body>
         </div>
+=======
+        <>
+            <div className='resetPasswordScreen'>
+                <div className='container '>
+                    <main class="form-signin">
+                        <form>
+                            <img class="mb-4" src={logo} alt="" width="72" height="57"></img>
+                            <h1 class="h3 mb-3 fw-normal">Vraag resetcode aan</h1>
+                            <div class="form-floating">
+                                <label for="floatingInput">Email address</label>
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    id="floatingInput"
+                                    placeholder="naam@voorbeeld.nl"
+                                    onChange={getInputValue}>
+                                </input>
+                            </div> 
+                            <Link to="/updatepassword">
+                                <button className="w-100 btn btn-lg agenda-buttons topMargin" type="submit" onClick={sendValueToAPI}>Verstuur me een
+                                    mail
+                                </button>
+                            </Link>
+                        </form>
+                    </main>
+                </div>
+            </div>
+        </>
+>>>>>>> fb9e5569e58f5526d820c79b429be4cf4b6c40e7
     );
 }
