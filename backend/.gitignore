@@ -1,0 +1,7 @@
+node_modules
+build
+.idea
+.env
+dev.db
+dev.db-journal
+.vscode
