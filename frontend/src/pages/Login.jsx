@@ -43,7 +43,7 @@ function Login() {
       setCredentialError(200);
       firebaseSignIn(email, password);
       localStorage.setItem("token", resp.data.token);
-      navigate("/Contacts", { replace: true });
+      navigate("/contacts", { replace: true });
     } catch (err) {
       if (err.request.status === 404) {
         setCredentialError(404);
@@ -60,11 +60,11 @@ function Login() {
     <div className="loginScreen">
       <div className="container ">
         <main className="form-signin">
-          <form onSubmit={handleSubmit.bind(this)}>
+          <form className="boogschutterLogo" onSubmit={handleSubmit.bind(this)}>
             <img
               className="mb-4"
               src={logo}
-              alt=""
+              alt="Logo boog"
               width="72"
               height="57"
             ></img>
@@ -80,13 +80,13 @@ function Login() {
                 onChange={handleEmailChange}
               ></input>
             </div>
-            <div className="form-floating">
+            <div className="form-floating topMargin">
               <label htmlFor="floatingPassword">Wachtwoord</label>
               <input
                 type="password"
                 className="form-control"
                 id="floatingPassword"
-                placeholder="Wachtwoord"
+                placeholder="wachtwoord"
                 value={password}
                 onChange={handlePasswordChange}
               ></input>
@@ -95,7 +95,7 @@ function Login() {
               <input
                 type="submit"
                 value="Log in"
-                className="w-100 btn btn-lg loginButton"
+                className="w-100 btn btn-lg agenda-buttons"
               />
             </div>
 

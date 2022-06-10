@@ -1,4 +1,3 @@
-import TemporaryLoginFirebase from "../components/TemporaryLoginFirebase";
 import { auth } from "../firebase/firebase.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Chats from "../components/Chats";
@@ -14,7 +13,7 @@ function App() {
     <>
       <AuthChecker></AuthChecker>
       <Navbar />
-      {user ? <Chats /> : <TemporaryLoginFirebase />}
+      <Chats />
     </>
   );
 }
