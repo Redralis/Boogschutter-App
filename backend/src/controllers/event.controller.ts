@@ -9,7 +9,6 @@ require("dotenv").config();
 const date = new Date();
 const dag = date.getDate();
 const maand = date.getMonth();
-const uur = date.getHours();
 const jaar = date.getFullYear();
 const datumNu = dag + "-" + (maand + 1) + "-" + jaar;
 
@@ -95,4 +94,72 @@ const getAllEvents = async (req: any, res: any) => {
   }
 };
 
-export { getEventsDay, getAllEvents };
+//
+const test = new Date();
+const tdag = test.getDate();
+const tmaand = test.getMonth();
+const tjaar = test.getFullYear();
+var diff = 0;
+var maanddif = 0;
+var jdiff = 0;
+var tdatumNu =
+  tdag + diff + "-" + (tmaand + 1 + maanddif) + "-" + (tjaar + jdiff);
+console.log(tdatumNu);
+//
+
+const getWeekEvents = async (req: any, res: any) => {
+  for (var u = 0; u < 7; u++) {
+    diff++;
+    console.log(tdatumNu);
+    try {
+      const weeklist = await prisma.event.findMany({
+        select: {
+          date: true,
+        },
+      });
+      for (var u = 0; u < weeklist.length; u++) {
+        let date = weeklist[u];
+        let cDate = date.date;
+        let sDate = cDate.toLocaleString();
+        if (sDate.includes(tdatumNu)) {
+          try {
+            const eventList = await prisma.event.findMany({
+              where: {
+                date: cDate,
+              },
+              select: {
+                eventId: true,
+                eventName: true,
+                date: true,
+                maxParticipants: true,
+                description: true,
+                type: true,
+                eventParticipants: true,
+              },
+            });
+            events.push(eventList);
+            console.log("!");
+          } catch (error) {
+            res.status(400).json({
+              status: 400,
+              error: "Something went wrong",
+            });
+          }
+        }
+      }
+    } catch (error) {
+      res.status(400).json({
+        status: 400,
+        error: "Something went wrong",
+      });
+    }
+  }
+  res.status(200).json({
+    status: 200,
+    result: events,
+  });
+  events = [];
+  diff = 0;
+};
+
+export { getEventsDay, getAllEvents, getWeekEvents };
