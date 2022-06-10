@@ -2,12 +2,14 @@
 import pdf from '../pdf/boogschutter.pdf'
 import '../styles/Documents.css'
 import Navbar from "../components/Navbar";
+import AuthChecker from "../components/AuthChecker";
 import * as BsIcons from 'react-icons/bs'
 
 export function Documents() {
   return (
     <>
       <Navbar />
+      <AuthChecker></AuthChecker>
       <div className="documentsScreen">
         <div className="container float-center">
           <h1 className="h3 mb-3 fw-normal">Documenten </h1>

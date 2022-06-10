@@ -4,7 +4,7 @@ import * as BsIcons from 'react-icons/bs'
 export const SidebarData = [
     {
         title: 'Contacten',
-        path: '/contacten',
+        path: '/contacts',
         icon: <BsIcons.BsFillChatLeftTextFill />,
         cName: 'nav-text'
     },
