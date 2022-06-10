@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import '../styles/Navbar.css'
 
+
 function Navbar() {
     const [sidebar, setSidebar] = useState(false)
     const showSidebar = () => setSidebar(!sidebar)
@@ -27,7 +28,7 @@ function Navbar() {
                         return (
                             <li key={index} className={item.cName}>
                                 <Link to={item.path}>
-                                    {item.icon}⠀
+                                    {item.icon}
                                     <span className="navbarItemText">{item.title}</span>
                                 </Link>
                             </li>
