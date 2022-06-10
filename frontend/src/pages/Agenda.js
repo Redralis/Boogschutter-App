@@ -32,7 +32,8 @@ export function Agenda() {
             <button type="button " className="agenda-buttons float-left">
               Vorige
             </button>
-            <h1 className="display-6 float-center">Datum</h1>
+            {/* <h1 className="display-6 float-center">Datum</h1> */}
+            <input type="date" name="" id="" />
             <button type="button " className="agenda-buttons float-right">
               Volgende
             </button>
