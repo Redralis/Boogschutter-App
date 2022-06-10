@@ -11,8 +11,8 @@ export function Agenda() {
     axios
       .get("http://localhost:5000/event")
       .then(function (response) {
-        console.log(response);
-        setEvents(response);
+        setEvents(response.data.result);
+        console.log(events);
       })
       .catch(function (error) {
         console.log(error);
@@ -35,9 +35,11 @@ export function Agenda() {
             </button>
           </div>
 
-          <h1 className="float-center display-6"> maandag </h1>
+          {/* <h1 className="float-center display-6"> maandag </h1> */}
           <div className="card">
-            <div className="card-body">Masterclass boogschieten</div>
+            {events.map((event) => (
+              <div className="card-body">Masterclass boogschieten</div>
+            ))}
           </div>
         </div>
       </div>
