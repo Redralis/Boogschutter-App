@@ -1,6 +1,11 @@
 import "../styles/Login.css"
 import Navbar from "../components/Navbar";
+import { getAllEvents } from '../ApiServices/Events'
+
 export function Agenda() {
+    let events = getAllEvents();
+
+
     return (
         <>
             <Navbar />
