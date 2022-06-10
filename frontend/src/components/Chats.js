@@ -4,6 +4,7 @@ import person from '../images/Person.png'
 import { Link } from 'react-router-dom'
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import AddChat from './AddChat'
 
 var selectedChat = "";
 
@@ -60,7 +61,9 @@ function Chats() {
                         </li>
                     </ui>
                 </div>
+                
             </div>
+            <AddChat/>
         </div>
     )
 }
