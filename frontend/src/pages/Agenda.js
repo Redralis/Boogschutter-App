@@ -4,16 +4,18 @@ import AuthChecker from "../components/AuthChecker";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Event from "../components/Event";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export function Agenda() {
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/event")
       .then(function (response) {
         setEvents(response.data.result);
-        console.log(response.data.result);
+        setLoading(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -37,11 +39,15 @@ export function Agenda() {
           </div>
 
           {/* <h1 className="float-center display-6"> maandag </h1> */}
-          <div className="card">
-            {events.map((event) => (
-              <Event key={event.eventId}  event={event}></Event>
-            ))}
-          </div>
+          {loading ? (
+            <LoadingSpinner></LoadingSpinner>
+          ) : (
+            <div className="card">
+              {events.map((event) => (
+                <Event key={event.eventId} event={event}></Event>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>
