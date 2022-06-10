@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import AuthChecker from "../components/AuthChecker";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Event from "../components/Event";
 
 export function Agenda() {
   const [events, setEvents] = useState([]);
@@ -12,7 +13,7 @@ export function Agenda() {
       .get("http://localhost:5000/event")
       .then(function (response) {
         setEvents(response.data.result);
-        console.log(events);
+        console.log(response.data.result);
       })
       .catch(function (error) {
         console.log(error);
@@ -38,7 +39,7 @@ export function Agenda() {
           {/* <h1 className="float-center display-6"> maandag </h1> */}
           <div className="card">
             {events.map((event) => (
-              <div className="card-body">Masterclass boogschieten</div>
+              <Event key={event.eventId}  event={event}></Event>
             ))}
           </div>
         </div>

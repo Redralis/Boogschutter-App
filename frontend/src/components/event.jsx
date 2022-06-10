@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
-function event() {
+function Event(props) {
+  const event = props.event;
   return (
-    <div>event</div>
-  )
+    <div className="card-body">
+     {event.eventName}
+    </div>
+  );
 }
 
-export default event
+export default Event;
