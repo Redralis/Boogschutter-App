@@ -2,8 +2,7 @@ const axios = require('axios');
 
 export async function getAllEvents() {
     console.log('get all events')
-    const response = await axios.get(`/event/d`, {
-        data: data
+    const response = await axios.get(`/event/`, {
     })
     return response.data;
 }
