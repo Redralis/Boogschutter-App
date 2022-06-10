@@ -8,7 +8,6 @@ function AuthChecker() {
       {typeof localStorage.getItem("token") !== "string" && (
         <Navigate to="/" ></Navigate>
       )}{
-        console.log(localStorage.getItem("token"))
       }
     </div>
   );

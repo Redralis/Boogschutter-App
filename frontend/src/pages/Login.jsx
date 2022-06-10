@@ -3,7 +3,7 @@ import "../styles/Login.css";
 import axios from "axios";
 import React, { useState, createContext } from "react";
 import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { auth } from "../firebase/firebase.js";
@@ -23,6 +23,8 @@ function Login() {
     });
   }
 
+  let navigate = useNavigate();
+
   function handleEmailChange(event) {
     setEmail(event.target.value);
   }
@@ -41,6 +43,7 @@ function Login() {
       setCredentialError(200);
       firebaseSignIn(email, password);
       localStorage.setItem("token", resp.data.token);
+      navigate("/Contacts", { replace: true });
     } catch (err) {
       if (err.request.status === 404) {
         setCredentialError(404);
@@ -129,7 +132,6 @@ function Login() {
           </form>
         </main>
       </div>
-      {redirect ? <Navigate push to="/contacts" /> : null}
     </div>
   );
 }
