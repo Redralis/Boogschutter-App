@@ -1,8 +1,11 @@
 import "../styles/Login.css"
 import Navbar from "../components/Navbar";
+import AuthChecker from "../components/AuthChecker";
+
 export function Agenda() {
     return (
-        <>
+        <>  
+            <AuthChecker></AuthChecker>
             <Navbar />
             <div className="loginScreen">
                 <div className="container ">
