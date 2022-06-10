@@ -7,7 +7,7 @@ import { eventRouter } from "./routes/event.routes";
 const app = express();
 app.use(express.json());
 const port = 3000;
-
+//
 app.use("/api", router);
 
 app.get("/", (req, res) => {
