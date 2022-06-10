@@ -9,7 +9,7 @@ import cors from "cors";
 
 const app = express();
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 const port = 5000 || process.env.PORT;
 
 
@@ -22,8 +22,8 @@ app.get("/", (req, res) => {
 
 app.use("/login/", loginRouter);
 app.use("/register/", registerRouter);
-app.use("/members/",memberListRouter);
-app.use("/participate/",eventParticipateRouter);
+app.use("/members/", memberListRouter);
+app.use("/participate/", eventParticipateRouter);
 app.use("/event/", eventRouter);
 
 app.all("*", (req, res) => {
