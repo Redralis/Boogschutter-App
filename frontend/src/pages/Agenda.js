@@ -2,12 +2,14 @@ import "../styles/Login.css"
 import Navbar from "../components/Navbar";
 import { getAllEvents } from '../ApiServices/Events'
 
+import AuthChecker from "../components/AuthChecker";
 export function Agenda() {
     let events = getAllEvents();
 
 
     return (
-        <>
+        <>  
+            <AuthChecker></AuthChecker>
             <Navbar />
             <div className="loginScreen">
                 <div className="container ">

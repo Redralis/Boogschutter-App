@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model User {
@@ -41,14 +41,10 @@ model Event {
   date              DateTime
   description       String
   maxParticipants   Int?
-  type              eventType
+  type              String
 }
 
-enum eventType {
-  matchAssistant
-  schietavond
-  training
-}
+
 
 model forgotPassword {
   ForgotPasswordUserEmail String
