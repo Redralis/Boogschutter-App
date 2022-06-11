@@ -4,14 +4,16 @@ import { registerRouter } from "./routes/register.routes";
 import { memberListRouter } from "./routes/memberlist.routes";
 import { eventParticipateRouter } from "./routes/eventParticipate.routes";
 import { router } from "./routes/resetPassword.routes";
+import { eventRouter } from "./routes/event.routes";
 import cors from "cors";
 
-import { eventRouter } from "./routes/event.routes";
 const app = express();
 app.use(express.json());
 app.use(cors());
 const port = 5000 || process.env.PORT;
 
+
+//
 app.use("/api", router);
 
 app.get("/", (req, res) => {
