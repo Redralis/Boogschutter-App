@@ -1,5 +1,7 @@
 import "../styles/Login.css";
 import Navbar from "../components/Navbar";
+import { getAllEvents } from '../ApiServices/Events'
+
 import AuthChecker from "../components/AuthChecker";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
