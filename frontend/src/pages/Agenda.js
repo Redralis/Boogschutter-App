@@ -12,7 +12,7 @@ export function Agenda() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/event")
+      .get("https://boogschutter-api.herokuapp.com/event")
       .then(function (response) {
         setEvents(response.data.result);
         setLoading(false);
