@@ -8,15 +8,15 @@ import {
 import { body, param } from "express-validator";
 
 router.post(
-  "/:eventid",
+  "/event/:eventid",
   param("eventid").notEmpty().isNumeric(),
   body("email").notEmpty().isString(),
   validateValidEventBody,
   participateEvent
 );
 
-router.get(
-  "/isenrolled",
+router.post(
+  "/isenrolled/",
   body("eventid").notEmpty().isNumeric(),
   body("email").notEmpty().isString(),
   validateValidEventBody,

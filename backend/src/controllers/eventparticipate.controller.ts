@@ -4,14 +4,13 @@ const prisma = new PrismaClient();
 
 export const validateValidEventBody = async (req: any, res: any, next: any) => {
   const errors = validationResult(req);
-  // console.log(errors)
   if (!errors.isEmpty()) {
     const errorFieldParam = errors.array()[0].param;
     // store the first found error by the validator in a variable
     switch (errorFieldParam) {
       case "eventid":
         res
-          .status(404)
+          .status(400)
           .json({ status: 404, error: "Invalid event id, must be int" });
         break;
       case "email":
@@ -48,6 +47,12 @@ export const participateEvent = async (req: any, res: any) => {
           message: "already enrolled for this event",
         });
       }
+    } else {
+      console.log(err)
+      res.status(400).json({
+        status: 400,
+        message: err,
+      });
     }
   }
 };

@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 function Event(props) {
   const [enrolled, setEnrolled] = useState(false);
-
-  useEffect(async () => {
-    const resp = await axios.post(
-      `http://localhost:5000/participate/${event.eventId}`,
-      {}
-    );
-  }, []);
+  const email = localStorage.getItem("email");
 
   const event = props.event;
   const dateObject = new Date(event.date);
@@ -20,16 +13,31 @@ function Event(props) {
     hour12: false,
   });
 
+  const isEnrolledFunc = async () => {
+    try {
+      const resp = await axios.post(
+        "http://localhost:5000/participate/isenrolled/",
+        { eventid: parseInt(event.eventId), email }
+      );
+      setEnrolled(resp.data.isEnrolled);
+    } catch (err) {
+      console.log("Requests went wrong");
+    }
+  };
+
+  useEffect(() => {
+    isEnrolledFunc();
+  }, [isEnrolledFunc()]);
+
   const participateEvent = async () => {
     try {
-      const email = localStorage.getItem("email");
-
       const resp = await axios.post(
-        `http://localhost:5000/participate/${event.eventId}`,
+        `http://localhost:5000/participate/event/${event.eventId}`,
         {
           email,
         }
       );
+      isEnrolledFunc()
     } catch (err) {}
   };
 
@@ -37,7 +45,11 @@ function Event(props) {
     <div className="card-body">
       <h3>{event.eventName}</h3>
       <p>{convertedDate}</p>
-      <button onClick={participateEvent}>Inschrijven</button>
+      {enrolled ? (
+        <button disabled>Ingeschreven</button>
+      ) : (
+        <button onClick={participateEvent}>Inschrijven</button>
+      )}
     </div>
   );
 }
