@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Event(props) {
-  let navigate = useNavigate();
+  const [enrolled, setEnrolled] = useState(false);
+
+  useEffect(async () => {
+    const resp = await axios.post(
+      `http://localhost:5000/participate/${event.eventId}`,
+      {}
+    );
+  }, []);
+
   const event = props.event;
   const dateObject = new Date(event.date);
   const convertedDate = dateObject.toLocaleString("nl-nl", {
