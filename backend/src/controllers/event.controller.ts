@@ -261,4 +261,42 @@ const getWeekEvents = async (req: any, res: any) => {
   wjaar = week.getFullYear();
 };
 
-export { getEventsDay, getAllEvents, getWeekEvents };
+const addEvents = async (req: any, res: any) => {
+  const { eventName, date, tijd, description, maxParticipants, type } =
+    req.body;
+  const dateSplit = date.split("-");
+  const maand = (dateSplit[1] -= 1);
+  const tijdSplit = tijd.split(":");
+  const newDate = new Date(
+    dateSplit[2],
+    maand,
+    dateSplit[0],
+    tijdSplit[0],
+    tijdSplit[1],
+    0,
+    0
+  );
+
+  try {
+    const addEvent = await prisma.event.create({
+      data: {
+        eventName: eventName,
+        date: newDate,
+        description: description,
+        maxParticipants: maxParticipants,
+        type: type,
+      },
+    });
+    res.status(200).json({
+      status: 200,
+      result: "new event added",
+    });
+  } catch (error) {
+    res.status(401).json({
+      status: 401,
+      result: "Something went wrong",
+    });
+  }
+};
+
+export { getEventsDay, getAllEvents, getWeekEvents, addEvents };
