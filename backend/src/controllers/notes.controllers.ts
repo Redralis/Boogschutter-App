@@ -27,4 +27,29 @@ const getNote = async (req:any, res:any, next:any) => {
     }
 }
 
-export { getNote };
+const saveNote = async (req:any, res:any, next:any) => {
+    const {notesMail, body} = req.body
+    console.log(notesMail,body, "data");
+    if (notesMail !== undefined) {
+        const updateNote = await prisma.notes.update({
+            where: {
+                notesMail: notesMail,
+            },
+            data: {
+                body: body,
+            },
+        })
+        res.status(200).json({
+            result: updateNote
+        })
+    } else {
+        res.status(400).json({
+            response: "User NOT found."
+        })
+    }
+    
+
+
+}
+
+export { getNote, saveNote };
