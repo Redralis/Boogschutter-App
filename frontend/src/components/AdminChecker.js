@@ -7,7 +7,7 @@ function AdminChecker() {
     const [isAdmin, setIsAdmin] = useState(false);
 
     function getIsAdmin() {
-        getUser('jaron.do14@gmail.com').then(res => {
+        getUser(localStorage.getItem('mail')).then(res => {
             setIsAdmin(!res.result.isAdmin);
         })
     }

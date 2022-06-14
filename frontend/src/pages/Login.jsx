@@ -96,6 +96,7 @@ function Login() {
                 type="submit"
                 value="Log in"
                 className="w-100 btn btn-lg agenda-buttons"
+                onClick={localStorage.setItem('mail', email)}
               />
             </div>
 
