@@ -30,7 +30,6 @@ model eventParticipants {
 
   event       Event   @relation(fields: [eventId], references: [eventId])
   eventId     Int
-  isAssistent Boolean
   @@id([userEmail, eventId])
 }
 

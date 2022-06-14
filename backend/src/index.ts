@@ -13,7 +13,6 @@ app.use(cors());
 const port = 5000 || process.env.PORT;
 
 
-
 app.use("/api", router);
 
 app.get("/", (req, res) => {

@@ -9,8 +9,7 @@ import { body , param } from "express-validator";
 router.post(
   "/:eventid",
   param("eventid").notEmpty().isNumeric(),
-  body("userEmail").notEmpty().isString(),
-  body("isAssistant").optional().isBoolean(),
+  body("email").notEmpty().isString(),
   validateValidEventBody,
   participateEvent
 );
