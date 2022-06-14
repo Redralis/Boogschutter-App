@@ -29,6 +29,14 @@ const regUser = async (req: any, res: any, next: any) => {
         }
       });
 
+      const createNote = await prisma.notes.create({
+        data: {
+          notesMail: email,
+          title: "aantekeningen",
+          body: "hallo ik schrijf hier al die leuke dingetjes over mijn handboog waajoowww"
+        }
+      });
+
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
