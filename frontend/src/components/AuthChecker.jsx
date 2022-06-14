@@ -4,7 +4,6 @@ import { Navigate } from "react-router-dom";
 function AuthChecker() {
   return (
     <div>
-      
       {typeof localStorage.getItem("token") !== "string" && (
         <Navigate to="/" ></Navigate>
       )}{
