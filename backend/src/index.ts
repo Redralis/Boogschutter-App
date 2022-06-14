@@ -10,7 +10,8 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = 3060 || process.env.PORT;
+const port = 5000 || process.env.PORT;
+
 
 
 app.use("/api", router);
