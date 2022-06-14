@@ -5,21 +5,26 @@ import { Event } from "@prisma/client";
 import bcrypt from "bcrypt";
 require("dotenv").config();
 
-const date = new Date();
-const dag = date.getDate();
-const maand = date.getMonth();
-const jaar = date.getFullYear();
-const datumNu = dag + "-" + (maand + 1) + "-" + jaar;
-
-var events: {
-  eventParticipants: eventParticipants[];
-  eventName: string;
-  date: Date;
-  description: string;
-  maxParticipants: number | null;
-}[][] = [];
-
 const getEventsDay = async (req: any, res: any) => {
+  var date = new Date();
+  const dateData = req.params.date;
+  if (dateData != null) {
+    const data = dateData.split("-");
+    date = new Date(data[2], data[1] - 1, data[0]);
+  }
+
+  const dag = date.getDate();
+  const maand = date.getMonth();
+  const jaar = date.getFullYear();
+  const datumNu = dag + "-" + (maand + 1) + "-" + jaar;
+
+  var events: {
+    eventParticipants: eventParticipants[];
+    eventName: string;
+    date: Date;
+    description: string;
+    maxParticipants: number | null;
+  }[][] = [];
   try {
     const datelist = await prisma.event.findMany({
       select: {
@@ -30,7 +35,8 @@ const getEventsDay = async (req: any, res: any) => {
       let date = datelist[u];
       let cDate = date.date;
       let sDate = cDate.toLocaleString();
-      if (sDate.includes(datumNu)) {
+      let nDate = sDate.split(" ");
+      if (nDate[0] == datumNu) {
         try {
           const eventList = await prisma.event.findMany({
             where: {
