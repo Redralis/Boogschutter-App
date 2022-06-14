@@ -267,6 +267,8 @@ const addEvents = async (req: any, res: any) => {
   const dateSplit = date.split("-");
   const maand = (dateSplit[1] -= 1);
   const tijdSplit = tijd.split(":");
+  console.log(tijdSplit[0]);
+  console.log(tijd);
   const newDate = new Date(
     dateSplit[2],
     maand,
