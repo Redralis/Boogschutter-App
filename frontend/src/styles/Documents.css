@@ -8,7 +8,6 @@
 .textarea {
   max-width: 90%;
   }
-
 .save {
   background-color: #0F6E0F;
   color: white;
@@ -16,7 +15,6 @@
   width: 27%;
   margin: 2em;
 }
-
 .save:hover {
   background-color: #148814;
   transition: 200ms;

@@ -33,6 +33,7 @@ export function Documents() {
           <h1 className="h3 mb-3 fw-normal">Sociale media</h1>
           <div className="card">
             <div className="card-body">
+            <BsIcons.BsFacebook />
             <a href=""></a>
             </div>
           </div>
