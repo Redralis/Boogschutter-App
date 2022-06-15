@@ -38,7 +38,7 @@ model Event {
   eventId           Int                 @id @default(autoincrement())
   eventParticipants eventParticipants[]
   eventName         String
-  date              DateTime
+  datePicker        Int
   description       String
   maxParticipants   Int?
   type              String
