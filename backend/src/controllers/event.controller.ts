@@ -114,7 +114,7 @@ const getWeekEvents = async (req: any, res: any) => {
   var diff = 0;
   var maanddif = 0;
   var jdiff = 0;
-  const dayCheck = week.toDateString();
+  const dayCheck = week.toTimeString();
 
   var eventsWeek: {
     eventParticipants: eventParticipants[];
@@ -204,6 +204,7 @@ const getWeekEvents = async (req: any, res: any) => {
     oddMonth();
     newYear();
     schrikkelJaar();
+    var ndatumNu = new Date(tdatumNu).getTime()
     try {
       const weeklist = await prisma.event.findMany({
         select: {
@@ -213,7 +214,8 @@ const getWeekEvents = async (req: any, res: any) => {
       for (var u = 0; u < weeklist.length; u++) {
         let date = weeklist[u];
         let cDate = date.datePicker;
-        let sDate = cDate.toLocaleString();
+        let zDate = new Date(cDate)
+        let sDate = zDate.toLocaleString();
         let nDate = sDate.split(" ");
 
         if (nDate[0] == tdatumNu) {
