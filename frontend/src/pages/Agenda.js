@@ -14,7 +14,7 @@ export function Agenda() {
 
   useEffect(() => {
     axios
-      .get("/event")
+      .get("/event/week/")
       .then(function (response) {
         setEvents(response.data.result);
         setLoading(false);
