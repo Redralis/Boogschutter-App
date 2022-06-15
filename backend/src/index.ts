@@ -24,7 +24,7 @@ app.use("/register/", registerRouter);
 app.use("/members/", memberListRouter);
 app.use("/participate/", eventParticipateRouter);
 app.use("/event/", eventRouter);
-app.use("/notes/", notesRouter);
+app.use("/api/", notesRouter);
 app.all("*", (req, res) => {
   res.status(401).json({
     status: 401,

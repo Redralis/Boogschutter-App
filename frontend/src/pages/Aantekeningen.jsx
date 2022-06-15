@@ -6,18 +6,23 @@ import {getNote} from "../ApiServices/Notes"
 
 export function Aantekeningen() {
     let input;
+    let getLoggedMail = "test@gmail.com"
+
+    // localStorage.getItem("mail")
+    let test;
 
     const getInput = (event) => {
         input = event.target.value;
         console.log(input);
     }
     function updateNote() {
-        
+        getNote(getLoggedMail).then(r => {
+            test = r.data
+            console.log(test)
+        })
     }
 
-    getNote("email@gmail.com").then(r => {
-    //    Retrieved data to put in inputfield of the notes.
-    })
+   
 
     return (
         <>
@@ -27,11 +32,11 @@ export function Aantekeningen() {
                 <div className="container float-center">
                     <div className="top">
                         <h1 className="titel h3 fw-normal">Uw aantekeningen</h1>
-                        <textarea onChange={getInput} cols="40" rows="18"></textarea>
+                        <textarea onChange={getInput} value= {test} cols="40" rows="18"></textarea>
                         
                     </div>
                     <div className="middle">
-                        <button onClick={} type="button " className="save">
+                        <button  type="button " className="save" onClick={updateNote}>
                             Save
                         </button>
                     </div>

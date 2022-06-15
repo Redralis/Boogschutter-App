@@ -2,11 +2,11 @@ const axios = require('axios');
 
 
 export async function getNote(data) {
-    const {email} = data.email
-
+    // const {email} = data.email
+    console.log("Started getNoteAPICAll")
     console.log(data , 'data')
-    console.log(email , 'email')
-    const response = await axios.get(`/notes?email=${email}`, {
+    
+    const response = await axios.get(`/api/notes?email=${data}`, {
     })
 
     return response.data;
