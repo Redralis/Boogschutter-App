@@ -1,20 +1,8 @@
-import React from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import EventPopup from "../components/EventPopup";
 
 function Event(props) {
 
-  let navigate = useNavigate();
-
-  const participateEvent = () => {
-    try {
-      const token = localStorage.getItem("token");
-      if(!token){
-        navigate("/", { replace: true });
-      }
-      
-    } catch (err) {}
-  };
 
   const event = props.event;
   const dateObject = new Date(event.date);
@@ -24,14 +12,24 @@ function Event(props) {
     hour12: false,
   });
 
-  return (
-    <div className="card-body">
-      <h3>{event.eventName}</h3>
-      <p>{convertedDate}</p>
-      <button>Inschrijven</button>
-    </div>
-  );
+  const showPopUpComponent = () => {};
 
+  return (
+    <>
+      <EventPopup id={event.eventId} event={event} date={convertedDate}></EventPopup>
+      <button
+        onClick={showPopUpComponent}
+        data-toggle="modal"
+        data-target={"#" + event.eventId}
+      >
+        <div className="card-body">
+          <h3>{event.eventName}</h3>
+          <p>{convertedDate}</p>
+         
+        </div>
+      </button>
+    </>
+  );
 }
 
 export default Event;
