@@ -5,9 +5,9 @@
     align-items: center;
     text-align: center;
   }
-.textarea {
-  max-width: 90%;
-  }
+.top textarea {
+  height: 80%;
+}
 .save {
   background-color: #0F6E0F;
   color: white;
