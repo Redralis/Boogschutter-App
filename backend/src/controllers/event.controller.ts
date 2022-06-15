@@ -21,31 +21,31 @@ const getEventsDay = async (req: any, res: any) => {
   var events: {
     eventParticipants: eventParticipants[];
     eventName: string;
-    date: Date;
+    datePicker: number;
     description: string;
     maxParticipants: number | null;
   }[][] = [];
   try {
     const datelist = await prisma.event.findMany({
       select: {
-        date: true,
+        datePicker: true,
       },
     });
     for (var u = 0; u < datelist.length; u++) {
       let date = datelist[u];
-      let cDate = date.date;
+      let cDate = date.datePicker;
       let sDate = cDate.toLocaleString();
       let nDate = sDate.split(" ");
       if (nDate[0] == datumNu) {
         try {
           const eventList = await prisma.event.findMany({
             where: {
-              date: cDate,
+              datePicker: cDate,
             },
             select: {
               eventId: true,
               eventName: true,
-              date: true,
+              datePicker: true,
               maxParticipants: true,
               description: true,
               type: true,
@@ -80,7 +80,7 @@ const getAllEvents = async (req: any, res: any) => {
       select: {
         eventId: true,
         eventName: true,
-        date: true,
+        datePicker: true,
         maxParticipants: true,
         description: true,
         type: true,
@@ -119,7 +119,7 @@ const getWeekEvents = async (req: any, res: any) => {
   var eventsWeek: {
     eventParticipants: eventParticipants[];
     eventName: string;
-    date: Date;
+    datePicker: number;
     description: string;
     maxParticipants: number | null;
   }[][] = [];
@@ -207,12 +207,12 @@ const getWeekEvents = async (req: any, res: any) => {
     try {
       const weeklist = await prisma.event.findMany({
         select: {
-          date: true,
+          datePicker: true,
         },
       });
       for (var u = 0; u < weeklist.length; u++) {
         let date = weeklist[u];
-        let cDate = date.date;
+        let cDate = date.datePicker;
         let sDate = cDate.toLocaleString();
         let nDate = sDate.split(" ");
 
@@ -220,12 +220,12 @@ const getWeekEvents = async (req: any, res: any) => {
           try {
             const eventList = await prisma.event.findMany({
               where: {
-                date: cDate,
+                datePicker: cDate,
               },
               select: {
                 eventId: true,
                 eventName: true,
-                date: true,
+                datePicker: true,
                 maxParticipants: true,
                 description: true,
                 type: true,
@@ -261,4 +261,50 @@ const getWeekEvents = async (req: any, res: any) => {
   wjaar = week.getFullYear();
 };
 
-export { getEventsDay, getAllEvents, getWeekEvents };
+const addEvents = async (req: any, res: any) => {
+  const { eventName, date, tijd, description, maxParticipants, type } =
+    req.body;
+  const dateSplit = date.split("-");
+  const maand = (dateSplit[1] -= 1);
+  const tijdSplit = tijd.split(":");
+  console.log(tijdSplit[0]);
+  console.log(tijd);
+  const newDate = new Date(
+    dateSplit[2],
+    maand,
+    dateSplit[0],
+    tijdSplit[0],
+    tijdSplit[1],
+    0,
+    0
+  ).getTime();
+  // "date":"10-10-2022",
+  //  "tijd":"4:00",
+  // Returns
+  // 1665367200000
+  // Save this int in the database. Frontend can pull this object and convert it to a human readable form of Date.
+
+  try {
+    const addEvent = await prisma.event.create({
+      data: {
+        eventName: eventName,
+        datePicker: newDate,
+        description: description,
+        maxParticipants: maxParticipants,
+        type: type,
+      },
+    });
+    res.status(200).json({
+      status: 200,
+      result: "new event added",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({
+      status: 401,
+      result: "Something went wrong",
+    });
+  }
+};
+
+export { getEventsDay, getAllEvents, getWeekEvents, addEvents };
