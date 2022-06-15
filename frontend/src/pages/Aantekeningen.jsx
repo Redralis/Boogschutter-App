@@ -1,28 +1,47 @@
 import '../styles/Documents.css'
 import Navbar from "../components/Navbar";
 import AuthChecker from "../components/AuthChecker";
-import {getNote} from "../ApiServices/Notes"
+import { getNote, saveNote } from "../ApiServices/Notes"
+import { useState, useEffect } from 'react';
+
 
 
 export function Aantekeningen() {
-    let input;
-    let getLoggedMail = "test@gmail.com"
-
-    // localStorage.getItem("mail")
-    let test;
-
-    const getInput = (event) => {
-        input = event.target.value;
-        console.log(input);
-    }
-    function updateNote() {
+    const [textarea, setTextArea] = useState("");
+    let getLoggedMail = "test@gmail.com";
+    function getAPIData() {
         getNote(getLoggedMail).then(r => {
-            test = r.data
-            console.log(test)
+            body = r.result.body
+            setTextArea(body);
         })
     }
 
-   
+
+    useEffect(() => {
+        getAPIData();
+    }, [])
+
+    // localStorage.getItem("mail")
+    let body;
+
+    const updateTextArea = (event) => {
+        setTextArea(event.target.value)
+    }
+
+
+
+
+    function setAPIData() {
+        let savedData = [
+            textarea, getLoggedMail
+        ]
+        saveNote(savedData).then(r => {
+            body = r.result.body
+            setTextArea(body);
+        })
+    }
+
+
 
     return (
         <>
@@ -32,11 +51,11 @@ export function Aantekeningen() {
                 <div className="container float-center">
                     <div className="top">
                         <h1 className="titel h3 fw-normal">Uw aantekeningen</h1>
-                        <textarea onChange={getInput} value= {test} cols="40" rows="18"></textarea>
-                        
+                        <textarea onChange={updateTextArea} value={textarea} cols="40" rows="18"></textarea>
+
                     </div>
                     <div className="middle">
-                        <button  type="button " className="save" onClick={updateNote}>
+                        <button type="button " className="save" onClick={setAPIData}>
                             Save
                         </button>
                     </div>

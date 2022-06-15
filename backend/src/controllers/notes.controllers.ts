@@ -28,15 +28,18 @@ const getNote = async (req:any, res:any, next:any) => {
 }
 
 const saveNote = async (req:any, res:any, next:any) => {
-    const {notesMail, body} = req.body
-    console.log(notesMail,body, "data");
+    const {body, notesMail} = req.body.data
+
+    console.log(req.body.data, "data");
+    console.log(req.body, "dataasd");
     if (notesMail !== undefined) {
         const updateNote = await prisma.notes.update({
             where: {
                 notesMail: notesMail,
             },
             data: {
-                body: body,
+                notesMail: notesMail,
+                body: body
             },
         })
         res.status(200).json({
