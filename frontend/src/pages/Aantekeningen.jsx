@@ -1,6 +1,7 @@
 import '../styles/Documents.css'
 import Navbar from "../components/Navbar";
 import AuthChecker from "../components/AuthChecker";
+import {getNote} from "../ApiServices/Notes"
 
 
 export function Aantekeningen() {
@@ -13,6 +14,10 @@ export function Aantekeningen() {
     function updateNote() {
         
     }
+
+    getNote("email@gmail.com").then(r => {
+    //    Retrieved data to put in inputfield of the notes.
+    })
 
     return (
         <>
