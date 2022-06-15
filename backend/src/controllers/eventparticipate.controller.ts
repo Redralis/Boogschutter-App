@@ -30,14 +30,20 @@ export const participateEvent = async (req: any, res: any) => {
   try {
     const eventId = parseInt(req.params.eventid);
     const bodyData = req.body;
-
-    const registration = await prisma.eventParticipants.create({
-      data: {
-        eventId,
-        userEmail: bodyData.email,
-      },
-    });
-    res.send(registration);
+    try {
+      const registration = await prisma.eventParticipants.create({
+        data: {
+          eventId,
+          userEmail: bodyData.email,
+        },
+      });
+      res.send(registration);
+    } catch(err) {
+      res.status(400).json({
+        status: 400,
+        message: "Something went wrong",
+      });
+    }
   } catch (err) {
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
@@ -48,7 +54,7 @@ export const participateEvent = async (req: any, res: any) => {
         });
       }
     } else {
-      console.log(err)
+      console.log(err);
       res.status(400).json({
         status: 400,
         message: err,

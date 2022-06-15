@@ -25,11 +25,11 @@ model User {
 }
 
 model eventParticipants {
-  user      User   @relation(fields: [userEmail], references: [email])
+  user      User   @relation(fields: [userEmail], references: [email], onDelete: Cascade, onUpdate: Cascade)
   userEmail String
+  event     Event  @relation(fields: [eventId], references: [eventId], onDelete: Cascade, onUpdate: Cascade)
+  eventId   Int
 
-  event       Event   @relation(fields: [eventId], references: [eventId])
-  eventId     Int
   @@id([userEmail, eventId])
 }
 
@@ -42,8 +42,6 @@ model Event {
   maxParticipants   Int?
   type              String
 }
-
-
 
 model forgotPassword {
   ForgotPasswordUserEmail String
