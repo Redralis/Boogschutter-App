@@ -112,6 +112,7 @@
 }
 .searchBar{
   width: 100%;
+  
 }
 
 .sendButton{
@@ -123,6 +124,8 @@
   font-weight: 500;
 }
 
-
+.sendMessageContainer{
+  bottom: 0;
+}
 
  
