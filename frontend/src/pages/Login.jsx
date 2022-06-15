@@ -36,7 +36,7 @@ function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const resp = await axios.post("http://localhost:3060/login", {
+      const resp = await axios.post("https://boogschutter-api.herokuapp.com/login", {
         email,
         password,
       });
@@ -96,6 +96,7 @@ function Login() {
                 type="submit"
                 value="Log in"
                 className="w-100 btn btn-lg agenda-buttons"
+                onClick={localStorage.setItem('mail', email)}
               />
             </div>
 
