@@ -114,7 +114,7 @@ const getWeekEvents = async (req: any, res: any) => {
   var diff = 0;
   var maanddif = 0;
   var jdiff = 0;
-  const dayCheck = week.toTimeString();
+  const dayCheck = week.getDay();
 
   var eventsWeek: {
     eventParticipants: eventParticipants[];
@@ -175,22 +175,22 @@ const getWeekEvents = async (req: any, res: any) => {
     }
   }
   function dayCorrecter() {
-    if (dayCheck.includes("Tue")) {
+    if (dayCheck == 1) {
       wdag -= 1;
     }
-    if (dayCheck.includes("Wed")) {
+    if (dayCheck == 2) {
       wdag -= 2;
     }
-    if (dayCheck.includes("Thu")) {
+    if (dayCheck == 3) {
       wdag -= 3;
     }
-    if (dayCheck.includes("Fri")) {
+    if (dayCheck == 4) {
       wdag -= 4;
     }
-    if (dayCheck.includes("Sat")) {
+    if (dayCheck == 5) {
       wdag -= 5;
     }
-    if (dayCheck.includes("Sun")) {
+    if (dayCheck == 6) {
       wdag -= 6;
     }
   }
@@ -204,7 +204,7 @@ const getWeekEvents = async (req: any, res: any) => {
     oddMonth();
     newYear();
     schrikkelJaar();
-    var ndatumNu = new Date(tdatumNu).getTime()
+    var ndatumNu = new Date(tdatumNu).getTime();
     try {
       const weeklist = await prisma.event.findMany({
         select: {
@@ -214,10 +214,9 @@ const getWeekEvents = async (req: any, res: any) => {
       for (var u = 0; u < weeklist.length; u++) {
         let date = weeklist[u];
         let cDate = date.datePicker;
-        let zDate = new Date(cDate)
+        let zDate = new Date(cDate);
         let sDate = zDate.toLocaleString();
         let nDate = sDate.split(" ");
-
         if (nDate[0] == tdatumNu) {
           try {
             const eventList = await prisma.event.findMany({
