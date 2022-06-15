@@ -21,31 +21,31 @@ const getEventsDay = async (req: any, res: any) => {
   var events: {
     eventParticipants: eventParticipants[];
     eventName: string;
-    date: Date;
+    datePicker: number;
     description: string;
     maxParticipants: number | null;
   }[][] = [];
   try {
     const datelist = await prisma.event.findMany({
       select: {
-        date: true,
+        datePicker: true,
       },
     });
     for (var u = 0; u < datelist.length; u++) {
       let date = datelist[u];
-      let cDate = date.date;
+      let cDate = date.datePicker;
       let sDate = cDate.toLocaleString();
       let nDate = sDate.split(" ");
       if (nDate[0] == datumNu) {
         try {
           const eventList = await prisma.event.findMany({
             where: {
-              date: cDate,
+              datePicker: cDate,
             },
             select: {
               eventId: true,
               eventName: true,
-              date: true,
+              datePicker: true,
               maxParticipants: true,
               description: true,
               type: true,
@@ -80,7 +80,7 @@ const getAllEvents = async (req: any, res: any) => {
       select: {
         eventId: true,
         eventName: true,
-        date: true,
+        datePicker: true,
         maxParticipants: true,
         description: true,
         type: true,
@@ -119,7 +119,7 @@ const getWeekEvents = async (req: any, res: any) => {
   var eventsWeek: {
     eventParticipants: eventParticipants[];
     eventName: string;
-    date: Date;
+    datePicker: number;
     description: string;
     maxParticipants: number | null;
   }[][] = [];
@@ -207,12 +207,12 @@ const getWeekEvents = async (req: any, res: any) => {
     try {
       const weeklist = await prisma.event.findMany({
         select: {
-          date: true,
+          datePicker: true,
         },
       });
       for (var u = 0; u < weeklist.length; u++) {
         let date = weeklist[u];
-        let cDate = date.date;
+        let cDate = date.datePicker;
         let sDate = cDate.toLocaleString();
         let nDate = sDate.split(" ");
 
@@ -220,12 +220,12 @@ const getWeekEvents = async (req: any, res: any) => {
           try {
             const eventList = await prisma.event.findMany({
               where: {
-                date: cDate,
+                datePicker: cDate,
               },
               select: {
                 eventId: true,
                 eventName: true,
-                date: true,
+                datePicker: true,
                 maxParticipants: true,
                 description: true,
                 type: true,
@@ -277,7 +277,7 @@ const addEvents = async (req: any, res: any) => {
     tijdSplit[1],
     0,
     0
-  ).getTime()
+  ).getTime();
   // "date":"10-10-2022",
   //  "tijd":"4:00",
   // Returns
@@ -299,7 +299,7 @@ const addEvents = async (req: any, res: any) => {
       result: "new event added",
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(401).json({
       status: 401,
       result: "Something went wrong",
