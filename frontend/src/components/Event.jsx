@@ -5,7 +5,7 @@ function Event(props) {
 
 
   const event = props.event;
-  const dateObject = new Date(event.date);
+  const dateObject = new Date(event.datePicker);
   const convertedDate = dateObject.toLocaleString("nl-nl", {
     dateStyle: "medium",
     timeStyle: "short",
