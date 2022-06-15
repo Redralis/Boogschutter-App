@@ -17,7 +17,6 @@ export function Documents() {
             <div className="card-body">
             <BsIcons.BsFillCloudDownloadFill />
               <a href={pdf} edownload="Boogschutters-regelementen"> Download de regelementen van de boogschuttersbond</a>
-             
             </div>
           </div>
           <h1 className="h3 mb-3 fw-normal">Links </h1>
