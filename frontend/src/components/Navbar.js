@@ -3,6 +3,8 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai'
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
+import { getUser } from '../ApiServices/GetUser';
+import * as BsIcons from 'react-icons/bs'
 import '../styles/Navbar.css'
 
 
@@ -10,12 +12,20 @@ function Navbar() {
     const [sidebar, setSidebar] = useState(false)
     const showSidebar = () => setSidebar(!sidebar)
     const closeSidebar = () => setSidebar(!sidebar)
+    const [isAdmin, setIsAdmin] = useState(false);
+    function getIsAdmin() {
+        getUser(localStorage.getItem('mail')).then(res => {
+            setIsAdmin(res.result.isAdmin);
+        })
+    }
     return (
         <>
             <div className="navbar sticky-top">
                 <Link to="#" className='menu-bars'>
                     <FaIcons.FaBars onClick={showSidebar} />
                 </Link>
+                {getIsAdmin()}
+                {isAdmin && <Link to="/adminpage"><BsIcons.BsFillShieldLockFill className="menu-bars"/></Link>}
             </div>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className="navbarList">

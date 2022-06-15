@@ -3,7 +3,9 @@ import { auth, db } from '../firebase/firebase'
 import { getCurrentChatId } from './Chats'
 import SendMessage from './SendMessage'
 import "../styles/Chat.css"
+import { useNavigate } from "react-router-dom";
 function ChatRoom() {
+    let navigate = useNavigate();
     function loadMessages() {
         db.collection('messages').where("chatId", "==", getCurrentChatId()).orderBy('sortBy').onSnapshot(snapshot => {
             setMessages(snapshot.docs.map(doc => ({
@@ -11,20 +13,24 @@ function ChatRoom() {
                 ...doc.data()
             })))
         })
+        
 
 
     }
 
     const [messages, setMessages] = useState([])
     useEffect(() => {
+        if(getCurrentChatId() === ""){
+        let path = `/contacts`; 
+        navigate(path);
+        }
         loadMessages();
-    }, [])
+    }, [navigate])
 
     return (
         <div>
-
             {messages.map(({ id, text, email, createdAt }) => (
-                <div className="msgs">
+                <div key={id} className="msgs">
                     <div className='container'>
                         <div className='row '>
                             <p style={email === auth.currentUser.email ? { textAlign: 'right' } : { textAlign: 'left' }} className='col-12 emailP'>{email}</p>

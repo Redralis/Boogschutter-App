@@ -6,6 +6,7 @@ import { eventParticipateRouter } from "./routes/eventParticipate.routes";
 import { router } from "./routes/resetPassword.routes";
 import { eventRouter } from "./routes/event.routes";
 import { notesRouter} from "./routes/notes.routes"
+import { userRouter } from "./routes/user.routes";
 import cors from "cors";
 
 const app = express();
@@ -25,6 +26,8 @@ app.use("/members/", memberListRouter);
 app.use("/participate/", eventParticipateRouter);
 app.use("/event/", eventRouter);
 app.use("/api/", notesRouter);
+app.use("/user/", userRouter);
+
 app.all("*", (req, res) => {
   res.status(401).json({
     status: 401,
