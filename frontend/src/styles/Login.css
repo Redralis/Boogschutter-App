@@ -1,9 +1,9 @@
 .loginScreen {
   font-family: Tahoma;
   height: 100%;
-  align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
+  display: flex;
 }
 
 .boogschutterlogo {
@@ -34,17 +34,20 @@
   color: #ccc;
 }
 
-.loginButton {
-  height: 50px;
+.agenda-buttons {
   background-color: #0F6E0F;
   color: white;
   border-radius: 10px;
+  width: 27%;
+  margin: auto;
 }
 
-.loginButton:hover {
+.agenda-buttons:hover {
   background-color: #148814;
   transition: 200ms;
 }
+
+
 
 .sideline:before,
 .sideline:after {
@@ -75,8 +78,6 @@
 
 .form-signin input[type="email"] {
   margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 .form-signin input[type="password"] {
@@ -84,5 +85,13 @@
 }
 
 .credentialErrorButton {
+  margin-top: 10px;
+}
+
+.card {
+  border: 3px solid black;
+}
+
+.topMargin {
   margin-top: 10px;
 }

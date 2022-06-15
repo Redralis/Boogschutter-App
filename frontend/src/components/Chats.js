@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom'
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import AddChat from './addChat'
-
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth'
 var selectedChat = "";
 
 function getCurrentChatId() {
@@ -17,31 +20,40 @@ function setSelectedChat(chatId) {
 }
 
 function Chats() {
+    const [user] = useAuthState(auth);
     const [chats, setChats] = useState([])
-
     useEffect(() => {
-        db.collection('chats').where("users", "array-contains", auth.currentUser.email).onSnapshot(snapshot => {
-            setChats(snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            })))
-        })
+        firebase.auth().onAuthStateChanged(firebaseUser => {
+            if (firebaseUser) {
+                db.collection('chats').where("users", "array-contains", firebaseUser.email).onSnapshot(snapshot => {
+                    setChats(snapshot.docs.map(doc => {
+
+                        return({
+                            id: doc.id,
+                            ...doc.data()
+                        })
+                    }))
+                
+                })
+
+            }
+        });
+
+
+
     }, [])
+    
+
+
 
     return (
         <div>
-            <head>
-                {/* Start of Bootstrap imports */}
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-                    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous" />
-                {/* End of Bootstrap imports */}
-            </head>
-            <div className="contacts-page">
+            {user ? <><div className="contacts-page">
                 <div className="card-body contacts_body">
-                    <ui className="contacts">
+                    <ul className="contacts">
                         <li className="active">
-                            {chats.map(({ id, name }) => (
-                                <div className="list-group-flush" onClick={function (e) {
+                            {chats.map(({ id, name, lastMessage }) => (
+                                <div key={id} className="list-group-flush" onClick={function (e) {
                                     setSelectedChat(id);
                                 }}>
                                     <Link to="chat" style={{ textDecoration: 'none' }}>
@@ -52,18 +64,18 @@ function Chats() {
                                             </div>
                                             <div className="user_info">
                                                 <span>{name}</span>
-                                                <p>Laatst gestuurde message</p>
                                             </div>
                                         </div>
                                     </Link>
                                 </div>
                             ))}
                         </li>
-                    </ui>
+                    </ul>
                 </div>
-                
             </div>
-            <AddChat/>
+
+            </> : <></>}
+            <AddChat />
         </div>
     )
 }

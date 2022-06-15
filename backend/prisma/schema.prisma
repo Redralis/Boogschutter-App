@@ -6,46 +6,48 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model User {
-  email         String              @id @unique
-  password      String
-  firstName     String
-  lastName      String
-  bondNumber    Int?
-  isAdmin       Boolean
-  isTrainer     Boolean
-  isMatchLeader Boolean
-  phoneNumber   String?
-  events        eventParticipants[]
+  email          String              @id @unique
+  password       String
+  firstName      String
+  lastName       String
+  bondNumber     Int?
+  isAdmin        Boolean
+  isTrainer      Boolean
+  isMatchLeader  Boolean
+  phoneNumber    String?
+  events         eventParticipants[]
+  forgotPassword forgotPassword[]
 }
 
 model eventParticipants {
   user      User   @relation(fields: [userEmail], references: [email])
-  userEmail String 
+  userEmail String
 
-  event   Event @relation(fields: [eventId], references: [eventId])
-  eventId Int
+  event       Event   @relation(fields: [eventId], references: [eventId])
+  eventId     Int
   isAssistent Boolean
-  @@id([userEmail,eventId])
-
+  @@id([userEmail, eventId])
 }
 
 model Event {
   eventId           Int                 @id @default(autoincrement())
   eventParticipants eventParticipants[]
-  eventName String
-  date DateTime
-  description String
-  maxParticipants Int?
-  type eventType
+  eventName         String
+  date              DateTime
+  description       String
+  maxParticipants   Int?
+  type              String
 }
 
-enum eventType {
-  matchAssistant
-  schietavond
-  training
+
+
+model forgotPassword {
+  ForgotPasswordUserEmail String
+  token                   String @id @unique
+  user                    User   @relation(fields: [ForgotPasswordUserEmail], references: [email])
 }

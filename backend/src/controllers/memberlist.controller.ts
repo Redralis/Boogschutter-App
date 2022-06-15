@@ -17,7 +17,10 @@ const getMemberList = async (req: any, res: any) => {
           email: true,
           firstName: true,
           lastName: true,
-          bondNumber: true
+          bondNumber: true,
+          isAdmin: true,
+          isMatchLeader: true,
+          isTrainer:true
         },
       });
       data.values;
@@ -25,8 +28,12 @@ const getMemberList = async (req: any, res: any) => {
     } else {
       const data = await prisma.user.findMany({
         select: {
+          email: true,
           firstName: true,
-          lastName: true,
+          lastName: true, 
+          isAdmin: true,
+          isMatchLeader: true,
+          isTrainer:true
         },
       });
       data.values;
@@ -42,7 +49,10 @@ const getMemberList = async (req: any, res: any) => {
           email: true,
           firstName: true,
           lastName: true,
-          bondNumber: true
+          bondNumber: true,
+          isAdmin: true,
+          isMatchLeader: true,
+          isTrainer:true
         },
       });
       data.values;
@@ -50,8 +60,12 @@ const getMemberList = async (req: any, res: any) => {
     } else {
       const data = await prisma.user.findMany({
         select: {
+          email: true,
           firstName: true,
           lastName: true,
+          isAdmin: true,
+          isMatchLeader: true,
+          isTrainer:true
         },
       });
       data.values;
@@ -64,7 +78,10 @@ const getMemberList = async (req: any, res: any) => {
           email: true,
           firstName: true,
           lastName: true,
-          bondNumber: true
+          bondNumber: true,
+          isAdmin: true,
+          isMatchLeader: true,
+          isTrainer:true
         },
       });
       data.values;
@@ -72,8 +89,12 @@ const getMemberList = async (req: any, res: any) => {
     } else {
       const data = await prisma.user.findMany({
         select: {
+          email: true,
           firstName: true,
           lastName: true,
+          isAdmin: true,
+          isMatchLeader: true,
+          isTrainer:true
         },
       });
       data.values;

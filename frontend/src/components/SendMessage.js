@@ -26,7 +26,6 @@ function SendMessage({ scroll }) {
                 createdAt: currentDate,
                 sortBy: firebase.firestore.FieldValue.serverTimestamp()
             })
-            console.log("nice thing")
             setMsg('');
             handleScroll()
         }
@@ -45,14 +44,14 @@ function SendMessage({ scroll }) {
 
             <form onSubmit={sendMessage}>
 
-                <div className="container sendMessageContainer fixed-bottom">
+                <div key="sendBar"className="container sendMessageContainer fixed-bottom">
                     <div className='row'>
 
                     </div>
                     <div className='row'>
                             {/* <input className='searchBar col-10' placeholder='Message...' type="text" value={msg} onChange={e => setMsg(e.target.value)} /> */}
                             <input className='col-10 form-control searchBar center-block' type="text" name="message" placeholder="Type Message ..."  value={msg} onChange={e => setMsg(e.target.value)}></input>
-                            <button type="submit" class="col-2 btn sendButton">Send</button>
+                            <button type="submit" className="col-2 btn sendButton">Send</button>
 
                     </div>
 
