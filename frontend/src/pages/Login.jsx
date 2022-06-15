@@ -16,6 +16,7 @@ function Login() {
   const [redirect, setRedirect] = useState(false);
 
   function firebaseSignIn() {
+    auth.signOut();
     auth.signInWithEmailAndPassword(email, password).catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;

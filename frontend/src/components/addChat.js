@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { db, auth } from '../firebase/firebase'
 import {useAuthState} from  'react-firebase-hooks/auth'
 
-
+axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('token')}`}
 
 
 function AddChat() {
