@@ -34,12 +34,10 @@ export function Documents() {
           <div className="card">
             <div className="card-body">
             <BsIcons.BsFacebook />
-            <a href=""></a>
+            <a href="https://www.facebook.com/HandboogverenigingAlliancedAmitie/">Bezoek ons op facebook</a>
             </div>
           </div>
         </div>
-
-
       </div>
     </>
   );

@@ -2,7 +2,6 @@ import '../styles/Documents.css'
 import Navbar from "../components/Navbar";
 import AuthChecker from "../components/AuthChecker";
 
-import 'react-edit-text/dist/index.css';
 
 export function Aantekeningen() {
 
@@ -23,7 +22,7 @@ export function Aantekeningen() {
                     </div>
                 </div>
             </div>
-           
+
         </>
     );
 }
