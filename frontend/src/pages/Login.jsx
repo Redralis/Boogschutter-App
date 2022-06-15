@@ -43,7 +43,6 @@ function Login() {
       });
       setCredentialError(200);
       firebaseSignIn(email, password);
-      console.log(resp.data.email)
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("email", resp.data.email);
       navigate("/contacts", { replace: true });
