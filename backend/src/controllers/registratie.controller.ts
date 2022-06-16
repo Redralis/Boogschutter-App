@@ -15,17 +15,35 @@ const regUser = async (req: any, res: any, next: any) => {
 
 
     if (email !== undefined) {
-      const data = await prisma.user.create({
-        data: {
+
+      // By unique identifier
+      const checkMail = await prisma.user.findUnique({
+        where: {
           email: email,
-          password: newPassword,
-          firstName: "Tijdelijke Voornaam",
-          lastName: "Tijdelijke achternaam",
-          isAdmin: false,
-          isTrainer: false,
-          isMatchLeader: false,
-        }
-      });
+        },
+      })
+
+      if (!checkMail) {
+        const data = await prisma.user.create({
+          data: {
+            email: email,
+            password: newPassword,
+            firstName: "Tijdelijke Voornaam",
+            lastName: "Tijdelijke achternaam",
+            isAdmin: false,
+            isTrainer: false,
+            isMatchLeader: false,
+          }
+        });
+      }else {
+        res.status(400).json({
+          status: 400,
+          response: "Email already exist is this database."
+        })
+      }
+
+
+
 
       const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -66,7 +84,7 @@ const regUser = async (req: any, res: any, next: any) => {
       })
     } else {
       res.status(400).json({
-        response: "Be sure to have an email where we can send the data to... dumbass."
+        response: "Be sure to have an email where we can send the data to... silly goose."
       })
     }
       })
