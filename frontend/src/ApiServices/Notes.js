@@ -7,7 +7,7 @@ export async function getNote(data) {
     console.log("Started getNoteAPICAll")
     console.log(data , 'data')
     
-    const response = await axios.get(`/api/getNote?email=${data}`, {
+    const response = await axios.get(`http://localhost:5000/api/getNote?email=${data}`, {
     })
 
     return response.data;
@@ -15,7 +15,7 @@ export async function getNote(data) {
 
 export async function saveNote(data) {
     console.log(data, "APIservices")
-    const response = await axios.put('/api/saveNote', {
+    const response = await axios.put('http://localhost:5000/api/saveNote', {
         data: data
     })
 

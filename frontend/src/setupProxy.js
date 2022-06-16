@@ -12,7 +12,7 @@ module.exports = function(app) {
     app.use(
         '/local',
         createProxyMiddleware({
-            target: 'http://localhost:3060',
+            target: 'http://localhost:5000',
             changeOrigin: true,
         }),
     );
