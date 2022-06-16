@@ -13,6 +13,7 @@ axios.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getIte
 function AddChat() {
     const [user] = useAuthState(auth);
     const [users, setUsers] = useState([])
+    const [email, setEmail] = useState([])
 
     const AdminBox = useRef()
     const TrainerBox = useRef()
@@ -20,7 +21,7 @@ function AddChat() {
 
     useEffect(() => {
         axios
-            .get("http://localhost:3060/members")
+            .get("http://localhost:5000/members")
             .then(function (response) {
                 setUsers(response.data.result);
             })
@@ -28,6 +29,10 @@ function AddChat() {
                 console.log(error);
             });
     }, []);
+
+    function refreshPage() {
+        window.location.reload(false);
+    }
 
     function setRights(mail) {
         editUser(mail, TrainerBox.current.checked, AdminBox.current.checked, MatchLeaderBox.current.checked).then(res => {
@@ -76,12 +81,13 @@ function AddChat() {
 
         handleChange(event) {
             this.setState({ value: event });
-            
+
         }
 
         handleSubmit(event) {
             event.preventDefault();
             setRights(this.state.value.value)
+            refreshPage();
         }
 
         render() {
@@ -106,33 +112,53 @@ function AddChat() {
                             ]} />
                         </div>
                         <div className="container">
-                        <div className="form-check" style={{ padding: 0 }}>
-                            <input type="checkbox" ref={AdminBox} />
-                            <label className="form-check-label" htmlFor="flexCheckChecked">
-                            ‏‏‎ ‎Beheerder
-                            </label>
-                        </div>
-                        <div className="form-check " style={{ padding: 0 }}>
-                            <input type="checkbox" ref={TrainerBox} />
-                            <label className="form-check-label" htmlFor="flexCheckChecked">
-                            ‏‏‎ ‎Trainer
-                            </label>
-                        </div>
-                        <div className="form-check " style={{ padding: 0 }}>
-                            <input type="checkbox" ref={MatchLeaderBox} />
-                            <label className="form-check-label" htmlFor="flexCheckChecked">
-                            ‏‏‎ ‎Wedstrijdleider
-                            </label>
-                        </div>
+                            <div className="form-check" style={{ padding: 0 }}>
+                                <input type="checkbox" ref={AdminBox} />
+                                <label className="form-check-label" htmlFor="flexCheckChecked">
+                                    ‏‏‎ ‎Beheerder
+                                </label>
+                            </div>
+                            <div className="form-check " style={{ padding: 0 }}>
+                                <input type="checkbox" ref={TrainerBox} />
+                                <label className="form-check-label" htmlFor="flexCheckChecked">
+                                    ‏‏‎ ‎Trainer
+                                </label>
+                            </div>
+                            <div className="form-check " style={{ padding: 0 }}>
+                                <input type="checkbox" ref={MatchLeaderBox} />
+                                <label className="form-check-label" htmlFor="flexCheckChecked">
+                                    ‏‏‎ ‎Wedstrijdleider
+                                </label>
+                            </div>
                         </div>
 
                         <div className="modal-body">
                             <input
-                                type="submit"
+                                type="button"
                                 value="Save"
                                 className="w-100 btn agenda-buttons"
-                                onClick={this.handleSubmit}
+                                data-toggle="modal"
+                                data-target="#popup"
                             />
+                        </div>
+                        <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Rechten verlenen</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Weet je zeker dat je jouw wijzigingen wilt opslaan?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" onClick={this.handleSubmit}>Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
