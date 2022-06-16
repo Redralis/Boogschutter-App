@@ -8,9 +8,8 @@ import { useState, useEffect } from 'react';
 
 export function Aantekeningen() {
     const [textarea, setTextArea] = useState("");
-    let getLoggedMail = "test@gmail.com";
     function getAPIData() {
-        getNote(getLoggedMail).then(r => {
+        getNote(localStorage.getItem("mail")).then(r => {
             body = r.result.body
             setTextArea(body);
         })
@@ -32,9 +31,10 @@ export function Aantekeningen() {
 
 
     function setAPIData() {
-        let savedData = [
-            textarea, getLoggedMail
-        ]
+        var savedData = {
+            "textarea": textarea,
+            "getLoggedMail": localStorage.getItem("mail")
+        }
         saveNote(savedData).then(r => {
             body = r.result.body
             setTextArea(body);

@@ -19,5 +19,5 @@ export async function saveNote(data) {
         data: data
     })
 
-    return response.data;
+    return [];
 }
