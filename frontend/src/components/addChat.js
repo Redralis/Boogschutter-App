@@ -3,16 +3,16 @@ import addChatButton from "../images/addChat.png"
 import "../styles/Contacts.css"
 import Select from 'react-select'
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { db, auth } from '../firebase/firebase'
-import {useAuthState} from  'react-firebase-hooks/auth'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
-axios.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('token')}`}
+axios.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
 
 
 function AddChat() {
     const [user] = useAuthState(auth);
-
+    const checkboxRef = useRef();
     const [users, setUsers] = useState([])
     useEffect(() => {
         axios
@@ -58,97 +58,106 @@ function AddChat() {
 
 
     const [name, setName] = useState("")
-
-async function addChat(values){
-    if(values !== "" && name !== ""){
-    if (!values.some(item => item.split(',')[0] === auth.currentUser.email)) {
-        values.unshift(auth.currentUser.email);
-      }
-  
-      await db.collection('chats').add({
-        name: name,
-        users: [...values],
-      })
-    }
-}
-
-class ChatForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { value: ""};
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) { this.setState({ value: event}); }
-    handleSubmit(event) {
-        event.preventDefault();
-        if(this.state.value !== "" && name !== ""){
-        addChat(this.state.value.map(doc => doc.value))
-        this.setState({ value: ""})
-        setName("");
-        
+    async function addChat(values) {
+        if (values !== "" && name !== "") {
+            if (!values.some(item => item.split(',')[0] === auth.currentUser.email)) {
+                values.unshift(auth.currentUser.email);
+            }
+            
+            await db.collection('chats').add({
+                name: name,
+                users: [...values],
+                usersCanSpeak: checkboxRef.current.checked
+            })
         }
-    }    
-
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="modal-body">
-                
-                    <Select placeholder={<div>Zoek gebruikers</div>}  value={this.state.value} onChange={this.handleChange} closeMenuOnSelect={false} blurInputOnSelect={false} isMulti options={[
-                        {
-                            label: "Beheerders",
-                            options: groupAdmins()
-                        },
-                        {
-                            label: "Trainers",
-                            options: groupTrainers()
-                        },
-                        {
-                            label: "Leden",
-                            options: groupLeden()
-                        }
-                    ]} />
-
-                </div>
-                <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Annuleren</button>
-                    <button type="submit" value="Submit" className="btn addButton" >Toevoegen</button>
-                </div>
-            </form>
-
-
-
-        );
     }
-}
+
+    class ChatForm extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { value: "" };
+            this.handleChange = this.handleChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+
+        handleChange(event) { this.setState({ value: event }); }
+        handleSubmit(event) {
+            event.preventDefault();
+            if (this.state.value !== "" && name !== "") {
+                addChat(this.state.value.map(doc => doc.value))
+                this.setState({ value: "" })
+                setName("");
+            }
+        }
+
+        render() {
+            return (
+                <form onSubmit={this.handleSubmit}>
+                    <div className="modal-body">
+
+                        <Select placeholder={<div>Zoek gebruikers</div>} value={this.state.value} onChange={this.handleChange} closeMenuOnSelect={false} blurInputOnSelect={false} isMulti options={[
+                            {
+                                label: "Beheerders",
+                                options: groupAdmins()
+                            },
+                            {
+                                label: "Trainers",
+                                options: groupTrainers()
+                            },
+                            {
+                                label: "Leden",
+                                options: groupLeden()
+                            }
+                        ]} />
+
+
+                    </div>
+                    <div className='modal-body'>
+                        <div className="form-check ">
+                            <input type="checkbox" ref={checkboxRef} />
+                            <label className="form-check-label" htmlFor="flexCheckChecked">
+                                Leden kunnen berichten sturen
+                            </label>
+                        </div>
+                    </div>
+
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Annuleren</button>
+                        <button type="submit" value="Submit" className="btn addButton" >Toevoegen</button>
+                    </div>
+                </form>
+
+
+
+            );
+        }
+    }
 
     return (
         <>
-        {user ? <><div className='fixed-bottom'>
+            {user ? <><div className='fixed-bottom'>
                 <img className='addChat' alt='addingChat' src={addChatButton} data-toggle="modal" data-target="#exampleModalCenter"></img>
             </div>
 
 
-            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">Voeg een gesprek toe</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            
+                <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLongTitle">Voeg een gesprek toe</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+                            <div className="modal-body">
+                                <input maxLength="20" type="text" className="form-control" placeholder="Gesprek naam..." value={name} onChange={(event) => setName(event.target.value)} />
+                            </div>
+                            <ChatForm />
                         </div>
-                        <div className="modal-body">
-                        <input type="text" className="form-control"  placeholder="Gesprek naam..." value={name} onChange={(event) => setName(event.target.value)}/>
-                        </div>
-                        <ChatForm />
                     </div>
-                </div>
-            </div></> : <></>}
-            
+                </div></> : <></>}
+
         </>
     )
 }

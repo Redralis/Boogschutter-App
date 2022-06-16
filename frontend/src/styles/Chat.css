@@ -114,6 +114,10 @@
   width: 100%;
   
 }
+.blockedSearchBar{
+  width: 100%;
+  pointer-events: none; 
+}
 
 .sendButton{
   background-color: #0F6E0F;
