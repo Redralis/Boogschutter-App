@@ -40,7 +40,7 @@ const regUser = async (req: any, res: any, next: any) => {
         from: "boogschuttervereniging@gmail.com",
         to: email,
         subject: "U heeft een nieuw account bij de boogschuttersvereniging. yay!",
-        text: ` u kan inloggen met uw email, en gebruik het wachtwoord ${newPassword}. Wilt u een ander wachtwoord?
+        text: `U kan inloggen met uw email, en gebruik het wachtwoord ${newPassword}. Wilt u een ander wachtwoord?
          Klik op "wachtwoord vergeten" bij het inlogscherm`
       };
 
