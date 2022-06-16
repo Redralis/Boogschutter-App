@@ -1,21 +1,22 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { validationResult } from "express-validator";
 const prisma = new PrismaClient();
 
 export const validateValidEventBody = async (req: any, res: any, next: any) => {
   const errors = validationResult(req);
-  console.log(errors)
   if (!errors.isEmpty()) {
     const errorFieldParam = errors.array()[0].param;
     // store the first found error by the validator in a variable
     switch (errorFieldParam) {
-      case "eventId":
-        res.status(404).json({ status: 404, error: "Invalid event id, must be int" });
+      case "eventid":
+        res
+          .status(400)
+          .json({ status: 404, error: "Invalid event id, must be int" });
         break;
-      case "userEmail":
+      case "email":
         res.status(400).json({
           status: 400,
-          error: "isAssistant is optional but must be boolean if passed",
+          error: "email does not exist",
         });
         break;
     }
@@ -23,28 +24,71 @@ export const validateValidEventBody = async (req: any, res: any, next: any) => {
   } else {
     next();
   }
-}
+};
 
 export const participateEvent = async (req: any, res: any) => {
   try {
     const eventId = parseInt(req.params.eventid);
     const bodyData = req.body;
-
-    if (typeof bodyData.isAssistent === "undefined") {
-      bodyData.isAssistent = false;
+    try {
+      const registration = await prisma.eventParticipants.create({
+        data: {
+          eventId,
+          userEmail: bodyData.email,
+        },
+      });
+      res.send(registration);
+    } catch(err) {
+      res.status(400).json({
+        status: 400,
+        message: "Something went wrong",
+      });
     }
-    const registration = await prisma.eventParticipants.create({
-      data: {
-        eventId,
-        userEmail: bodyData.userEmail,
-        isAssistent: bodyData.isAssistent,
+  } catch (err) {
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (err.code === "P2002") {
+        res.status(409).json({
+          status: 409,
+          message: "already enrolled for this event",
+        });
+      }
+    } else {
+      console.log(err);
+      res.status(400).json({
+        status: 400,
+        message: err,
+      });
+    }
+  }
+};
+
+export const checkIfAlreadyEnrolled = async (req: any, res: any) => {
+  try {
+    const { email, eventid } = req.body;
+    const isEnrolled = await prisma.eventParticipants.count({
+      where: {
+        userEmail: email,
+        eventId: eventid,
       },
     });
-    res.send(registration)
+
+    if (isEnrolled) {
+      res.status(200).json({
+        status: 200,
+        isEnrolled: true,
+      });
+    } else {
+      res.status(200).json({
+        status: 200,
+        isEnrolled: false,
+      });
+    }
   } catch (err) {
+    console.log(err);
     res.status(404).json({
-      
-      message : "hallo"
-    })
+      status: 404,
+      message: "Something went wrong",
+    });
   }
 };

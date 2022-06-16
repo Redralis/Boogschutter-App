@@ -1,6 +1,6 @@
 import "../styles/Login.css";
 import Navbar from "../components/Navbar";
-import { getAllEvents } from '../ApiServices/Events'
+import { getAllEvents } from "../ApiServices/Events";
 
 import AuthChecker from "../components/AuthChecker";
 import React, { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ export function Agenda() {
 
   useEffect(() => {
     axios
-      .get("https://boogschutter-api.herokuapp.com/event")
+      .get("http://localhost:5000/event/")
       .then(function (response) {
         setEvents(response.data.result);
         setLoading(false);

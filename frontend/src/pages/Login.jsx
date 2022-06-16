@@ -37,13 +37,14 @@ function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const resp = await axios.post("https://boogschutter-api.herokuapp.com/login", {
+      const resp = await axios.post("http://localhost:5000/login", {
         email,
         password,
       });
       setCredentialError(200);
       firebaseSignIn(email, password);
       localStorage.setItem("token", resp.data.token);
+      localStorage.setItem("email", resp.data.email);
       navigate("/contacts", { replace: true });
     } catch (err) {
       if (err.request.status === 404) {

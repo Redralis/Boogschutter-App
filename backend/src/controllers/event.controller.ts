@@ -1,9 +1,28 @@
-import { eventParticipants, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import { User } from "@prisma/client";
-import { Event } from "@prisma/client";
-import bcrypt from "bcrypt";
 require("dotenv").config();
+
+const prismaQuery = {
+  select: {
+    eventId: true,
+    eventName: true,
+    datePicker: true,
+    maxParticipants: true,
+    description: true,
+    type: true,
+    eventParticipants: {
+      select: {
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
+    },
+    _count: true,
+  },
+};
 
 const getEventsDay = async (req: any, res: any) => {
   var date = new Date();
@@ -18,40 +37,21 @@ const getEventsDay = async (req: any, res: any) => {
   const jaar = date.getFullYear();
   const datumNu = dag + "-" + (maand + 1) + "-" + jaar;
 
-  var events: {
-    eventParticipants: eventParticipants[];
-    eventName: string;
-    date: Date;
-    description: string;
-    maxParticipants: number | null;
-  }[][] = [];
+  let events = [];
   try {
     const datelist = await prisma.event.findMany({
       select: {
-        date: true,
+        datePicker: true,
       },
     });
     for (var u = 0; u < datelist.length; u++) {
       let date = datelist[u];
-      let cDate = date.date;
+      let cDate = date.datePicker;
       let sDate = cDate.toLocaleString();
       let nDate = sDate.split(" ");
       if (nDate[0] == datumNu) {
         try {
-          const eventList = await prisma.event.findMany({
-            where: {
-              date: cDate,
-            },
-            select: {
-              eventId: true,
-              eventName: true,
-              date: true,
-              maxParticipants: true,
-              description: true,
-              type: true,
-              eventParticipants: true,
-            },
-          });
+          const eventList = await prisma.event.findMany(prismaQuery);
           events.push(eventList);
         } catch (error) {
           res.status(400).json({
@@ -76,17 +76,7 @@ const getEventsDay = async (req: any, res: any) => {
 
 const getAllEvents = async (req: any, res: any) => {
   try {
-    const allEvents = await prisma.event.findMany({
-      select: {
-        eventId: true,
-        eventName: true,
-        date: true,
-        maxParticipants: true,
-        description: true,
-        type: true,
-        eventParticipants: true,
-      },
-    });
+    const allEvents = await prisma.event.findMany(prismaQuery);
     res.status(200).json({
       status: 200,
       result: allEvents,
@@ -114,16 +104,9 @@ const getWeekEvents = async (req: any, res: any) => {
   var diff = 0;
   var maanddif = 0;
   var jdiff = 0;
-  const dayCheck = week.toDateString();
+  const dayCheck = week.getDay();
 
-  var eventsWeek: {
-    eventParticipants: eventParticipants[];
-    eventName: string;
-    date: Date;
-    description: string;
-    maxParticipants: number | null;
-  }[][] = [];
-
+  let eventsWeek = [];
   function schrikkelJaar() {
     var round = Number.isInteger(wjaar / 4);
     if (round == true) {
@@ -175,22 +158,22 @@ const getWeekEvents = async (req: any, res: any) => {
     }
   }
   function dayCorrecter() {
-    if (dayCheck.includes("Tue")) {
+    if (dayCheck == 1) {
       wdag -= 1;
     }
-    if (dayCheck.includes("Wed")) {
+    if (dayCheck == 2) {
       wdag -= 2;
     }
-    if (dayCheck.includes("Thu")) {
+    if (dayCheck == 3) {
       wdag -= 3;
     }
-    if (dayCheck.includes("Fri")) {
+    if (dayCheck == 4) {
       wdag -= 4;
     }
-    if (dayCheck.includes("Sat")) {
+    if (dayCheck == 5) {
       wdag -= 5;
     }
-    if (dayCheck.includes("Sun")) {
+    if (dayCheck == 6) {
       wdag -= 6;
     }
   }
@@ -204,34 +187,22 @@ const getWeekEvents = async (req: any, res: any) => {
     oddMonth();
     newYear();
     schrikkelJaar();
+    var ndatumNu = new Date(tdatumNu).getTime();
     try {
       const weeklist = await prisma.event.findMany({
         select: {
-          date: true,
+          datePicker: true,
         },
       });
       for (var u = 0; u < weeklist.length; u++) {
         let date = weeklist[u];
-        let cDate = date.date;
-        let sDate = cDate.toLocaleString();
+        let cDate = date.datePicker;
+        let zDate = new Date(cDate);
+        let sDate = zDate.toLocaleString();
         let nDate = sDate.split(" ");
-
         if (nDate[0] == tdatumNu) {
           try {
-            const eventList = await prisma.event.findMany({
-              where: {
-                date: cDate,
-              },
-              select: {
-                eventId: true,
-                eventName: true,
-                date: true,
-                maxParticipants: true,
-                description: true,
-                type: true,
-                eventParticipants: true,
-              },
-            });
+            const eventList = await prisma.event.findMany(prismaQuery);
             eventsWeek.push(eventList);
           } catch (error) {
             res.status(400).json({
@@ -261,4 +232,42 @@ const getWeekEvents = async (req: any, res: any) => {
   wjaar = week.getFullYear();
 };
 
-export { getEventsDay, getAllEvents, getWeekEvents };
+const addEvents = async (req: any, res: any) => {
+  const { eventName, date, tijd, description, maxParticipants, type } =
+    req.body;
+  const dateSplit = date.split("-");
+  const maand = (dateSplit[1] -= 1);
+  const tijdSplit = tijd.split(":");
+  const newDate = new Date(
+    dateSplit[2],
+    maand,
+    dateSplit[0],
+    tijdSplit[0],
+    tijdSplit[1],
+    0,
+    0
+  ).getTime();
+
+  try {
+    const addEvent = await prisma.event.create({
+      data: {
+        eventName: eventName,
+        datePicker: newDate,
+        description: description,
+        maxParticipants: maxParticipants,
+        type: type,
+      },
+    });
+    res.status(200).json({
+      status: 200,
+      result: "new event added",
+    });
+  } catch (error) {
+    res.status(401).json({
+      status: 401,
+      result: "Something went wrong",
+    });
+  }
+};
+
+export { getEventsDay, getAllEvents, getWeekEvents, addEvents };
