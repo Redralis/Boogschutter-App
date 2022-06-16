@@ -6,7 +6,7 @@ import { EmitFlags } from "typescript";
 const nodemailer = require("nodemailer");
 
 const regUser = async (req: any, res: any, next: any) => {
-  const { email, firstName, lastName, bondNumber, isAdmin, isTrainer, isMatchLeader, phoneNumber } = req.body;
+  const { email } = req.body;
   let newPassword = "";
 
   require("crypto").randomBytes(3, async function (err: any, buffer: { toString: (arg0: string) => any }) {
@@ -19,13 +19,11 @@ const regUser = async (req: any, res: any, next: any) => {
         data: {
           email: email,
           password: newPassword,
-          firstName: firstName,
-          lastName: lastName,
-          bondNumber: bondNumber,
-          isAdmin: isAdmin,
-          isTrainer: isTrainer,
-          isMatchLeader: isMatchLeader,
-          phoneNumber: phoneNumber
+          firstName: "Tijdelijke Voornaam",
+          lastName: "Tijdelijke achternaam",
+          isAdmin: false,
+          isTrainer: false,
+          isMatchLeader: false,
         }
       });
 

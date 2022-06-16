@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { db, auth } from '../firebase/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { editUser } from '../ApiServices/EditUser';
+import { regUser } from '../ApiServices/RegUser';
 
 axios.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
 
@@ -13,7 +14,11 @@ axios.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getIte
 function AddChat() {
     const [user] = useAuthState(auth);
     const [users, setUsers] = useState([])
-    const [email, setEmail] = useState([])
+    var userValue;
+
+    const getInputValue = (event) => {
+        userValue = event.target.value;
+    };
 
     const AdminBox = useRef()
     const TrainerBox = useRef()
@@ -40,7 +45,7 @@ function AddChat() {
     }
 
     function inviteUser(mail) {
-        editUser(mail, TrainerBox.current.checked, AdminBox.current.checked, MatchLeaderBox.current.checked).then(res => {
+        regUser(mail).then(res => {
         })
     }
 
@@ -97,7 +102,7 @@ function AddChat() {
 
         handleInvite(event) {
             event.preventDefault();
-            console.log("GHIHHIUBHJ UKJB JHB MN ")
+            regUser(userValue)
         }
 
         render() {
@@ -177,7 +182,7 @@ function AddChat() {
                             <h1 className="h4 mb-3 fw-normal" >Nieuwe gebruiker uitnodigen</h1>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email adres</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email invoeren" />
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email invoeren" onChange={getInputValue}/>
                                 <input
                                     type="button"
                                     value="Gebruiker uitnodigen"
