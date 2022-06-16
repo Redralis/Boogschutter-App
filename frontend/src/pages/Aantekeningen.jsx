@@ -20,7 +20,7 @@ export function Aantekeningen() {
         getAPIData();
     }, [])
 
-    // localStorage.getItem("mail")
+   
     let body;
 
     const updateTextArea = (event) => {
