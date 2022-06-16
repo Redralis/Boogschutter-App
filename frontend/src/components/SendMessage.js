@@ -6,7 +6,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { getCurrentChatId } from './Chats';
 
-function SendMessage({ scroll }) {
+function SendMessage() {
     const [msg, setMsg] = useState('')
 
     async function sendMessage(e) {
@@ -65,5 +65,4 @@ function SendMessage({ scroll }) {
 
     )
 }
-
 export default SendMessage

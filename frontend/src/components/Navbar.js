@@ -8,6 +8,7 @@ import * as BsIcons from 'react-icons/bs'
 import '../styles/Navbar.css'
 
 
+
 function Navbar() {
     const [sidebar, setSidebar] = useState(false)
     const showSidebar = () => setSidebar(!sidebar)
