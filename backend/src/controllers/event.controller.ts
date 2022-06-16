@@ -98,8 +98,13 @@ const getWeekEvents = async (req: any, res: any) => {
 
   const dateData = req.params.date;
   if (dateData != null) {
-    const data = dateData.split("/");
-    week = new Date(data[2], data[1] - 1, data[0]);
+    if (new Date().toLocaleString().includes("/")) {
+      const data = dateData.split("/");
+      week = new Date(data[2], data[1] - 1, data[0]);
+    } else {
+      const data = dateData.split("-");
+      week = new Date(data[2], data[1] - 1, data[0]);
+    }
   }
 
   var wdag = week.getDate();
@@ -185,7 +190,15 @@ const getWeekEvents = async (req: any, res: any) => {
   dayCorrecter();
   for (var i = 0; i < 7; i++) {
     var tdatumNu =
-      wdag + diff + "/" +'0'+ (wmaand + maanddif + 1) + "/" + (wjaar + jdiff);
+      wdag + diff + "-" + (wmaand + maanddif + 1) + "-" + (wjaar + jdiff);
+      if(new Date().toLocaleString().includes("/")){
+        if (wmaand<10) {
+          var tdatumNu =
+        wdag + diff + "/" +'0'+ (wmaand + maanddif + 1) + "/" + (wjaar + jdiff);
+        } else{     
+        var tdatumNu =
+        wdag + diff + "/" + (wmaand + maanddif + 1) + "/" + (wjaar + jdiff);}
+      }
     diff++;
     evenMonth();
     oddMonth();
@@ -205,7 +218,6 @@ const getWeekEvents = async (req: any, res: any) => {
         let sDate = zDate.toLocaleString();
         let nDate = sDate.split(", ");
         eventsWeek = [];
-        console.log(eventList)
         if (nDate[0] == tdatumNu) {
           try {
              eventList = await prisma.event.findMany(prismaQuery);
@@ -231,7 +243,6 @@ const getWeekEvents = async (req: any, res: any) => {
     result: eventList,
   });
   
-  console.log("a")
   diff = 0;
   maanddif = 0;
   jdiff = 0;
