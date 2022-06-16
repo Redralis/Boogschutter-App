@@ -238,8 +238,6 @@ const addEvents = async (req: any, res: any) => {
   const dateSplit = date.split("-");
   const maand = (dateSplit[1] -= 1);
   const tijdSplit = tijd.split(":");
-  console.log(tijdSplit[0]);
-  console.log(tijd);
   const newDate = new Date(
     dateSplit[2],
     maand,
@@ -249,11 +247,6 @@ const addEvents = async (req: any, res: any) => {
     0,
     0
   ).getTime();
-  // "date":"10-10-2022",
-  //  "tijd":"4:00",
-  // Returns
-  // 1665367200000
-  // Save this int in the database. Frontend can pull this object and convert it to a human readable form of Date.
 
   try {
     const addEvent = await prisma.event.create({
@@ -270,7 +263,6 @@ const addEvents = async (req: any, res: any) => {
       result: "new event added",
     });
   } catch (error) {
-    console.log(error);
     res.status(401).json({
       status: 401,
       result: "Something went wrong",
