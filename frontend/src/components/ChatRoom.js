@@ -2,29 +2,54 @@ import React, { useState, useEffect } from 'react'
 import { auth, db } from '../firebase/firebase'
 import { getCurrentChatId } from './Chats'
 import SendMessage from './SendMessage'
+import BlockedSendMessage from './BlockedSendMessage'
 import "../styles/Chat.css"
 import { useNavigate } from "react-router-dom";
+import { getUser } from '../ApiServices/GetUser';
 function ChatRoom() {
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    function getIsAdmin() {
+        getUser(localStorage.getItem('mail')).then(res => {
+            if(res.result.isAdmin || res.result.isTrainer || res.result.isMatchLeader){
+                setIsAdmin(true);
+            }else{
+                setIsAdmin(false);
+            }
+            
+        })
+    }
+    function handleScroll() {
+
+        window.scroll({
+            top: document.body.offsetHeight,
+            left: 0,
+            behavior: 'smooth',
+        });
+    }
     let navigate = useNavigate();
-    function loadMessages() {
+
+    const [messages, setMessages] = useState([])
+    const [currentChat, setCurrentChat] = useState([])
+    useEffect(() => {
+        getIsAdmin();
+
         db.collection('messages').where("chatId", "==", getCurrentChatId()).orderBy('sortBy').onSnapshot(snapshot => {
             setMessages(snapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             })))
+            handleScroll();
+
         })
-        
-
-
-    }
-
-    const [messages, setMessages] = useState([])
-    useEffect(() => {
-        if(getCurrentChatId() === ""){
-        let path = `/contacts`; 
-        navigate(path);
+        if (getCurrentChatId() === "") {
+            let path = `/contacts`;
+            navigate(path);
+        } else {
+            db.collection('chats').doc(getCurrentChatId()).get()
+                .then(snapshot => setCurrentChat(snapshot.data()))
         }
-        loadMessages();
+
     }, [navigate])
 
     return (
@@ -37,18 +62,18 @@ function ChatRoom() {
                         </div>
                         <div key={id} className={`row`}>
                             <div className={`msg  ${email === auth.currentUser.email ? 'sent' : 'received'}`}>
-                            <p className={'chatP col-12 '}>{text}</p>
+                                <p className={'chatP col-12 '}>{text}</p>
                             </div>
                             <div className='col-12 dateP' style={email === auth.currentUser.email ? { textAlign: 'right' } : { textAlign: 'left' }}>{createdAt}</div>
                         </div>
-                        
+
 
                     </div>
                 </div>
 
             ))}
+            {isAdmin ? <SendMessage /> : <>{currentChat.usersCanSpeak ? <SendMessage /> : <BlockedSendMessage/>}</>}
 
-            <SendMessage />
         </div>
     )
 }
