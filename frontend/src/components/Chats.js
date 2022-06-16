@@ -12,14 +12,15 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import AddChatNoAdmin from './addChatNoAdmin.js';
 import { getUser } from '../ApiServices/GetUser';
 import { BsFillPeopleFill } from "react-icons/bs";
+import LoadingSpinner from "./LoadingSpinner"
 var selectedChat = "";
 
 function getCurrentChatId() {
-    return selectedChat;
+  return selectedChat;
 }
 
 function setSelectedChat(chatId) {
-    selectedChat = chatId;
+  selectedChat = chatId;
 }
 
 function Chats() {
@@ -88,7 +89,7 @@ function Chats() {
                 {isAdmin ? <AddChat/> : <AddChatNoAdmin />}
             </div>
             
-            </> : <></>}
+            </> : <><LoadingSpinner></LoadingSpinner></>}
             
             
             
@@ -96,5 +97,5 @@ function Chats() {
     )
 }
 
-export { getCurrentChatId, setSelectedChat }
-export default Chats
+export { getCurrentChatId, setSelectedChat };
+export default Chats;

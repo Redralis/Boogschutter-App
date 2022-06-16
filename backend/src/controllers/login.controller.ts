@@ -73,6 +73,7 @@ const loginUser = async (req: any, res: any) => {
                   res.cookie("token", token,{httpOnly: true})
                   res.status(200).json({
                     status: 200,
+                    email,
                     token,
                   });
                 }

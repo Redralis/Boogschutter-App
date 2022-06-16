@@ -16,7 +16,7 @@ function AddChat() {
     const [users, setUsers] = useState([])
     useEffect(() => {
         axios
-            .get("http://localhost:3060/members")
+            .get("http://localhost:5000/members")
             .then(function (response) {
                 setUsers(response.data.result);
             })

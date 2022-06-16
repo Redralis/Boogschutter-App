@@ -16,7 +16,7 @@ function AddChat() {
     const [users, setUsers] = useState([])
     useEffect(() => {
         axios
-            .get("http://localhost:3060/members")
+            .get("http://localhost:5000/members")
             .then(function (response) {
                 setUsers(response.data.result);
             })
@@ -113,9 +113,9 @@ function AddChat() {
 
                     </div>
                     <div className='modal-body'>
-                        <div className="form-check ">
+                        <div className="form-check " style={{padding: 0}}>
                             <input type="checkbox" ref={checkboxRef} />
-                            <label className="form-check-label" htmlFor="flexCheckChecked">
+                            <label className="form-check-label"  htmlFor="flexCheckChecked">
                                 Leden kunnen berichten sturen
                             </label>
                         </div>
