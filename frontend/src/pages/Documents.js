@@ -17,7 +17,6 @@ export function Documents() {
             <div className="card-body">
             <BsIcons.BsFillCloudDownloadFill />
               <a href={pdf} edownload="Boogschutters-regelementen"> Download de regelementen van de boogschuttersbond</a>
-             
             </div>
           </div>
           <h1 className="h3 mb-3 fw-normal">Links </h1>
@@ -33,12 +32,11 @@ export function Documents() {
           <h1 className="h3 mb-3 fw-normal">Sociale media</h1>
           <div className="card">
             <div className="card-body">
-            <a href=""></a>
+            <BsIcons.BsFacebook />
+            <a href="https://www.facebook.com/HandboogverenigingAlliancedAmitie/">Bezoek ons op facebook</a>
             </div>
           </div>
         </div>
-
-
       </div>
     </>
   );
