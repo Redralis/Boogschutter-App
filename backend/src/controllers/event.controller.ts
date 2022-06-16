@@ -1,9 +1,28 @@
-import { eventParticipants, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import { User } from "@prisma/client";
-import { Event } from "@prisma/client";
-import bcrypt from "bcrypt";
 require("dotenv").config();
+
+const prismaQuery = {
+  select: {
+    eventId: true,
+    eventName: true,
+    datePicker: true,
+    maxParticipants: true,
+    description: true,
+    type: true,
+    eventParticipants: {
+      select: {
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
+    },
+    _count: true,
+  },
+};
 
 const getEventsDay = async (req: any, res: any) => {
   var date = new Date();
@@ -18,13 +37,7 @@ const getEventsDay = async (req: any, res: any) => {
   const jaar = date.getFullYear();
   const datumNu = dag + "-" + (maand + 1) + "-" + jaar;
 
-  var events: {
-    eventParticipants: eventParticipants[];
-    eventName: string;
-    datePicker: number;
-    description: string;
-    maxParticipants: number | null;
-  }[][] = [];
+  let events = [];
   try {
     const datelist = await prisma.event.findMany({
       select: {
@@ -38,20 +51,7 @@ const getEventsDay = async (req: any, res: any) => {
       let nDate = sDate.split(" ");
       if (nDate[0] == datumNu) {
         try {
-          const eventList = await prisma.event.findMany({
-            where: {
-              datePicker: cDate,
-            },
-            select: {
-              eventId: true,
-              eventName: true,
-              datePicker: true,
-              maxParticipants: true,
-              description: true,
-              type: true,
-              eventParticipants: true,
-            },
-          });
+          const eventList = await prisma.event.findMany(prismaQuery);
           events.push(eventList);
         } catch (error) {
           res.status(400).json({
@@ -76,17 +76,7 @@ const getEventsDay = async (req: any, res: any) => {
 
 const getAllEvents = async (req: any, res: any) => {
   try {
-    const allEvents = await prisma.event.findMany({
-      select: {
-        eventId: true,
-        eventName: true,
-        datePicker: true,
-        maxParticipants: true,
-        description: true,
-        type: true,
-        eventParticipants: true,
-      },
-    });
+    const allEvents = await prisma.event.findMany(prismaQuery);
     res.status(200).json({
       status: 200,
       result: allEvents,
@@ -116,14 +106,7 @@ const getWeekEvents = async (req: any, res: any) => {
   var jdiff = 0;
   const dayCheck = week.getDay();
 
-  var eventsWeek: {
-    eventParticipants: eventParticipants[];
-    eventName: string;
-    datePicker: number;
-    description: string;
-    maxParticipants: number | null;
-  }[][] = [];
-
+  let eventsWeek = [];
   function schrikkelJaar() {
     var round = Number.isInteger(wjaar / 4);
     if (round == true) {
@@ -219,20 +202,7 @@ const getWeekEvents = async (req: any, res: any) => {
         let nDate = sDate.split(" ");
         if (nDate[0] == tdatumNu) {
           try {
-            const eventList = await prisma.event.findMany({
-              where: {
-                datePicker: cDate,
-              },
-              select: {
-                eventId: true,
-                eventName: true,
-                datePicker: true,
-                maxParticipants: true,
-                description: true,
-                type: true,
-                eventParticipants: true,
-              },
-            });
+            const eventList = await prisma.event.findMany(prismaQuery);
             eventsWeek.push(eventList);
           } catch (error) {
             res.status(400).json({
