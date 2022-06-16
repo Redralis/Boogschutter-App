@@ -11,12 +11,12 @@ function ChatRoom() {
 
     function getIsAdmin() {
         getUser(localStorage.getItem('mail')).then(res => {
-            if(res.result.isAdmin || res.result.isTrainer || res.result.isMatchLeader){
+            if (res.result.isAdmin || res.result.isTrainer || res.result.isMatchLeader) {
                 setIsAdmin(true);
-            }else{
+            } else {
                 setIsAdmin(false);
             }
-            
+
         })
     }
     function handleScroll() {
@@ -54,11 +54,11 @@ function ChatRoom() {
 
     return (
         <div>
-            {messages.map(({ id, text, email, createdAt }) => (
+            {messages.map(({ id, text, email, createdAt, firstName, lastName }) => (
                 <div key={id} className="msgs">
                     <div className='container'>
                         <div className='row '>
-                            <p style={email === auth.currentUser.email ? { textAlign: 'right' } : { textAlign: 'left' }} className='col-12 emailP'>{email}</p>
+                            <p style={email === auth.currentUser.email ? { textAlign: 'right' } : { textAlign: 'left' }} className='col-12 emailP'>{firstName + " " + lastName}</p>
                         </div>
                         <div key={id} className={`row`}>
                             <div className={`msg  ${email === auth.currentUser.email ? 'sent' : 'received'}`}>
@@ -71,8 +71,9 @@ function ChatRoom() {
                     </div>
                 </div>
 
+
             ))}
-            {isAdmin ? <SendMessage /> : <>{currentChat.usersCanSpeak ? <SendMessage /> : <BlockedSendMessage/>}</>}
+            {isAdmin ? <SendMessage /> : <>{currentChat.usersCanSpeak ? <SendMessage /> : <BlockedSendMessage />}</>}
 
         </div>
     )

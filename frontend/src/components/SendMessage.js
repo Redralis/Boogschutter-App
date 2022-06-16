@@ -5,6 +5,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { getCurrentChatId } from './Chats';
+import { getUser } from '../ApiServices/GetUser';
 
 function SendMessage() {
     const [msg, setMsg] = useState('')
@@ -13,8 +14,9 @@ function SendMessage() {
         e.preventDefault()
         if (msg !== "") {
             const { email } = auth.currentUser
+            const userDetails = await getUser(email);
             let dateTime = new Date();
-            var currentDate = dateTime.toLocaleString('en-US', {
+            var currentDate = dateTime.toLocaleString('nl-nl', {
                 dateStyle: 'medium',
                 timeStyle: 'short',
                 hour12: false,
@@ -22,6 +24,8 @@ function SendMessage() {
             await db.collection('messages').add({
                 chatId: getCurrentChatId(),
                 text: msg,
+                firstName: userDetails.result.firstName,
+                lastName: userDetails.result.lastName,
                 email,
                 createdAt: currentDate,
                 sortBy: firebase.firestore.FieldValue.serverTimestamp()
@@ -49,8 +53,7 @@ function SendMessage() {
 
                     </div>
                     <div className='row'>
-                            {/* <input className='searchBar col-10' placeholder='Message...' type="text" value={msg} onChange={e => setMsg(e.target.value)} /> */}
-                            <input className='col-10 form-control searchBar center-block' type="text" name="message" placeholder="Type Message ..."  value={msg} onChange={e => setMsg(e.target.value)}></input>
+                            <input autoComplete="off" className='col-10 form-control searchBar center-block' type="text" name="message" placeholder="Type Message ..."  value={msg} onChange={e => setMsg(e.target.value)}></input>
                             <button type="submit" className="col-2 btn sendButton">Send</button>
 
                     </div>
