@@ -39,6 +39,11 @@ function AddChat() {
         })
     }
 
+    function inviteUser(mail) {
+        editUser(mail, TrainerBox.current.checked, AdminBox.current.checked, MatchLeaderBox.current.checked).then(res => {
+        })
+    }
+
     var trainers = [];
     var admins = [];
     var leden = [];
@@ -90,13 +95,19 @@ function AddChat() {
             refreshPage();
         }
 
+        handleInvite(event) {
+            event.preventDefault();
+            console.log("GHIHHIUBHJ UKJB JHB MN ")
+        }
+
         render() {
             return (
                 <div className="container">
                     <form onSubmit={this.handleSubmit}>
                         <div className="modal-body">
-
-                            <Select placeholder={<div>Zoek gebruikers</div>} value={this.state.value} onChange={this.handleChange} closeMenuOnSelect={true} blurInputOnSelect={false} options={[
+                            <h1 className="h4 mb-3 fw-normal" >Rechten verlenen</h1>
+                            <label for="gebruikerSelect">Selecteer een gebruiker</label>
+                            <Select className="gebruikerSelect" placeholder={<div>Zoek gebruikers</div>} value={this.state.value} onChange={this.handleChange} closeMenuOnSelect={true} blurInputOnSelect={false} options={[
                                 {
                                     label: "Beheerders",
                                     options: groupAdmins()
@@ -160,6 +171,43 @@ function AddChat() {
                                 </div>
                             </div>
                         </div>
+                        <br />
+                        <form onSubmit={this.handleInvite}>
+                        <div className="container">
+                            <h1 className="h4 mb-3 fw-normal" >Nieuwe gebruiker uitnodigen</h1>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email adres</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email invoeren" />
+                                <input
+                                    type="button"
+                                    value="Gebruiker uitnodigen"
+                                    className="w-100 btn agenda-buttons"
+                                    data-toggle="modal"
+                                    data-target="#popup-newuser"
+                                    style={{ marginTop: "20px" }}
+                                />
+                            </div>
+                        </div>
+                        <div class="modal fade" id="popup-newuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Gebruiker uitnodigen</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                       Weet je zeker dat je deze gebruiker wilt uitnodigen?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" onClick={this.handleInvite}>Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
                     </form>
                 </div>
             );
