@@ -5,7 +5,7 @@ import { memberListRouter } from "./routes/memberlist.routes";
 import { eventParticipateRouter } from "./routes/eventParticipate.routes";
 import { router } from "./routes/resetPassword.routes";
 import { eventRouter } from "./routes/event.routes";
-import { notesRouter} from "./routes/notes.routes"
+import { notesRouter } from "./routes/notes.routes";
 import { userRouter } from "./routes/user.routes";
 import cors from "cors";
 
@@ -13,7 +13,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 const port = 5000 || process.env.PORT;
-
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
