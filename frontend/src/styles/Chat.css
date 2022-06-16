@@ -132,4 +132,17 @@
   bottom: 0;
 }
 
+.infoButton{
+  width: 75px;
+  height: auto;
+  z-index: 20;
+  position: fixed;
+  right: 20px; 
+  top: 100px;
+}
+
+.BsFillInfoCircleFill{
+  width: 20%;
+}
+
  
