@@ -2,7 +2,6 @@
   "name": "project-1",
   "version": "0.1.0",
   "private": true,
-
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -16,6 +15,7 @@
     "react-dom": "^18.1.0",
     "react-firebase-hooks": "^5.0.3",
     "react-icons": "^4.4.0",
+    "react-onclickoutside": "^6.12.2",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",

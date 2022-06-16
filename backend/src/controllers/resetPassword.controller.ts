@@ -6,7 +6,7 @@ const saltRounds = 10;
 
 const resetPassword = async (req: any, res: any) => {
   console.log("entered resetPassword");
-  console.log(req.body.data, "body.data zzzzzz");
+  console.log(req.body.data, "body.data");
   const { token, email, password } = req.body.data;
   console.log(token, email, password);
 

@@ -19,6 +19,7 @@ model User {
   phoneNumber    String?
   events         eventParticipants[]
   forgotPassword forgotPassword[]
+  notes          notes[]
 }
 
 model eventParticipants {
@@ -44,4 +45,11 @@ model forgotPassword {
   ForgotPasswordUserEmail String
   token                   String @id @unique
   user                    User   @relation(fields: [ForgotPasswordUserEmail], references: [email])
+}
+
+model notes {
+    user                  User   @relation(fields: [notesMail], references: [email])
+    notesMail             String    @id
+    title                 String
+    body                  String
 }

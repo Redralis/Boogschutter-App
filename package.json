@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-edit-text": "^5.0.2",
+    "sweetalert2": "^11.4.17"
+  }
+}

@@ -10,6 +10,7 @@ import Agenda from './pages/Agenda';
 import Register from './pages/Register';
 import UpdatePassword from "./pages/UpdatePassword"
 import Login from "./pages/Login"
+import Aantekeningen from "./pages/Aantekeningen"
 import AdminPage from "./pages/AdminPage"
 
 
@@ -26,6 +27,7 @@ root.render(
     <Route path="Register" element={<Register/>} />
     <Route path="UpdatePassword" element={<UpdatePassword/>} />
     <Route path="Login" element={<Login/>}/>
+    <Route path="Aantekeningen" element={<Aantekeningen/>} />
     <Route path="AdminPage" element={<AdminPage/>}/>
   </Routes>
 </BrowserRouter>);
