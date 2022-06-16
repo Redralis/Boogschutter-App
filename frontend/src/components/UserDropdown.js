@@ -103,6 +103,7 @@ function AddChat() {
         handleInvite(event) {
             event.preventDefault();
             regUser(userValue)
+            refreshPage()
         }
 
         render() {

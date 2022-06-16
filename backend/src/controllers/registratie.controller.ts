@@ -36,9 +36,9 @@ const regUser = async (req: any, res: any, next: any) => {
           }
         });
       }else {
-        res.status(400).json({
+        return res.status(400).json({
           status: 400,
-          response: "Email already exist is this database."
+          response: "Email already exists is this database."
         })
       }
 
@@ -80,11 +80,11 @@ const regUser = async (req: any, res: any, next: any) => {
 
       res.status(200).json({
         status: 200,
-        newAccount: data
+        newAccount: "New account created"
       })
     } else {
       res.status(400).json({
-        response: "Be sure to have an email where we can send the data to... silly goose."
+        response: "Be sure to have an email where we can send the data to..."
       })
     }
       })
