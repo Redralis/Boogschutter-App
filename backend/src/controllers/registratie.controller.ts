@@ -57,7 +57,7 @@ const regUser = async (req: any, res: any, next: any) => {
       const mailOptions = {
         from: "boogschuttervereniging@gmail.com",
         to: email,
-        subject: "U heeft een nieuw account bij de boogschuttersvereniging. yay!",
+        subject: "U heeft een nieuw account bij de boogschuttersvereniging.",
         text: `U kan inloggen met uw email, en gebruik het wachtwoord ${newPassword}. Wilt u een ander wachtwoord?
          Klik op "wachtwoord vergeten" bij het inlogscherm`
       };
@@ -84,7 +84,7 @@ const regUser = async (req: any, res: any, next: any) => {
       })
     } else {
       res.status(400).json({
-        response: "Be sure to have an email where we can send the data to..."
+        response: "Be sure to have an email where we can send the data to"
       })
     }
       })
