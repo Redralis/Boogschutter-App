@@ -52,3 +52,16 @@
   padding-top: 0.4rem;
   padding-bottom: 0.4rem;
 }
+
+.addChat{
+  float: right;
+  width: 75px;
+  height: auto;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.addButton{
+  background-color: #0F6E0F;
+  color: white;
+}
