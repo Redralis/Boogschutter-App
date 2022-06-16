@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import EventPopup from "../components/EventPopup";
 
 function Event(props) {
-
-
   const event = props.event;
   const dateObject = new Date(event.datePicker);
   const convertedDate = dateObject.toLocaleString("nl-nl", {
@@ -16,7 +14,11 @@ function Event(props) {
 
   return (
     <>
-      <EventPopup id={event.eventId} event={event} date={convertedDate}></EventPopup>
+      <EventPopup
+        id={event.eventId}
+        event={event}
+        date={convertedDate}
+      ></EventPopup>
       <button
         onClick={showPopUpComponent}
         data-toggle="modal"
@@ -25,7 +27,7 @@ function Event(props) {
         <div className="card-body">
           <h3>{event.eventName}</h3>
           <p>{convertedDate}</p>
-         
+          <p>{event._count.eventParticipants + "/" + event.maxParticipants} aanmeldingen</p>
         </div>
       </button>
     </>

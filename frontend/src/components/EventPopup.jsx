@@ -25,21 +25,19 @@ function EventPopup(props) {
     isEnrolledFunc();
   }, []);
 
-    const participateEvent = async () => {
-      try {
-        console.log(event.eventId);
-        const resp = await axios.post(
-          `http://localhost:5000/participate/event/${event.eventId}`,
-          {
-            email,
-          }
-        );
-        console.log(resp);
-        isEnrolledFunc();
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const participateEvent = async () => {
+    try {
+      const resp = await axios.post(
+        `http://localhost:5000/participate/event/${event.eventId}`,
+        {
+          email,
+        }
+      );
+      isEnrolledFunc();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="modal fade" aria-hidden="true" id={id}>
@@ -59,13 +57,41 @@ function EventPopup(props) {
             </button>
           </div>
           <div className="modal-body">
+            <p>
+              <strong>Omschrijving</strong>
+            </p>
             <p>{event.description}</p>
             <p>
-              <strong>Tijd en datum </strong> {date}
+              <strong>Tijd en datum: </strong> {date}
             </p>
             <p>
-              <strong>Type evenement</strong> {event.type}
+              <strong>Type evenement:</strong> {event.type}
             </p>
+            <p>
+              <button
+                className="btn btn-primary"
+                type="button"
+                data-toggle="collapse"
+                data-target="#aanmeldingenDIv"
+                aria-expanded="false"
+                aria-controls="aanmeldingenDIv"
+              >
+                Aanmeldingen
+              </button>
+            </p>
+
+            <div id="aanmeldingenDIv" className="collapse">
+              <ul>
+                {event.eventParticipants.map((participant) => (
+                  <li key={participant.user.firstName}>
+                    {participant.user.firstName +
+                      " " +
+                      participant.user.lastName}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             {enrolled ? (
               <>
                 {" "}
@@ -81,7 +107,6 @@ function EventPopup(props) {
                   type="button"
                   className="btn btn-danger"
                   data-dismiss="modal"
-                  
                 >
                   Uitschrijven
                 </button>
