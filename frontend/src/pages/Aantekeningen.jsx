@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import AuthChecker from "../components/AuthChecker";
 import { getNote, saveNote } from "../ApiServices/Notes"
 import { useState, useEffect } from 'react';
+import Swal from 'sweetalert2'
+
 
 
 
@@ -36,10 +38,20 @@ export function Aantekeningen() {
             "getLoggedMail": localStorage.getItem("mail")
         }
         saveNote(savedData).then(r => {
-            body = r.result.body
+            
             setTextArea(body);
         })
+        
+        Swal.fire({
+            title: 'Opgeslagen',
+            icon: 'success',
+            confirmButtonText: 'Sluiten',
+            confirmButtonColor: '#0F6E0F',
+            
+          })
+        
     }
+    
 
 
 
