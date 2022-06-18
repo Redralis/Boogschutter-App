@@ -13,6 +13,7 @@ function AddAnnouncement() {
 
 
     const [msg, setMsg] = useState('')
+    const [poll, setPoll] = useState('')
     const Admins = useRef();
     const Trainers = useRef();
     const matchleaders = useRef();
@@ -31,6 +32,7 @@ function AddAnnouncement() {
             if (Admins.current.checked || Trainers.current.checked || matchleaders.current.checked) {
                 await db.collection('announcements').add({
                     text: msg,
+                    poll: poll,
                     firstName: userDetails.result.firstName,
                     lastName: userDetails.result.lastName,
                     email,
@@ -44,6 +46,7 @@ function AddAnnouncement() {
             }else{
                 await db.collection('announcements').add({
                     text: msg,
+                    poll: poll,
                     firstName: userDetails.result.firstName,
                     lastName: userDetails.result.lastName,
                     email,
@@ -78,7 +81,11 @@ function AddAnnouncement() {
                             <form>
                                 <div className="form-group">
                                     <label>Mededeling</label>
-                                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Type Mededeling..." value={msg} onChange={e => setMsg(e.target.value)}></textarea>
+                                    <textarea className="form-control" id="announcement" rows="3" placeholder="Type Mededeling..." value={msg} onChange={e => setMsg(e.target.value)}></textarea>
+                                </div>
+                                <div className="form-group">
+                                    <label>Link naar poll</label>
+                                    <input type="text" className="form-control" id="poll"placeholder="https://mijnpoll.com/12345..." value={poll} onChange={e => setPoll(e.target.value)}></input>
                                 </div>
                                 <div className="form-group">
                                     <label>Limiteer Doelgroep {("(leeg is alle leden)")}</label>

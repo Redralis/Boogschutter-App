@@ -61,7 +61,7 @@ function AnnouncementRoom() {
         }
         return arr
     }
-    function getAnnouncements(id, text, email, createdAt, firstName, lastName, forAdmin, forTrainer, forMatchLeader, forMember) {
+    function getAnnouncements(id, text, email, createdAt, firstName, lastName, forAdmin, forTrainer, forMatchLeader, forMember, poll) {
         var showFor = meantFor(forAdmin, forTrainer, forMatchLeader, forMember);
         if (showFor.length === 1) {
             if (isAdmin && showFor[0] === "Beheerders") {
@@ -81,6 +81,7 @@ function AnnouncementRoom() {
                                             <b className='col'>Bestemd voor beheerders</b>
                                             </div>
                                             <div className='textAnn'>{text}</div>
+                                            
                                             <div className='createdAtAnn'>{createdAt}</div>
                                     </div>
                                 </div>
@@ -159,6 +160,7 @@ function AnnouncementRoom() {
                                         </div>
                                         <div className='row'>
                                             <b className='col'>Bestemd voor alle leden</b></div> <div className='textAnn'>{text}</div>
+                                            {poll ? <div className='textAnn'>Klik <a href={poll} className="text-decoration-none">hier</a> om naar de poll te gaan.</div> : <></>}
                                             <div className='createdAtAnn'>{createdAt}</div>
                                     </div>
                                 </div>
@@ -229,8 +231,8 @@ function AnnouncementRoom() {
         <p className='h2 titleAnn text-center'>Mededelingen</p>
         <div className='containerAnn'>
             
-            {announcements.map(({ id, text, email, createdAt, firstName, lastName, forAdmin, forTrainer, forMatchLeader, forMember }) => (
-                getAnnouncements(id, text, email, createdAt, firstName, lastName, forAdmin, forTrainer, forMatchLeader, forMember)
+            {announcements.map(({ id, text, email, createdAt, firstName, lastName, forAdmin, forTrainer, forMatchLeader, forMember, poll }) => (
+                getAnnouncements(id, text, email, createdAt, firstName, lastName, forAdmin, forTrainer, forMatchLeader, forMember, poll)
             ))}
         </div>
         </>
