@@ -45,7 +45,7 @@ function Login() {
       firebaseSignIn(email, password);
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("email", resp.data.email);
-      navigate("/contacts", { replace: true });
+      navigate("/announcements", { replace: true });
     } catch (err) {
       if (err.request.status === 404) {
         setCredentialError(404);

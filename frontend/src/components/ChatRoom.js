@@ -34,8 +34,8 @@ function ChatRoom() {
     useEffect(() => {
         getIsAdmin();
 
-        db.collection('messages').where("chatId", "==", getCurrentChatId()).orderBy('sortBy').onSnapshot(snapshot => {
-            setMessages(snapshot.docs.map(doc => ({
+        db.collection('messages').where("chatId", "==", getCurrentChatId()).orderBy('sortBy','desc').limit(50).onSnapshot(snapshot => {
+            setMessages(snapshot.docs.slice(0).reverse().map(doc => ({
                 id: doc.id,
                 ...doc.data()
             })))

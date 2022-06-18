@@ -1,0 +1,89 @@
+.containerAnn{
+    padding-top: 20px !important;
+}
+.title h3{
+    font-size: 25px !important;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    line-height: 1.4em !important;
+    font-weight: 300;
+}
+
+/* alerts */
+
+.alert {
+    border: 0;
+    border-radius: 0;
+    padding: 20px 15px !important;
+    line-height: 20px;
+    font-weight: 300;
+    color: #fff;
+}
+
+
+.alert b {
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding-bottom: 3px;
+}
+
+.alert.alert-matchleader {
+    background-color: #005263;
+    color: #fff;
+    font-weight: bolder;
+
+}
+.alert.alert-admin {
+    background-color:#2F4858;
+    color: #fff;
+    font-weight: bolder;
+
+}
+.alert.alert-trainer {
+    background-color: #005B63;
+    color: #fff;
+    font-weight: bolder;
+
+}
+.alert.alert-allmembers {
+    background-color: #006455;
+    color: #fff;
+    font-weight: bolder;
+
+}
+.alert.alert-other {
+    background-color: #006A3A;
+    color: #fff;
+    font-weight: bolder;
+
+}
+.textAnn {
+    font-weight: 500;
+    font-size: 12px
+  
+}
+
+.createdAtAnn {
+    font-weight: 500;
+    font-size: 12px;
+    float: right;
+}
+
+.announcementIcon{
+    display: flex;  /* make the row a flex container */
+    align-items: center; 
+}
+
+.addAnnouncement{
+    float: right;
+    width: 75px;
+    height: auto;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .addButton{
+    background-color: #0F6E0F;
+    color: white;
+  }
