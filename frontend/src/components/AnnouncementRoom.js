@@ -94,7 +94,7 @@ function AnnouncementRoom() {
             }
             if (isTrainer && showFor[0] === "Trainers") {
                 return (
-                    <div key={id} className="alert alert-matchleader">
+                    <div key={id} className="alert alert-trainer">
                         <div className='container'>
                             <div className='row announcementIcon'>
                                 <div className='col-1 '>
@@ -120,7 +120,7 @@ function AnnouncementRoom() {
             }
             if (isMatchLeader && showFor[0] === "Wedstrijd Leiders") {
                 return (
-                    <div key={id} className="alert alert-trainer">
+                    <div key={id} className="alert alert-matchleader">
                         <div className='container'>
                             <div className='row announcementIcon'>
                                 <div className='col-1 '>
@@ -225,11 +225,15 @@ function AnnouncementRoom() {
         })
     }, [])
     return (
+        <>
+        <p className='h2 titleAnn text-center'>Mededelingen</p>
         <div className='containerAnn'>
+            
             {announcements.map(({ id, text, email, createdAt, firstName, lastName, forAdmin, forTrainer, forMatchLeader, forMember }) => (
                 getAnnouncements(id, text, email, createdAt, firstName, lastName, forAdmin, forTrainer, forMatchLeader, forMember)
             ))}
         </div>
+        </>
     )
 }
 
