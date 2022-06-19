@@ -81,6 +81,7 @@ function AnnouncementRoom() {
                                             <b className='col'>Bestemd voor beheerders</b>
                                             </div>
                                             <div className='textAnn'>{text}</div>
+                                            {poll ? <div className='textAnn'>Klik <a href={poll} className="text-decoration-none">hier</a> om naar de poll te gaan.</div> : <></>}
                                             
                                             <div className='createdAtAnn'>{createdAt}</div>
                                     </div>
@@ -108,6 +109,7 @@ function AnnouncementRoom() {
                                         </div>
                                         <div className='row'>
                                             <b className='col'>Bestemd voor trainers</b></div> <div className='textAnn'>{text}</div>
+                                            {poll ? <div className='textAnn'>Klik <a href={poll} className="text-decoration-none">hier</a> om naar de poll te gaan.</div> : <></>}
                                             <div className='createdAtAnn'>{createdAt}</div>
                                     </div>
                                 </div>
@@ -134,6 +136,7 @@ function AnnouncementRoom() {
                                         </div>
                                         <div className='row'>
                                             <b className='col'>Bestemd voor wedstrijd leiders</b></div> <div className='textAnn'>{text}</div>
+                                            {poll ? <div className='textAnn'>Klik <a href={poll} className="text-decoration-none">hier</a> om naar de poll te gaan.</div> : <></>}
                                             <div className='createdAtAnn'>{createdAt}</div>
                                     </div>
                                 </div>
@@ -196,6 +199,7 @@ function AnnouncementRoom() {
                                                     return (item + ".")
                                                 }
                                             })}</b></div> <div className='textAnn'>{text}</div>
+                                            {poll ? <div className='textAnn'>Klik <a href={poll} className="text-decoration-none">hier</a> om naar de poll te gaan.</div> : <></>}
                                             <div className='createdAtAnn'>{createdAt}</div>
                                     </div>
                                 </div>
