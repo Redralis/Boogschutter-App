@@ -94,7 +94,6 @@ const getWeekEvents = async (req: any, res: any) => {
   let currentDate: any;
 
   if (typeof req.query.date !== "undefined") {
-    console.log("daar")
     const timestamp = parseInt(req.query.date);
     currentDate = new Date(timestamp);
   } else {
