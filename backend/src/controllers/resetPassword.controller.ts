@@ -12,14 +12,19 @@ const resetPassword = async (req: any, res: any) => {
 
   if (password !== undefined && email !== undefined && token !== undefined) {
     console.log("entered query");
-    const user =
-      await prisma.$queryRaw`SELECT * FROM ForgotPassword WHERE ForgotPasswordUserEmail = ${email} AND token = ${token}`;
-    console.log(user);
+    const user = await prisma.forgotPassword.findMany({
+      where: {
+        ForgotPasswordUserEmail: email,
+        token: token
+      },
+    })
+    console.log(user, "Did i find the correct user with token?");
 
-    if (user === undefined) {
+    if (user.length === 0) {
       res.status(200).json({
         status: 400,
         password: "Can not find this email in the database.",
+        result: user
       });
     } else {
       bcrypt.hash(password, saltRounds, async function (err, hash) {
@@ -36,9 +41,12 @@ const resetPassword = async (req: any, res: any) => {
             password: hash,
           },
         });
+
+
+
         res.status(200).json({
           status: 200,
-          password: user,
+          result: user,
         });
       });
     }
