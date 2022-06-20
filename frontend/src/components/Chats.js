@@ -13,7 +13,7 @@ import AddChatNoAdmin from './addChatNoAdmin.js';
 import { getUser } from '../ApiServices/GetUser';
 import { BsFillPeopleFill } from "react-icons/bs";
 import LoadingSpinner from "./LoadingSpinner"
-var selectedChat = "";
+let selectedChat = "";
 
 function getCurrentChatId() {
   return selectedChat;

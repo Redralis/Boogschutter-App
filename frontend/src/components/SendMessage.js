@@ -16,7 +16,7 @@ function SendMessage() {
             const { email } = auth.currentUser
             const userDetails = await getUser(email);
             let dateTime = new Date();
-            var currentDate = dateTime.toLocaleString('nl-nl', {
+            let currentDate = dateTime.toLocaleString('nl-nl', {
                 dateStyle: 'medium',
                 timeStyle: 'short',
                 hour12: false,

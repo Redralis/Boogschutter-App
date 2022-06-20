@@ -25,9 +25,9 @@ function AddChat() {
             });
     }, []);
 
-    var trainers = [];
-    var admins = [];
-    var leden = [];
+    let trainers = [];
+    let admins = [];
+    let leden = [];
     function groupAdmins() {
         admins = [];
         users.forEach((user) => {

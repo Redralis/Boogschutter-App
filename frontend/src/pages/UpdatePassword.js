@@ -36,7 +36,7 @@ export default function ResetPassword() {
         // Clear the localStorage
         console.log(email, 'email second page');
 
-        var data = {
+        let data = {
             "token": token,
             "email": email,
             "password": firstPassword

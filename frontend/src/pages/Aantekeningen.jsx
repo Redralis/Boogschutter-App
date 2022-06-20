@@ -33,7 +33,7 @@ export function Aantekeningen() {
 
 
     function setAPIData() {
-        var savedData = {
+        let savedData = {
             "textarea": textarea,
             "getLoggedMail": localStorage.getItem("mail")
         }

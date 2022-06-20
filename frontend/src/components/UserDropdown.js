@@ -14,7 +14,7 @@ axios.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getIte
 function AddChat() {
     const [user] = useAuthState(auth);
     const [users, setUsers] = useState([])
-    var userValue;
+    let userValue;
 
     const getInputValue = (event) => {
         userValue = event.target.value;
@@ -49,9 +49,9 @@ function AddChat() {
         })
     }
 
-    var trainers = [];
-    var admins = [];
-    var leden = [];
+    let trainers = [];
+    let admins = [];
+    let leden = [];
     function groupAdmins() {
         admins = [];
         users.forEach((user) => {

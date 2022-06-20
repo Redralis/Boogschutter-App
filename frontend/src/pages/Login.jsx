@@ -18,8 +18,8 @@ function Login() {
   function firebaseSignIn() {
     auth.signOut();
     auth.signInWithEmailAndPassword(email, password).catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      let errorCode = error.code;
+      let errorMessage = error.message;
       console.log(errorCode, errorMessage);
     });
   }
