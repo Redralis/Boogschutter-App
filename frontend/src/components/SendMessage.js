@@ -53,7 +53,7 @@ function SendMessage() {
 
                     </div>
                     <div className='row'>
-                            <input autoComplete="off" className='col-10 form-control searchBar center-block' type="text" name="message" placeholder="Type Message ..."  value={msg} onChange={e => setMsg(e.target.value)}></input>
+                            <input autoComplete="off" className='col-10 form-control searchBar center-block' type="text" name="message" placeholder="Type Bericht..."  value={msg} onChange={e => setMsg(e.target.value)}></input>
                             <button type="submit" className="col-2 btn sendButton">Send</button>
 
                     </div>

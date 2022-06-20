@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Chat from "./pages/Chat";
+import Announcements from "./pages/Announcements"
 import Contacts from "./pages/Contacts"
 import ResetPassword from "./pages/ResetPassword"
 import Documents from './pages/Documents';
@@ -19,6 +20,7 @@ root.render(
 <BrowserRouter>
   <Routes>
     <Route path="/" element={<App />} />
+    <Route path="Announcements" element={<Announcements />} />
     <Route path="Contacts" element={<Contacts />} />
     <Route path="Contacts/Chat" element={<Chat />} />
     <Route path="Documents" element={<Documents />} />

@@ -3,6 +3,12 @@ import * as BsIcons from 'react-icons/bs'
 
 export const SidebarData = [
     {
+        title: 'Mededelingen',
+        path: '/announcements',
+        icon: <BsIcons.BsFillMegaphoneFill />,
+        cName: 'nav-text'
+    },
+    {
         title: 'Contacten',
         path: '/contacts',
         icon: <BsIcons.BsFillChatLeftTextFill />,
