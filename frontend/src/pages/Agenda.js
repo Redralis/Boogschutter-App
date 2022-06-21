@@ -1,6 +1,6 @@
 import "../styles/Login.css";
 import Navbar from "../components/Navbar";
-
+import { getUser } from "../ApiServices/GetUser";
 import AuthChecker from "../components/AuthChecker";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -12,6 +12,40 @@ export function Agenda() {
   const [loading, setLoading] = useState(true);
   const [timestamp, setTimestamp] = useState(0);
   const [datePickerValue, setDatePickerValue] = useState(new Date());
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const [eventName, setEventName] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [description, setDescription] = useState("");
+  const [participants, setParticipants] = useState("");
+  const [type, setType] = useState("");
+
+  function onEventNameChange(e) {
+    setEventName(e.target.value);
+  }
+
+  function onDateChange(e) {
+    setDate(e.target.value);
+  }
+
+  function onTimeChange(e) {
+    setTime(e.target.value);
+  }
+
+  function onDescriptionChange(e) {
+    setDescription(e.target.value);
+  }
+
+  function onMaxParticipantChange(e) {
+    setParticipants(e.target.value);
+  }
+
+  function onEventTypeChange(e) {
+    setType(e.target.value);
+  }
+  
+
 
   useEffect(() => {
     axios
@@ -24,6 +58,7 @@ export function Agenda() {
       .catch(function (error) {
         console.log(error);
       });
+    getIsAdmin();
   }, []);
 
   const getPreviousWeek = () => {
@@ -84,8 +119,36 @@ export function Agenda() {
       .then(function (response) {
         setEvents(response.data.result);
         setLoading(false);
-        setTimestamp(datePickerValue.getTime());
+        // setTimestamp(datePickerValue.getTime());
         // setDatePickerValue(datePickerValue.toISOString().split("T", 1)[0]);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  function getIsAdmin() {
+    getUser(localStorage.getItem("mail")).then((res) => {
+      setIsAdmin(res.result.isAdmin);
+    });
+  }
+
+  const submitEvent = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    axios
+      .post("http://localhost:5000/event/", {
+        eventName,
+        date,
+        time,
+        tijd: time,
+        description,
+        maxParticipants: participants,
+        type,
+      })
+      .then(function (response) {
+        setLoading(false)
+        window.location.reload(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -98,6 +161,125 @@ export function Agenda() {
       <Navbar />
       <div className="loginScreen">
         <div className="container ">
+          {isAdmin && (
+            <div className="row  mb-3">
+              <button
+                type="button"
+                className="agenda-buttons"
+                data-toggle="modal"
+                data-target="#addEventModal"
+              >
+                Evenement toevoegen
+              </button>
+            </div>
+          )}
+
+          <div
+            className="modal fade"
+            id="addEventModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">
+                    Voeg een evenement toe
+                  </h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form>
+                  <div className="modal-body">
+                    <div className="form-group">
+                      <label htmlFor="eventName">Naam evenement</label>
+                      <input
+                        onChange={onEventNameChange}
+                        type="text"
+                        className="form-control"
+                        name="eventName"
+                        id=""
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="date">Datum</label>
+                      <input
+                        onChange={onDateChange}
+                        type="date"
+                        className="form-control"
+                        name="date"
+                        id=""
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="time">Tijd</label>
+                      <input
+                        onChange={onTimeChange}
+                        type="time"
+                        className="form-control"
+                        name="time"
+                        id=""
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="description">Omschrijving</label>
+                      <textarea
+                        onChange={onDescriptionChange}
+                        className="form-control"
+                        name="description"
+                        id=""
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="participants">Aantal participanten</label>
+                      <input
+                        onChange={onMaxParticipantChange}
+                        type="number"
+                        className="form-control"
+                        name="participants"
+                        id=""
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="type">Type evenement</label>
+                      <input
+                        onChange={onEventTypeChange}
+                        type="text"
+                        className="form-control"
+                        name="type"
+                        id=""
+                      />
+                    </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Sluiten
+                    </button>
+                    <button
+                      type="button"
+                      onClick={submitEvent}
+                      className="btn btn-primary"
+                    >
+                      Opslaan
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
           <div className="col-xs-4 row justify-content-between">
             <button
               type="button"
