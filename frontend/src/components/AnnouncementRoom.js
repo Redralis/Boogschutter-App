@@ -1,11 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { auth, db } from '../firebase/firebase'
-import { getCurrentChatId } from './Chats'
-import SendMessage from './SendMessage'
-import BlockedSendMessage from './BlockedSendMessage'
+import { db } from '../firebase/firebase'
 import "../styles/Chat.css"
-import { useNavigate } from "react-router-dom";
 import { getUser } from '../ApiServices/GetUser';
 import "../styles/announcement.css"
 import * as BsIcons from 'react-icons/bs'
