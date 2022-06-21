@@ -171,8 +171,8 @@ function AddChat() {
                                         Weet je zeker dat je jouw wijzigingen wilt opslaan?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onClick={this.handleSubmit}>Save changes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                                        <button type="button" class="btn btn-primary" onClick={this.handleSubmit}>Opslaan</button>
                                     </div>
                                 </div>
                             </div>
@@ -207,8 +207,8 @@ function AddChat() {
                                        Weet je zeker dat je deze gebruiker wilt uitnodigen?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onClick={this.handleInvite}>Save changes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                                        <button type="button" class="btn btn-primary" onClick={this.handleInvite}>Opslaan</button>
                                     </div>
                                 </div>
                             </div>
