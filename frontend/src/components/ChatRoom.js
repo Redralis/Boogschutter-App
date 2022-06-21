@@ -10,7 +10,7 @@ function ChatRoom() {
     const [isAdmin, setIsAdmin] = useState(false);
 
     function getIsAdmin() {
-        getUser(localStorage.getItem('mail')).then(res => {
+        getUser(localStorage.getItem('email')).then(res => {
             if (res.result.isAdmin || res.result.isTrainer || res.result.isMatchLeader) {
                 setIsAdmin(true);
             } else {

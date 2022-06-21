@@ -11,7 +11,8 @@ import Swal from 'sweetalert2'
 export function Aantekeningen() {
     const [textarea, setTextArea] = useState("");
     function getAPIData() {
-        getNote(localStorage.getItem("mail")).then(r => {
+        getNote(localStorage.getItem("email")).then(r => {
+            console.log(body)
             body = r.result.body
             setTextArea(body);
         })
@@ -35,7 +36,7 @@ export function Aantekeningen() {
     function setAPIData() {
         var savedData = {
             "textarea": textarea,
-            "getLoggedMail": localStorage.getItem("mail")
+            "getLoggedMail": localStorage.getItem("email")
         }
         saveNote(savedData).then(r => {
             

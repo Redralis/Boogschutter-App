@@ -29,7 +29,7 @@ function Chats() {
     const [isAdmin, setIsAdmin] = useState(false);
 
     function getIsAdmin() {
-        getUser(localStorage.getItem('mail')).then(res => {
+        getUser(localStorage.getItem('email')).then(res => {
             setIsAdmin(res.result.isAdmin);
         })
     }
