@@ -48,7 +48,7 @@ function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const resp = await axios.post("http://localhost:3060/login", {
+      const resp = await axios.post("http://localhost:5000/login", {
         email,
         password,
       });
