@@ -143,7 +143,7 @@ const getWeekEvents = async (req: any, res: any) => {
     res.status(200).json({
       status: 200,
       result: eventList,
-      timestamp: currentDateTimestamp
+      timestamp: currentDateTimestamp,
     });
   } catch (err) {
     res.status(400).json({
@@ -154,8 +154,8 @@ const getWeekEvents = async (req: any, res: any) => {
 };
 
 const addEvents = async (req: any, res: any) => {
-  const { eventName, date, tijd, description, maxParticipants, type } =
-    req.body;
+  const { eventName, date, tijd, description, type } = req.body;
+  const maxParticipants = parseInt(req.body.maxParticipants);
   const dateSplit = date.split("-");
   const maand = (dateSplit[1] -= 1);
   const tijdSplit = tijd.split(":");
@@ -184,8 +184,9 @@ const addEvents = async (req: any, res: any) => {
       result: "new event added",
     });
   } catch (error) {
-    res.status(401).json({
-      status: 401,
+    console.log(error);
+    res.status(400).json({
+      status: 400,
       result: "Something went wrong",
     });
   }

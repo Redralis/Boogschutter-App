@@ -6,6 +6,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Event from "../components/Event";
 import LoadingSpinner from "../components/LoadingSpinner";
+const config = {
+  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+};
 
 export function Agenda() {
   const [events, setEvents] = useState([]);
@@ -79,7 +82,7 @@ export function Agenda() {
         setEvents(response.data.result);
         setLoading(false);
         setTimestamp(date);
-        setDatePickerValue();
+        // setDatePickerValue();
       })
       .catch(function (error) {
         console.log(error);
@@ -145,6 +148,7 @@ export function Agenda() {
         description,
         maxParticipants: participants,
         type,
+        config
       })
       .then(function (response) {
         setLoading(false)
