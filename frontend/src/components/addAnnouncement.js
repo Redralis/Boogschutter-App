@@ -81,11 +81,11 @@ function AddAnnouncement() {
                             <form>
                                 <div className="form-group">
                                     <label>Mededeling</label>
-                                    <textarea className="form-control" id="announcement" rows="3" placeholder="Type Mededeling..." value={msg} onChange={e => setMsg(e.target.value)}></textarea>
+                                    <textarea autoComplete="off" className="form-control" id="announcement" rows="3" placeholder="Type Mededeling..." value={msg} onChange={e => setMsg(e.target.value)}></textarea>
                                 </div>
                                 <div className="form-group">
                                     <label>Link naar poll</label>
-                                    <input type="text" className="form-control" id="poll"placeholder="https://mijnpoll.com/12345..." value={poll} onChange={e => setPoll(e.target.value)}></input>
+                                    <input autoComplete="off" type="text" className="form-control" id="poll"placeholder="https://mijnpoll.com/12345..." value={poll} onChange={e => setPoll(e.target.value)}></input>
                                 </div>
                                 <div className="form-group">
                                     <label>Limiteer Doelgroep {("(leeg is alle leden)")}</label>
