@@ -176,8 +176,8 @@ function AnnouncementRoom() {
                 if ((showFor.includes("Beheerders") && isAdmin) || (showFor.includes("Trainers") && isTrainer) || (showFor.includes("Wedstrijd Leiders") && isMatchLeader)) {
                     return (<div key={id} className="alert alert-other ">
                         <div className='container '>
-                            <div className='row'>
-                                <div className='col-1 announcementIcon'>
+                            <div className='row announcementIcon'>
+                                <div className='col-1 '>
                                     <BsIcons.BsFillMegaphoneFill style={{color: "orange"}} />
                                 </div>
                                 <div className='col-11 p-0'>
