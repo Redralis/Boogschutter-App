@@ -58,6 +58,7 @@ function Navbar() {
                 <Link to="#" className='menu-bars'>
                     <FaIcons.FaBars onClick={showSidebar} />
                 </Link>
+                <text className={"title"}>Boogschutter Vereniging</text>
                 {getIsAdmin()}
                 {isAdmin && <Link to="/adminpage"><BsIcons.BsFillShieldLockFill className="menu-bars" /></Link>}
             </div>
