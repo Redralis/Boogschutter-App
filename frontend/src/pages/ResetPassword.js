@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import logo from '../images/Logo.png'
 import '../styles/ResetPassword.css'
-import { queryToUpdatePassword, sendEmailToResetPassword } from '../ApiServices/ResetPassword'
+import { sendEmailToResetPassword } from '../ApiServices/ResetPassword'
 
 export default function ResetPassword() {
     let userValue;
@@ -27,12 +27,12 @@ export default function ResetPassword() {
         <>
             <div className='resetPasswordScreen'>
                 <div className='container '>
-                    <main class="form-signin">
+                    <main className="form-signin">
                         <form>
-                            <img class="mb-4" src={logo} alt="" width="72" height="57"></img>
-                            <h1 class="h3 mb-3 fw-normal">Vraag resetcode aan</h1>
-                            <div class="form-floating">
-                                <label for="floatingInput">Email address</label>
+                            <img className="mb-4" src={logo} alt="" width="72" height="57"></img>
+                            <h1 className="h3 mb-3 fw-normal">Vraag resetcode aan</h1>
+                            <div className="form-floating">
+                                <label htmlFor="floatingInput">Email address</label>
                                 <input
                                     type="email"
                                     className="form-control"

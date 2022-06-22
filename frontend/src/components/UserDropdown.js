@@ -3,7 +3,7 @@ import "../styles/Contacts.css"
 import Select from 'react-select'
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { db, auth } from '../firebase/firebase'
+import { auth } from '../firebase/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { editUser } from '../ApiServices/EditUser';
 import { regUser } from '../ApiServices/RegUser';
@@ -158,7 +158,7 @@ function AddChat() {
                                 data-target="#popup"
                             />
                         </div>
-                        <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="popup" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -194,7 +194,7 @@ function AddChat() {
                                 />
                             </div>
                         </div>
-                        <div class="modal fade" id="popup-newuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="popup-newuser" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
