@@ -2,11 +2,8 @@
 import React from 'react'
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth, db } from '../firebase/firebase.js'
 function SendMessage() {
     
-    const [user] = useAuthState(auth);
     return (
 
         <div>

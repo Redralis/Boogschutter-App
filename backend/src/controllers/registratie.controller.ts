@@ -52,15 +52,6 @@ const regUser = async (req: any, res: any, next: any) => {
                             body: "Empty"
                         },
                     })
-                    // Firebase creating account
-                    console.log("testing firebase acc");
-                    auth.createUserWithEmailAndPassword(email, hash)
-                        .catch((error: { code: any; message: any; }) => {
-                            const errorCode = error.code;
-                            const errorMessage = error.message;
-                            console.log(errorCode, errorMessage)
-                            console.log(email, hash)
-                        });
 
                 });
 

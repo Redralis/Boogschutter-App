@@ -5,10 +5,6 @@ import { Link } from 'react-router-dom'
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import AddChat from './addChat'
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth'
 import AddChatNoAdmin from './addChatNoAdmin.js';
 import { getUser } from '../ApiServices/GetUser';
 import { BsFillPeopleFill } from "react-icons/bs";
@@ -24,36 +20,27 @@ function setSelectedChat(chatId) {
 }
 
 function Chats() {
-    const [user] = useAuthState(auth);
+    const user = auth.currentUser;
     const [chats, setChats] = useState([])
     const [isAdmin, setIsAdmin] = useState(false);
-
-    function getIsAdmin() {
+    async function getIsAdmin() {
         getUser(localStorage.getItem('email')).then(res => {
             setIsAdmin(res.result.isAdmin);
+            db.collection('chats').where("users", "array-contains", res.result.email).onSnapshot(snapshot => {
+                setChats(snapshot.docs.map(doc => {
+
+                    return({
+                        id: doc.id,
+                        ...doc.data(),
+
+                    })
+                }))
+            
+            })
         })
     }
     useEffect(() => {
         getIsAdmin()
-        firebase.auth().onAuthStateChanged(firebaseUser => {
-            if (firebaseUser) {
-                db.collection('chats').where("users", "array-contains", firebaseUser.email).onSnapshot(snapshot => {
-                    setChats(snapshot.docs.map(doc => {
-
-                        return({
-                            id: doc.id,
-                            ...doc.data(),
-
-                        })
-                    }))
-                
-                })
-
-            }
-        });
-
-
-
     }, [])
     
 

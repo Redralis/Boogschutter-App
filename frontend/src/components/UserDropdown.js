@@ -7,13 +7,14 @@ import { auth } from '../firebase/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { editUser } from '../ApiServices/EditUser';
 import { regUser } from '../ApiServices/RegUser';
-
+import { getUser } from '../ApiServices/GetUser';
 axios.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
 
 
 function AddChat() {
     const [user] = useAuthState(auth);
     const [users, setUsers] = useState([])
+    const [userEmail, setUserEmail] = useState("");
     let userValue;
 
     const getInputValue = (event) => {
@@ -25,6 +26,9 @@ function AddChat() {
     const MatchLeaderBox = useRef()
 
     useEffect(() => {
+        getUser(localStorage.getItem('email')).then(res => {
+            setUserEmail(res.result.email)
+        })
         axios
             .get("http://localhost:5000/members")
             .then(function (response) {
@@ -44,10 +48,6 @@ function AddChat() {
         })
     }
 
-    function inviteUser(mail) {
-        regUser(mail).then(res => {
-        })
-    }
 
     let trainers = [];
     let admins = [];
@@ -55,7 +55,7 @@ function AddChat() {
     function groupAdmins() {
         admins = [];
         users.forEach((user) => {
-            if (user.isAdmin && user.email !== auth.currentUser.email) {
+            if (user.isAdmin && user.email !== userEmail) {
                 admins.push({ label: user.firstName + " " + user.lastName, value: user.email })
             }
         })
@@ -64,7 +64,7 @@ function AddChat() {
     function groupTrainers() {
         trainers = [];
         users.forEach((user) => {
-            if (user.isTrainer && !user.isAdmin && user.email !== auth.currentUser.email) {
+            if (user.isTrainer && !user.isAdmin && user.email !== userEmail) {
                 trainers.push({ label: user.firstName + " " + user.lastName, value: user.email })
             }
         })
@@ -73,7 +73,7 @@ function AddChat() {
     function groupLeden() {
         leden = [];
         users.forEach((user) => {
-            if (!user.isTrainer && !user.isAdmin && user.email !== auth.currentUser.email) {
+            if (!user.isTrainer && !user.isAdmin && user.email !== userEmail) {
                 leden.push({ label: user.firstName + " " + user.lastName, value: user.email })
             }
         })

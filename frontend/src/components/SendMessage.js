@@ -1,6 +1,6 @@
 
-import { db, auth } from '../firebase/firebase'
-import React, { useState } from 'react'
+import { db} from '../firebase/firebase'
+import React, { useState, useEffect} from 'react'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -8,13 +8,22 @@ import { getCurrentChatId } from './Chats';
 import { getUser } from '../ApiServices/GetUser';
 
 function SendMessage() {
+    const [userEmail, setUserEmail] = useState("");
+    function getIsAdmin() {
+        getUser(localStorage.getItem('email')).then(res => {
+            setUserEmail(res.result.email)
+        })
+    }
+    useEffect(() => {
+        getIsAdmin()
+    }, [])
     const [msg, setMsg] = useState('')
 
     async function sendMessage(e) {
         e.preventDefault()
         if (msg !== "") {
-            const { email } = auth.currentUser
-            const userDetails = await getUser(email);
+        
+            const userDetails = await getUser(userEmail);
             let dateTime = new Date();
             let currentDate = dateTime.toLocaleString('nl-nl', {
                 dateStyle: 'medium',
@@ -26,7 +35,7 @@ function SendMessage() {
                 text: msg,
                 firstName: userDetails.result.firstName,
                 lastName: userDetails.result.lastName,
-                email,
+                email: userEmail,
                 createdAt: currentDate,
                 sortBy: firebase.firestore.FieldValue.serverTimestamp()
             })

@@ -1,32 +1,25 @@
 import logo from "../images/Logo.png";
 import "../styles/Login.css";
 import axios from "axios";
-import React, { useState, createContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { auth } from "../firebase/firebase.js";
-import {getUser} from "../ApiServices/GetUser"
 import pdf from '../pdf/privacy_statement.pdf'
 
 
 
 function Login() {
-  const jwtContext = createContext("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [credentialError, setCredentialError] = useState(0);
-  const [redirect, setRedirect] = useState(false);
 
   async function firebaseSignIn() {
-    let hashedPassword;
-    await getUser(email).then(res => {
-      hashedPassword = res.result.password
-    })
 
     await auth.signOut();
-    auth.signInWithEmailAndPassword(email, hashedPassword).catch((error) => {
+    auth.signInWithEmailAndPassword("main@gmail.com", "j*CP4A36u*k&").catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode, errorMessage);

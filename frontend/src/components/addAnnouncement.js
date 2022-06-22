@@ -2,14 +2,22 @@ import React from 'react'
 import addChatButton from "../images/addChat.png"
 import "../styles/announcement.css"
 import { getUser } from '../ApiServices/GetUser';
-import { db, auth } from '../firebase/firebase'
-import { useState, useRef } from 'react'
+import { db} from '../firebase/firebase'
+import { useState, useRef, useEffect } from 'react'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
 function AddAnnouncement() {
-
+    const [userEmail, setUserEmail] = useState("");
+    function getIsAdmin() {
+        getUser(localStorage.getItem('email')).then(res => {
+            setUserEmail(res.result.email)
+        })
+    }
+    useEffect(() => {
+        getIsAdmin()
+    }, [])
 
 
     const [msg, setMsg] = useState('')
@@ -20,8 +28,7 @@ function AddAnnouncement() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        const { email } = auth.currentUser
-        const userDetails = await getUser(email);
+        const userDetails = await getUser(userEmail);
         let dateTime = new Date();
         var currentDate = dateTime.toLocaleString('nl-nl', {
             dateStyle: 'medium',
@@ -35,7 +42,7 @@ function AddAnnouncement() {
                     poll: poll,
                     firstName: userDetails.result.firstName,
                     lastName: userDetails.result.lastName,
-                    email,
+                    email: userEmail,
                     forAdmin: Admins.current.checked,
                     forMatchLeader: matchleaders.current.checked,
                     forTrainer: Trainers.current.checked,
@@ -49,7 +56,7 @@ function AddAnnouncement() {
                     poll: poll,
                     firstName: userDetails.result.firstName,
                     lastName: userDetails.result.lastName,
-                    email,
+                    email: userEmail,
                     forAdmin: false,
                     forMatchLeader: false,
                     forTrainer: false,
