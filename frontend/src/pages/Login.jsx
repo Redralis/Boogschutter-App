@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { auth } from "../firebase/firebase.js";
+import {getUser} from "../ApiServices/GetUser"
 import pdf from '../pdf/privacy_statement.pdf'
 
 
@@ -18,9 +19,14 @@ function Login() {
   const [credentialError, setCredentialError] = useState(0);
   const [redirect, setRedirect] = useState(false);
 
-  function firebaseSignIn() {
-    auth.signOut();
-    auth.signInWithEmailAndPassword(email, password).catch((error) => {
+  async function firebaseSignIn() {
+    let hashedPassword;
+    await getUser(email).then(res => {
+      hashedPassword = res.result.password
+    })
+
+    await auth.signOut();
+    auth.signInWithEmailAndPassword(email, hashedPassword).catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode, errorMessage);

@@ -3,53 +3,87 @@ import { Link } from "react-router-dom";
 import logo from '../images/Logo.png'
 import '../styles/ResetPassword.css'
 import { queryToUpdatePassword, sendEmailToResetPassword } from '../ApiServices/ResetPassword'
+import { getAuth, updatePassword } from "firebase/auth";
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import { auth } from '../firebase/firebase.js'
+import {getUser} from "../ApiServices/GetUser"
+
 
 export default function ResetPassword() {
+    let oldPassword;
     let firstPassword;
     let secondPassword;
     let token;
+
 
     // onChange Handler function
     const getToken = (event) => {
         // show the user input value to console
         token = event.target.value;
-        console.log(token);
     };
 
     const getFirstPasswordValue = (event) => {
         // show the user input value to console
         firstPassword = event.target.value;
-        console.log(firstPassword);
     };
 
     const getSecondPasswordValue = (event) => {
         // show the user input value to console
         secondPassword = event.target.value;
-        console.log(secondPassword);
     };
 
     //On click
-    function updatePassword() {
+    async function updatePasswordOnClick() {
         // Get the variable
         let email = localStorage['mail'];
         localStorage.removeItem('mail');
         // Clear the localStorage
-        console.log(email, 'email second page');
 
         var data = {
             "token": token,
             "email": email,
             "password": firstPassword
         };
-        console.log(data)
 
         if (email === undefined) {
             alert("Email niet gevonden. Probeer opnieuw een token te krijgen.")
         }
 
         if (firstPassword === secondPassword) {
-            queryToUpdatePassword(data).then(res => {
-                console.log(res.data)
+            let passwordFromApi;
+            await getUser(email).then(async res => {
+                passwordFromApi = res.result.password
+            })
+
+            queryToUpdatePassword(data).then(async res => {
+                if (res.status === 200) {
+                    const user = auth.currentUser;
+                    const newPassword = firstPassword;
+
+                    console.log(email)
+                    console.log(passwordFromApi)
+                    await auth.signInWithEmailAndPassword(email, passwordFromApi)
+                        .catch((error) => {
+                            var errorCode = error.code;
+                            var errorMessage = error.message;
+                            console.log(errorCode, errorMessage)
+                        });
+
+
+                    let newPass;
+                    await getUser(email).then(async res => {
+                        newPass = res.result.password
+                    })
+                    updatePassword(user, newPass).then(() => {
+                        alert(" Wachtwoord wijzigen gelukt!.")
+                        auth.signOut()
+                    }).catch((error) => {
+                        alert(error)
+                    });
+                } else {
+                    alert("Token of het wachtwoord is iets niet goed gegaan. Probeer het opnieuw door terug naar het inlogpagina te gaan, en opnieuw op wachtwoord vergeten te drukken. .")
+                }
             })
         } else {
             alert("Wachtwoorden zijn niet het zelfde.")
@@ -101,7 +135,7 @@ export default function ResetPassword() {
                             </div>
                             <Link to="/Login">
                                 <div className="sendEmailButton">
-                                    <button className="w-100 btn btn-lg " type="submit" onClick={updatePassword}>Update mijn
+                                    <button className="w-100 btn btn-lg " type="submit" onClick={updatePasswordOnClick}>Update mijn
                                         wachtwoord
                                     </button>
                                 </div>

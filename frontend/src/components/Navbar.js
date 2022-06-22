@@ -22,7 +22,7 @@ function Navbar() {
     // Call hook passing in the ref and a function to call on outside click
     useOnClickOutside(ref, () => setModalOpen(false))
     function getIsAdmin() {
-        getUser(localStorage.getItem('mail')).then(res => {
+        getUser(localStorage.getItem('email')).then(res => {
             setIsAdmin(res.result.isAdmin);
         })
     }

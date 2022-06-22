@@ -12,7 +12,7 @@ function AnnouncementRoom() {
     const [isTrainer, setIsTrainer] = useState(false);
     const [isMatchLeader, setIsMatchLeader] = useState(false);
     function getIsAdmin() {
-        getUser(localStorage.getItem('mail')).then(res => {
+        getUser(localStorage.getItem('email')).then(res => {
             if (res.result.isAdmin) {
                 setIsAdmin(true);
             } else {
@@ -22,7 +22,7 @@ function AnnouncementRoom() {
         })
     }
     function getIsTrainer() {
-        getUser(localStorage.getItem('mail')).then(res => {
+        getUser(localStorage.getItem('email')).then(res => {
             if (res.result.isTrainer) {
                 setIsTrainer(true);
             } else {
@@ -32,7 +32,7 @@ function AnnouncementRoom() {
         })
     }
     function getIsMatchLeader() {
-        getUser(localStorage.getItem('mail')).then(res => {
+        getUser(localStorage.getItem('email')).then(res => {
             if (res.result.isMatchLeader) {
                 setIsMatchLeader(true);
             } else {
