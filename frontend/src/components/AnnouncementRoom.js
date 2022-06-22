@@ -177,7 +177,7 @@ function AnnouncementRoom() {
                     return (<div key={id} className="alert alert-other ">
                         <div className='container '>
                             <div className='row'>
-                                <div className='col-1 '>
+                                <div className='col-1 announcementIcon'>
                                     <BsIcons.BsFillMegaphoneFill style={{color: "orange"}} />
                                 </div>
                                 <div className='col-11 p-0'>
