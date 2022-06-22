@@ -1,0 +1,96 @@
+.containerAnn{
+    padding-top: 20px;
+    padding-bottom: 80px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.titleAnn{
+    padding-top: 20px !important;
+}
+.title h3{
+    font-size: 25px !important;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    line-height: 1.4em !important;
+    font-weight: 300;
+}
+
+/* alerts */
+
+.alert {
+    border: 0;
+    border-radius: 10px;
+    padding: 20px 15px !important;
+    line-height: 20px;
+    font-weight: 300;
+    color: black;
+}
+
+
+.alert b {
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding-bottom: 3px;
+}
+
+.alert.alert-matchleader {
+    background-color: #F4F6FC;
+    color: black;
+    font-weight: bolder;
+
+}
+.alert.alert-admin {
+    background-color:#F4F6FC;
+    color: black;
+    font-weight: bolder;
+
+}
+.alert.alert-trainer {
+    background-color: #F4F6FC;
+    color: black;
+    font-weight: bolder;
+
+}
+.alert.alert-allmembers {   
+    background-color: #F4F6FC;
+    color: black;
+    font-weight: bolder;
+
+}
+.alert.alert-other {
+    background-color: #F4F6FC;
+    color: black;
+    font-weight: bolder;
+
+}
+.textAnn {
+    font-weight: 500;
+    font-size: 12px
+  
+}
+
+.createdAtAnn {
+    font-weight: 500;
+    font-size: 12px;
+    float: right;
+}
+
+.announcementIcon{
+    display: flex;  /* make the row a flex container */
+    align-items: center; 
+}
+
+.addAnnouncement{
+    float: right;
+    width: 75px;
+    height: auto;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .addButton{
+    background-color: #0F6E0F;
+    color: white;
+  }

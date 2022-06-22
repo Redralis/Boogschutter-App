@@ -3,7 +3,7 @@ import "../styles/Contacts.css"
 import Select from 'react-select'
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { db, auth } from '../firebase/firebase'
+import { auth } from '../firebase/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { editUser } from '../ApiServices/EditUser';
 import { regUser } from '../ApiServices/RegUser';
@@ -158,7 +158,7 @@ function AddChat() {
                                 data-target="#popup"
                             />
                         </div>
-                        <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="popup" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -171,8 +171,8 @@ function AddChat() {
                                         Weet je zeker dat je jouw wijzigingen wilt opslaan?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onClick={this.handleSubmit}>Save changes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                                        <button type="button" class="btn btn-primary" onClick={this.handleSubmit}>Opslaan</button>
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@ function AddChat() {
                                 />
                             </div>
                         </div>
-                        <div class="modal fade" id="popup-newuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="popup-newuser" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -207,8 +207,8 @@ function AddChat() {
                                        Weet je zeker dat je deze gebruiker wilt uitnodigen?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onClick={this.handleInvite}>Save changes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                                        <button type="button" class="btn btn-primary" onClick={this.handleInvite}>Opslaan</button>
                                     </div>
                                 </div>
                             </div>

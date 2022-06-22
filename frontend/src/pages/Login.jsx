@@ -7,6 +7,10 @@ import { useNavigate } from "react-router-dom";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { auth } from "../firebase/firebase.js";
+import {getUser} from "../ApiServices/GetUser"
+import pdf from '../pdf/privacy_statement.pdf'
+
+
 
 function Login() {
   const jwtContext = createContext("");
@@ -15,16 +19,23 @@ function Login() {
   const [credentialError, setCredentialError] = useState(0);
   const [redirect, setRedirect] = useState(false);
 
-  function firebaseSignIn() {
-    auth.signOut();
-    auth.signInWithEmailAndPassword(email, password).catch((error) => {
-      let errorCode = error.code;
-      let errorMessage = error.message;
+  async function firebaseSignIn() {
+    let hashedPassword;
+    await getUser(email).then(res => {
+      hashedPassword = res.result.password
+    })
+
+    await auth.signOut();
+    auth.signInWithEmailAndPassword(email, hashedPassword).catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
       console.log(errorCode, errorMessage);
     });
   }
 
+
   let navigate = useNavigate();
+
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -41,11 +52,12 @@ function Login() {
         email,
         password,
       });
+      
       setCredentialError(200);
       firebaseSignIn(email, password);
       localStorage.setItem("token", resp.data.token);
       localStorage.setItem("email", resp.data.email);
-      navigate("/contacts", { replace: true });
+      navigate("/announcements", { replace: true });
     } catch (err) {
       if (err.request.status === 404) {
         setCredentialError(404);
@@ -93,12 +105,18 @@ function Login() {
                 onChange={handlePasswordChange}
               ></input>
             </div>
+            <div className="form-check " style={{ padding: 0 }}>
+              <input type="checkbox" required  />
+              <label className="form-check-label" htmlFor="flexCheckChecked">
+                Ik accepteer de <a href={pdf} edownload="HBSV Alliance d'Amitié privacy verklaring">privacyverklaring</a>
+              </label>
+            </div>
             <div className="">
               <input
                 type="submit"
                 value="Log in"
                 className="w-100 btn btn-lg agenda-buttons"
-                onClick={localStorage.setItem('mail', email)}
+
               />
             </div>
 

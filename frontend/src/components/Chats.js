@@ -29,7 +29,7 @@ function Chats() {
     const [isAdmin, setIsAdmin] = useState(false);
 
     function getIsAdmin() {
-        getUser(localStorage.getItem('mail')).then(res => {
+        getUser(localStorage.getItem('email')).then(res => {
             setIsAdmin(res.result.isAdmin);
         })
     }
@@ -61,7 +61,7 @@ function Chats() {
 
     return (
         <div>
-            {user ? <><div className="contacts-page">
+            {user ? <><div className="contacts-page" style={{paddingBottom: "80px"}}>
                 <div className="card-body contacts_body">
                     <ul className="contacts">
                         <li className="active">

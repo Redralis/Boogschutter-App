@@ -10,7 +10,7 @@ function ChatRoom() {
     const [isAdmin, setIsAdmin] = useState(false);
 
     function getIsAdmin() {
-        getUser(localStorage.getItem('mail')).then(res => {
+        getUser(localStorage.getItem('email')).then(res => {
             if (res.result.isAdmin || res.result.isTrainer || res.result.isMatchLeader) {
                 setIsAdmin(true);
             } else {
@@ -34,8 +34,8 @@ function ChatRoom() {
     useEffect(() => {
         getIsAdmin();
 
-        db.collection('messages').where("chatId", "==", getCurrentChatId()).orderBy('sortBy').onSnapshot(snapshot => {
-            setMessages(snapshot.docs.map(doc => ({
+        db.collection('messages').where("chatId", "==", getCurrentChatId()).orderBy('sortBy','desc').limit(50).onSnapshot(snapshot => {
+            setMessages(snapshot.docs.slice(0).reverse().map(doc => ({
                 id: doc.id,
                 ...doc.data()
             })))
