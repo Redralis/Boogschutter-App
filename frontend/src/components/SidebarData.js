@@ -31,5 +31,11 @@ export const SidebarData = [
         path: '/aantekeningen',
         icon: <BsIcons.BsFillPencilFill />,
         cName: 'nav-text'
+    },
+    {
+        title: '‎ Profiel',
+        path: '/profiel',
+        icon: <BsIcons.BsFillPersonFill />,
+        cName: 'nav-text'
     }
 ]
