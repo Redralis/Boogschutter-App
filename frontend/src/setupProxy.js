@@ -12,7 +12,7 @@ module.exports = function(app) {
     app.use(
         '/local',
         createProxyMiddleware({
-            target: 'http://localhost:5000',
+            target: 'https://boogschutter-api.herokuapp.com',
             changeOrigin: true,
         }),
     );
