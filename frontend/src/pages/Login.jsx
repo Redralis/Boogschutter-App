@@ -19,7 +19,7 @@ function Login() {
   async function firebaseSignIn() {
 
     await auth.signOut();
-    auth.signInWithEmailAndPassword("main@gmail.com", "j*CP4A36u*k&").catch((error) => {
+    auth.signInWithEmailAndPassword("alliancedamitie.app@gmail.com", "*K23iJaC6?w#").catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode, errorMessage);
