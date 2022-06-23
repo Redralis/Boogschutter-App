@@ -134,7 +134,7 @@ export function Agenda() {
   };
 
   function getPriveleges() {
-    getUser(localStorage.getItem("mail")).then((res) => {
+    getUser(localStorage.getItem("email")).then((res) => {
       setIsAdmin(res.result.isAdmin);
       setIsTrainer(res.result.isTrainer);
       setIsMatchLeader(res.result.isMatchLeader);
