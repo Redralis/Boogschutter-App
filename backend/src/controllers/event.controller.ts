@@ -16,7 +16,6 @@ const prismaQuery = {
           select: {
             firstName: true,
             lastName: true,
-            
           },
         },
       },
@@ -26,7 +25,7 @@ const prismaQuery = {
 };
 
 const getEventsDay = async (req: any, res: any) => {
-  var date = new Date();
+  let date = new Date();
   const dateData = req.params.date;
   if (dateData != null) {
     const data = dateData.split("-");
@@ -45,7 +44,7 @@ const getEventsDay = async (req: any, res: any) => {
         datePicker: true,
       },
     });
-    for (var u = 0; u < datelist.length; u++) {
+    for (let u = 0; u < datelist.length; u++) {
       let date = datelist[u];
       let cDate = date.datePicker;
       let sDate = cDate.toLocaleString();
@@ -71,7 +70,6 @@ const getEventsDay = async (req: any, res: any) => {
       status: 400,
       error: "Something went wrong",
     });
-    
   }
   events = [];
 };
@@ -92,168 +90,72 @@ const getAllEvents = async (req: any, res: any) => {
 };
 
 const getWeekEvents = async (req: any, res: any) => {
-  let eventList: any
-  
-  var week = new Date();
+  let eventList: any = [];
+  let currentDate: any;
 
-  const dateData = req.params.date;
-  if (dateData != null) {
-    if (new Date().toLocaleString().includes("/")) {
-      const data = dateData.split("/");
-      week = new Date(data[2], data[1] - 1, data[0]);
-    } else {
-      const data = dateData.split("-");
-      week = new Date(data[2], data[1] - 1, data[0]);
-    }
+  if (typeof req.query.date !== "undefined") {
+    const timestamp = parseInt(req.query.date);
+    currentDate = new Date(timestamp);
+  } else {
+    currentDate = new Date();
   }
 
-  var wdag = week.getDate();
-  var wmaand = week.getMonth();
-  var wjaar = week.getFullYear();
-  var diff = 0;
-  var maanddif = 0;
-  var jdiff = 0;
-  const dayCheck = week.getDay();
+  currentDate.setHours(0, 0, 0, 0);
 
-  let eventsWeek:any = [];
-  function schrikkelJaar() {
-    var round = Number.isInteger(wjaar / 4);
-    if (round == true) {
-      round = Number.isInteger(wjaar / 100);
-      if (round == true) {
-        round = Number.isInteger(wjaar / 400);
-        if (round == true) {
-          maanddif++;
-          wdag = 1;
-        }
-      }
-    } else if (wdag + diff > 28 && wmaand == 2) {
-      maanddif++;
-      wdag = 1;
-      diff = 0;
-    }
-  }
-  function evenMonth() {
-    if (wdag + diff > 30) {
-      if (wmaand == 3 || wmaand == 5 || wmaand == 8 || wmaand == 10) {
-        maanddif++;
-        wdag = 1;
-        diff = 0;
-      }
-    }
-  }
-  function oddMonth() {
-    if (wdag + diff > 31) {
-      if (
-        wmaand == 0 ||
-        wmaand == 2 ||
-        wmaand == 4 ||
-        wmaand == 6 ||
-        wmaand == 7 ||
-        wmaand == 9
-      ) {
-        maanddif++;
-        wdag = 1;
-        diff = 0;
-      }
-    }
-  }
-  function newYear() {
-    if (wmaand == 11 && wdag + diff > 31) {
-      jdiff++;
-      wmaand = 0;
-      wdag = 1;
-      diff = 0;
-    }
-  }
-  function dayCorrecter() {
-    if (dayCheck == 1) {
-      wdag -= 1;
-    }
-    if (dayCheck == 2) {
-      wdag -= 2;
-    }
-    if (dayCheck == 3) {
-      wdag -= 3;
-    }
-    if (dayCheck == 4) {
-      wdag -= 4;
-    }
-    if (dayCheck == 5) {
-      wdag -= 5;
-    }
-    if (dayCheck == 6) {
-      wdag -= 6;
-    }
-  }
+  let nextWeekDate = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate() + 7
+  );
+  nextWeekDate.setHours(23, 59, 59, 999);
 
-  dayCorrecter();
-  for (var i = 0; i < 7; i++) {
-    var tdatumNu =
-      wdag + diff + "-" + (wmaand + maanddif + 1) + "-" + (wjaar + jdiff);
-      if(new Date().toLocaleString().includes("/")){
-        if (wmaand<10) {
-          var tdatumNu =
-        wdag + diff + "/" +'0'+ (wmaand + maanddif + 1) + "/" + (wjaar + jdiff);
-        } else{     
-        var tdatumNu =
-        wdag + diff + "/" + (wmaand + maanddif + 1) + "/" + (wjaar + jdiff);}
-      }
-    diff++;
-    evenMonth();
-    oddMonth();
-    newYear();
-    schrikkelJaar();
-    var ndatumNu = new Date(tdatumNu).getTime();
-    try {
-      const weeklist = await prisma.event.findMany({
-        select: {
-          datePicker: true,
+  let currentDateTimestamp = currentDate.getTime();
+  let nextWeekDateTimestamp = nextWeekDate.getTime();
+
+  try {
+    eventList = await prisma.event.findMany({
+      where: {
+        datePicker: {
+          gte: currentDateTimestamp,
+          lte: nextWeekDateTimestamp,
         },
-      });
-      for (var u = 0; u < weeklist.length; u++) {
-        let date = weeklist[u];
-        let cDate = date.datePicker;
-        let zDate = new Date(cDate);
-        let sDate = zDate.toLocaleString();
-        let nDate = sDate.split(", ");
-        eventsWeek = [];
-        if (nDate[0] == tdatumNu) {
-          try {
-             eventList = await prisma.event.findMany(prismaQuery);
-            eventsWeek = eventList;
-          } catch (error) {
-            res.status(400).json({
-              status: 400,
-              error: "Something went wrong",
-            });
-          }
-        }
-      }
-    } catch (error) {
-      res.status(400).json({
-        status: 400,
-        error: "Something went wrong",
-      });
-    }
+      },
+      select: {
+        eventId: true,
+        eventName: true,
+        datePicker: true,
+        maxParticipants: true,
+        description: true,
+        type: true,
+        eventParticipants: {
+          select: {
+            user: {
+              select: {
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
+        _count: true,
+      },
+    });
+    res.status(200).json({
+      status: 200,
+      result: eventList,
+      timestamp: currentDateTimestamp,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      error: "Something went wrong with the request",
+    });
   }
-  // console.log(eventsWeek)
-  res.status(200).json({
-    status: 200,
-    result: eventList,
-  });
-  
-  diff = 0;
-  maanddif = 0;
-  jdiff = 0;
-  wdag = week.getDate();
-  wmaand = week.getMonth();
-  wjaar = week.getFullYear();
 };
 
 const addEvents = async (req: any, res: any) => {
-  const { eventName, date, tijd, description, maxParticipants, type } =
-    req.body;
+  const { eventName, date, tijd, description, type } = req.body;
+  const maxParticipants = parseInt(req.body.maxParticipants);
   const dateSplit = date.split("-");
   const maand = (dateSplit[1] -= 1);
   const tijdSplit = tijd.split(":");
@@ -282,8 +184,9 @@ const addEvents = async (req: any, res: any) => {
       result: "new event added",
     });
   } catch (error) {
-    res.status(401).json({
-      status: 401,
+    console.log(error);
+    res.status(400).json({
+      status: 400,
       result: "Something went wrong",
     });
   }

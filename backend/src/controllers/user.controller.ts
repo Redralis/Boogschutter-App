@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const getUser = async (req: any, res: any) => {
   const { email } = req.body;
   try {
-    var data = await prisma.user.findUnique({
+    let data = await prisma.user.findUnique({
       where: {
         email: email,
       },
@@ -30,7 +30,7 @@ const getUser = async (req: any, res: any) => {
 const editUser = async (req: any, res: any, next: any) => {
   const { email, isTrainer, isAdmin, isMatchLeader } = req.body;
   try {
-    var data = await prisma.user.findUnique({
+    let data = await prisma.user.findUnique({
       where: {
         email: email,
       },

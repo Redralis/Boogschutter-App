@@ -2,16 +2,13 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import logo from '../images/Logo.png'
 import '../styles/ResetPassword.css'
-import { queryToUpdatePassword, sendEmailToResetPassword } from '../ApiServices/ResetPassword'
-import { getAuth, updatePassword } from "firebase/auth";
+import { queryToUpdatePassword} from '../ApiServices/ResetPassword'
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { auth } from '../firebase/firebase.js'
 import {getUser} from "../ApiServices/GetUser"
 
 
 export default function ResetPassword() {
-    let oldPassword;
     let firstPassword;
     let secondPassword;
     let token;
@@ -40,7 +37,7 @@ export default function ResetPassword() {
         localStorage.removeItem('mail');
         // Clear the localStorage
 
-        var data = {
+        let data = {
             "token": token,
             "email": email,
             "password": firstPassword
@@ -58,29 +55,9 @@ export default function ResetPassword() {
 
             queryToUpdatePassword(data).then(async res => {
                 if (res.status === 200) {
-                    const user = auth.currentUser;
-                    const newPassword = firstPassword;
 
                     console.log(email)
                     console.log(passwordFromApi)
-                    await auth.signInWithEmailAndPassword(email, passwordFromApi)
-                        .catch((error) => {
-                            var errorCode = error.code;
-                            var errorMessage = error.message;
-                            console.log(errorCode, errorMessage)
-                        });
-
-
-                    let newPass;
-                    await getUser(email).then(async res => {
-                        newPass = res.result.password
-                    })
-                    updatePassword(user, newPass).then(() => {
-                        alert(" Wachtwoord wijzigen gelukt!.")
-                        auth.signOut()
-                    }).catch((error) => {
-                        alert(error)
-                    });
                 } else {
                     alert("Token of het wachtwoord is iets niet goed gegaan. Probeer het opnieuw door terug naar het inlogpagina te gaan, en opnieuw op wachtwoord vergeten te drukken. .")
                 }

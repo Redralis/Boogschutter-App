@@ -1,11 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { auth, db } from '../firebase/firebase'
-import { getCurrentChatId } from './Chats'
-import SendMessage from './SendMessage'
-import BlockedSendMessage from './BlockedSendMessage'
+import { db } from '../firebase/firebase'
 import "../styles/Chat.css"
-import { useNavigate } from "react-router-dom";
 import { getUser } from '../ApiServices/GetUser';
 import "../styles/announcement.css"
 import * as BsIcons from 'react-icons/bs'
@@ -69,10 +65,10 @@ function AnnouncementRoom() {
                     <div key={id} className="alert alert-admin">
                         <div className='container'>
                             <div className='row announcementIcon'>
-                                <div className='col-1 '>
-                                    <BsIcons.BsFillMegaphoneFill style />
+                                <div className='col-sm-1 '>
+                                    <BsIcons.BsFillMegaphoneFill style={{color: "red"}} />
                                 </div>
-                                <div className='col-11 p-0'>
+                                <div className='col-sm-11 p-0'>
                                     <div className="container">
                                         <div className="alert-icon row">
                                             <i className=" col">@{firstName + " " + lastName}</i>
@@ -100,7 +96,7 @@ function AnnouncementRoom() {
                         <div className='container'>
                             <div className='row announcementIcon'>
                                 <div className='col-1 '>
-                                    <BsIcons.BsFillMegaphoneFill style />
+                                    <BsIcons.BsFillMegaphoneFill style={{color: "purple"}} />
                                 </div>
                                 <div className='col-11 p-0'>
                                     <div className="container">
@@ -127,7 +123,7 @@ function AnnouncementRoom() {
                         <div className='container'>
                             <div className='row announcementIcon'>
                                 <div className='col-1 '>
-                                    <BsIcons.BsFillMegaphoneFill style />
+                                    <BsIcons.BsFillMegaphoneFill style={{color: "blue"}} />
                                 </div>
                                 <div className='col-11 p-0'>
                                     <div className="container">
@@ -154,7 +150,7 @@ function AnnouncementRoom() {
                         <div className='container'>
                             <div className='row announcementIcon'>
                                 <div className='col-1 '>
-                                    <BsIcons.BsFillMegaphoneFill style />
+                                    <BsIcons.BsFillMegaphoneFill  style={{color: "0F6E0F"}} />
                                 </div>
                                 <div className='col-11 p-0'>
                                     <div className="container">
@@ -177,12 +173,12 @@ function AnnouncementRoom() {
             }
         } else {
             if (isAdmin || isMatchLeader || isTrainer) {
-                if (showFor.includes("Beheerders") && isAdmin || showFor.includes("Trainers") && isTrainer || showFor.includes("Wedstrijd Leiders") && isMatchLeader) {
+                if ((showFor.includes("Beheerders") && isAdmin) || (showFor.includes("Trainers") && isTrainer) || (showFor.includes("Wedstrijd Leiders") && isMatchLeader)) {
                     return (<div key={id} className="alert alert-other ">
                         <div className='container '>
                             <div className='row announcementIcon'>
                                 <div className='col-1 '>
-                                    <BsIcons.BsFillMegaphoneFill style />
+                                    <BsIcons.BsFillMegaphoneFill style={{color: "orange"}} />
                                 </div>
                                 <div className='col-11 p-0'>
                                     <div className="container">
@@ -193,7 +189,7 @@ function AnnouncementRoom() {
                                             <b className='col'>Bestemd voor {showFor.map((item, index, array) => {
                                                 if (index < array.length - 2) {
                                                     return (item + ", ")
-                                                } else if (index == array.length - 2) {
+                                                } else if (index === array.length - 2) {
                                                     return (item + " en ")
                                                 } else {
                                                     return (item + ".")

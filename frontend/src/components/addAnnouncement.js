@@ -2,14 +2,22 @@ import React from 'react'
 import addChatButton from "../images/addChat.png"
 import "../styles/announcement.css"
 import { getUser } from '../ApiServices/GetUser';
-import { db, auth } from '../firebase/firebase'
-import { useState, useRef } from 'react'
+import { db} from '../firebase/firebase'
+import { useState, useRef, useEffect } from 'react'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
 function AddAnnouncement() {
-
+    const [userEmail, setUserEmail] = useState("");
+    function getIsAdmin() {
+        getUser(localStorage.getItem('email')).then(res => {
+            setUserEmail(res.result.email)
+        })
+    }
+    useEffect(() => {
+        getIsAdmin()
+    }, [])
 
 
     const [msg, setMsg] = useState('')
@@ -20,8 +28,7 @@ function AddAnnouncement() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        const { email } = auth.currentUser
-        const userDetails = await getUser(email);
+        const userDetails = await getUser(userEmail);
         let dateTime = new Date();
         var currentDate = dateTime.toLocaleString('nl-nl', {
             dateStyle: 'medium',
@@ -35,7 +42,7 @@ function AddAnnouncement() {
                     poll: poll,
                     firstName: userDetails.result.firstName,
                     lastName: userDetails.result.lastName,
-                    email,
+                    email: userEmail,
                     forAdmin: Admins.current.checked,
                     forMatchLeader: matchleaders.current.checked,
                     forTrainer: Trainers.current.checked,
@@ -49,7 +56,7 @@ function AddAnnouncement() {
                     poll: poll,
                     firstName: userDetails.result.firstName,
                     lastName: userDetails.result.lastName,
-                    email,
+                    email: userEmail,
                     forAdmin: false,
                     forMatchLeader: false,
                     forTrainer: false,
@@ -81,11 +88,11 @@ function AddAnnouncement() {
                             <form>
                                 <div className="form-group">
                                     <label>Mededeling</label>
-                                    <textarea className="form-control" id="announcement" rows="3" placeholder="Type Mededeling..." value={msg} onChange={e => setMsg(e.target.value)}></textarea>
+                                    <textarea autoComplete="off" className="form-control" id="announcement" rows="3" placeholder="Type Mededeling..." value={msg} onChange={e => setMsg(e.target.value)}></textarea>
                                 </div>
                                 <div className="form-group">
                                     <label>Link naar poll</label>
-                                    <input type="text" className="form-control" id="poll"placeholder="https://mijnpoll.com/12345..." value={poll} onChange={e => setPoll(e.target.value)}></input>
+                                    <input autoComplete="off" type="text" className="form-control" id="poll"placeholder="https://mijnpoll.com/12345..." value={poll} onChange={e => setPoll(e.target.value)}></input>
                                 </div>
                                 <div className="form-group">
                                     <label>Limiteer Doelgroep {("(leeg is alle leden)")}</label>

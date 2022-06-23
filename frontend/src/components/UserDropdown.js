@@ -3,18 +3,19 @@ import "../styles/Contacts.css"
 import Select from 'react-select'
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { db, auth } from '../firebase/firebase'
+import { auth } from '../firebase/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { editUser } from '../ApiServices/EditUser';
 import { regUser } from '../ApiServices/RegUser';
-
+import { getUser } from '../ApiServices/GetUser';
 axios.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
 
 
 function AddChat() {
     const [user] = useAuthState(auth);
     const [users, setUsers] = useState([])
-    var userValue;
+    const [userEmail, setUserEmail] = useState("");
+    let userValue;
 
     const getInputValue = (event) => {
         userValue = event.target.value;
@@ -25,6 +26,9 @@ function AddChat() {
     const MatchLeaderBox = useRef()
 
     useEffect(() => {
+        getUser(localStorage.getItem('email')).then(res => {
+            setUserEmail(res.result.email)
+        })
         axios
             .get("http://localhost:5000/members")
             .then(function (response) {
@@ -44,18 +48,14 @@ function AddChat() {
         })
     }
 
-    function inviteUser(mail) {
-        regUser(mail).then(res => {
-        })
-    }
 
-    var trainers = [];
-    var admins = [];
-    var leden = [];
+    let trainers = [];
+    let admins = [];
+    let leden = [];
     function groupAdmins() {
         admins = [];
         users.forEach((user) => {
-            if (user.isAdmin && user.email !== auth.currentUser.email) {
+            if (user.isAdmin && user.email !== userEmail) {
                 admins.push({ label: user.firstName + " " + user.lastName, value: user.email })
             }
         })
@@ -64,7 +64,7 @@ function AddChat() {
     function groupTrainers() {
         trainers = [];
         users.forEach((user) => {
-            if (user.isTrainer && !user.isAdmin && user.email !== auth.currentUser.email) {
+            if (user.isTrainer && !user.isAdmin && user.email !== userEmail) {
                 trainers.push({ label: user.firstName + " " + user.lastName, value: user.email })
             }
         })
@@ -73,7 +73,7 @@ function AddChat() {
     function groupLeden() {
         leden = [];
         users.forEach((user) => {
-            if (!user.isTrainer && !user.isAdmin && user.email !== auth.currentUser.email) {
+            if (!user.isTrainer && !user.isAdmin && user.email !== userEmail) {
                 leden.push({ label: user.firstName + " " + user.lastName, value: user.email })
             }
         })
@@ -158,7 +158,7 @@ function AddChat() {
                                 data-target="#popup"
                             />
                         </div>
-                        <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="popup" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -194,7 +194,7 @@ function AddChat() {
                                 />
                             </div>
                         </div>
-                        <div class="modal fade" id="popup-newuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="popup-newuser" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">

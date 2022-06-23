@@ -6,7 +6,7 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { db, auth } from '../firebase/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
-
+import { getUser } from '../ApiServices/GetUser';
 axios.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
 
 
@@ -14,7 +14,11 @@ function AddChat() {
     const [user] = useAuthState(auth);
     const checkboxRef = useRef();
     const [users, setUsers] = useState([])
+    const [userEmail, setUserEmail] = useState("");
     useEffect(() => {
+        getUser(localStorage.getItem('email')).then(res => {
+            setUserEmail(res.result.email)
+        })
         axios
             .get("http://localhost:5000/members")
             .then(function (response) {
@@ -25,13 +29,13 @@ function AddChat() {
             });
     }, []);
 
-    var trainers = [];
-    var admins = [];
-    var leden = [];
+    let trainers = [];
+    let admins = [];
+    let leden = [];
     function groupAdmins() {
         admins = [];
         users.forEach((user) => {
-            if (user.isAdmin && user.email !== auth.currentUser.email) {
+            if (user.isAdmin && user.email !== userEmail) {
                 admins.push({ label: user.firstName + " " + user.lastName, value: user.email })
             }
         })
@@ -40,7 +44,7 @@ function AddChat() {
     function groupTrainers() {
         trainers = [];
         users.forEach((user) => {
-            if (user.isTrainer && !user.isAdmin && user.email !== auth.currentUser.email) {
+            if (user.isTrainer && !user.isAdmin && user.email !== userEmail) {
                 trainers.push({ label: user.firstName + " " + user.lastName, value: user.email })
             }
         })
@@ -49,7 +53,7 @@ function AddChat() {
     function groupLeden() {
         leden = [];
         users.forEach((user) => {
-            if (!user.isTrainer && !user.isAdmin && user.email !== auth.currentUser.email) {
+            if (!user.isTrainer && !user.isAdmin && user.email !== userEmail) {
                 leden.push({ label: user.firstName + " " + user.lastName, value: user.email })
             }
         })
@@ -60,8 +64,8 @@ function AddChat() {
     const [name, setName] = useState("")
     async function addChat(values) {
         if (values !== "" && name !== "") {
-            if (!values.some(item => item.split(',')[0] === auth.currentUser.email)) {
-                values.unshift(auth.currentUser.email);
+            if (!values.some(item => item.split(',')[0] === userEmail)) {
+                values.unshift(userEmail);
             }
             
             await db.collection('chats').add({
