@@ -70,3 +70,10 @@
     padding: 0px 0px 0px 0px;
 }
 
+.title {
+    color: white;
+    font-weight: bold;
+    font-size: small;
+    letter-spacing: 2px;
+
+}

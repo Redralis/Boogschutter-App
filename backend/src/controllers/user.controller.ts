@@ -28,7 +28,7 @@ const getUser = async (req: any, res: any) => {
 };
 
 const editUser = async (req: any, res: any, next: any) => {
-  const { email, isTrainer, isAdmin, isMatchLeader } = req.body;
+  const { email, isTrainer, isAdmin, isMatchLeader, firstName, lastName } = req.body;
   try {
     let data = await prisma.user.findUnique({
       where: {
@@ -72,6 +72,26 @@ const editUser = async (req: any, res: any, next: any) => {
         },
         data: {
           isMatchLeader: isMatchLeader,
+        },
+      });
+    }
+    if (typeof firstName !== 'undefined') {
+      await prisma.user.update({
+        where: {
+          email: email,
+        },
+        data: {
+          firstName: firstName,
+        },
+      });
+    }
+    if (typeof lastName !== 'undefined') {
+      await prisma.user.update({
+        where: {
+          email: email,
+        },
+        data: {
+          lastName: lastName,
         },
       });
     }
