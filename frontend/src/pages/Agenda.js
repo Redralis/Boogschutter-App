@@ -7,7 +7,7 @@ import axios from "axios";
 import Event from "../components/Event";
 import LoadingSpinner from "../components/LoadingSpinner";
 const config = {
-  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 };
 
 export function Agenda() {
@@ -16,6 +16,8 @@ export function Agenda() {
   const [timestamp, setTimestamp] = useState(0);
   const [datePickerValue, setDatePickerValue] = useState(new Date());
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isTrainer, setIsTrainer] = useState(false);
+  const [isMatchLeader, setIsMatchLeader] = useState(false);
 
   const [eventName, setEventName] = useState("");
   const [date, setDate] = useState("");
@@ -47,8 +49,6 @@ export function Agenda() {
   function onEventTypeChange(e) {
     setType(e.target.value);
   }
-  
-
 
   useEffect(() => {
     axios
@@ -61,7 +61,7 @@ export function Agenda() {
       .catch(function (error) {
         console.log(error);
       });
-    getIsAdmin();
+    getPriveleges();
   }, []);
 
   const getPreviousWeek = () => {
@@ -116,14 +116,14 @@ export function Agenda() {
   const datePickerCall = (e) => {
     console.log(e.target.value);
     setDatePickerValue(new Date(e.target.value));
-    datePickerValue.setTime(0,0,0,0);
+    datePickerValue.setTime(0, 0, 0, 0);
     setTimestamp(datePickerValue.getTime());
-    console.log(timestamp)
+    console.log(timestamp);
     setLoading(true);
     axios
       .get(`http://localhost:5000/event/week?date=${datePickerValue.getTime()}`)
       .then(function (response) {
-        console.log(response.request)
+        console.log(response.request);
         setEvents(response.data.result);
         setLoading(false);
         // setTimestamp(response.data.timestamp);
@@ -133,9 +133,11 @@ export function Agenda() {
       });
   };
 
-  function getIsAdmin() {
+  function getPriveleges() {
     getUser(localStorage.getItem("mail")).then((res) => {
       setIsAdmin(res.result.isAdmin);
+      setIsTrainer(res.result.isTrainer);
+      setIsMatchLeader(res.result.isMatchLeader);
     });
   }
 
@@ -151,10 +153,10 @@ export function Agenda() {
         description,
         maxParticipants: participants,
         type,
-        config
+        config,
       })
       .then(function (response) {
-        setLoading(false)
+        setLoading(false);
         window.location.reload(false);
       })
       .catch(function (error) {
@@ -168,7 +170,8 @@ export function Agenda() {
       <Navbar />
       <div className="loginScreen">
         <div className="container ">
-          {isAdmin ?  <div className="row  mb-3">
+          {isAdmin || isTrainer || isMatchLeader ? (
+            <div className="row  mb-3">
               <button
                 type="button"
                 className="agenda-buttons"
@@ -177,7 +180,10 @@ export function Agenda() {
               >
                 Evenement toevoegen
               </button>
-            </div> : <></>}
+            </div>
+          ) : (
+            <></>
+          )}
 
           <div
             className="modal fade"
