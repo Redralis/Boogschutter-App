@@ -3,12 +3,13 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
 const firebaseApp = firebase.initializeApp({
-  apiKey: "AIzaSyBbUmk_hA9Wa3OlzmOq5wxlL9_F5CU24FU",
-  authDomain: "firechat-5a319.firebaseapp.com",
-  projectId: "firechat-5a319",
-  storageBucket: "firechat-5a319.appspot.com",
-  messagingSenderId: "792945212585",
-  appId: "1:792945212585:web:1b0fd8d5f0dbd54d527db8"
+  apiKey: "AIzaSyCb6gXjXDRIAxJAQglB5zTH5Kz5pTeT3HQ",
+  authDomain: "alliancedamitie-app.firebaseapp.com",
+  projectId: "alliancedamitie-app",
+  storageBucket: "alliancedamitie-app.appspot.com",
+  messagingSenderId: "206569007946",
+  appId: "1:206569007946:web:b87698c008e175b4796fb3",
+  measurementId: "G-MZ3H2X817H"
 })
 
 const db = firebaseApp.firestore()
