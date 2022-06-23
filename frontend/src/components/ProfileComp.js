@@ -15,7 +15,7 @@ function Profile() {
 
     const saveChanges = (event) => {
         editUser(localStorage.getItem('email'), undefined, undefined, undefined, firstName, lastName)
-        window.location.reload(false);
+        // window.location.reload(false);
     }
 
     return (
