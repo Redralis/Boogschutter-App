@@ -116,14 +116,17 @@ export function Agenda() {
   const datePickerCall = (e) => {
     console.log(e.target.value);
     setDatePickerValue(new Date(e.target.value));
+    datePickerValue.setTime(0,0,0,0);
+    setTimestamp(datePickerValue.getTime());
+    console.log(timestamp)
     setLoading(true);
     axios
       .get(`http://localhost:5000/event/week?date=${datePickerValue.getTime()}`)
       .then(function (response) {
+        console.log(response.request)
         setEvents(response.data.result);
         setLoading(false);
-        // setTimestamp(datePickerValue.getTime());
-        // setDatePickerValue(datePickerValue.toISOString().split("T", 1)[0]);
+        // setTimestamp(response.data.timestamp);
       })
       .catch(function (error) {
         console.log(error);
@@ -165,8 +168,7 @@ export function Agenda() {
       <Navbar />
       <div className="loginScreen">
         <div className="container ">
-          {isAdmin && (
-            <div className="row  mb-3">
+          {isAdmin ?  <div className="row  mb-3">
               <button
                 type="button"
                 className="agenda-buttons"
@@ -175,8 +177,7 @@ export function Agenda() {
               >
                 Evenement toevoegen
               </button>
-            </div>
-          )}
+            </div> : <></>}
 
           <div
             className="modal fade"
