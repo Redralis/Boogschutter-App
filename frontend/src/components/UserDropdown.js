@@ -30,7 +30,7 @@ function AddChat() {
             setUserEmail(res.result.email)
         })
         axios
-            .get("http://localhost:5000/members")
+            .get("https://boogschutter-api.herokuapp.com/members")
             .then(function (response) {
                 setUsers(response.data.result);
             })

@@ -158,7 +158,7 @@ const addEvents = async (req: any, res: any) => {
   const maxParticipants = parseInt(req.body.maxParticipants);
   const dateString = `${date}T${tijd}:00Z`;
   const newDate = new Date(dateString);
-  // console.log(date + "T" + tijd+ "Z");
+  console.log(newDate);
   try {
     const addEvent = await prisma.event.create({
       data: {
