@@ -156,7 +156,7 @@ const getWeekEvents = async (req: any, res: any) => {
 const addEvents = async (req: any, res: any) => {
   const { eventName, date, tijd, description, type } = req.body;
   const maxParticipants = parseInt(req.body.maxParticipants);
-  const dateString = `${date}T${tijd}:00Z`;
+  const dateString = `${date}T${tijd}:00`;
   const newDate = new Date(dateString);
   // console.log(date + "T" + tijd+ "Z");
   try {
