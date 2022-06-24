@@ -47,8 +47,10 @@ const resetPassword = async (req: any, res: any) => {
 };
 
 const sendEmailForReset = async (req: any, res: any) => {
+  
   try {
     let mail = req.body.data;
+    console.log(mail);
     let token: any;
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -63,7 +65,7 @@ const sendEmailForReset = async (req: any, res: any) => {
       3,
       async function (err: any, buffer: { toString: (arg0: string) => any }) {
         token = buffer.toString("hex");
-
+        console.log(mail);
         if (req.body.data !== undefined) {
           const mailOptions = {
             from: "boogschuttervereniging@gmail.com",
