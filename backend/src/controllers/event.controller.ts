@@ -156,9 +156,9 @@ const getWeekEvents = async (req: any, res: any) => {
 const addEvents = async (req: any, res: any) => {
   const { eventName, date, tijd, description, type } = req.body;
   const maxParticipants = parseInt(req.body.maxParticipants);
-  const dateString = `${date}T${tijd}:00Z`;
+  const dateString = `${date}T${tijd}:000`;
   const newDate = new Date(dateString);
-  console.log(newDate);
+  
   try {
     const addEvent = await prisma.event.create({
       data: {
@@ -174,7 +174,7 @@ const addEvents = async (req: any, res: any) => {
       result: addEvent,
     });
   } catch (error) {
-    // console.log(error);
+    // 
     res.status(400).json({
       status: 400,
       result: "Something went wrong",

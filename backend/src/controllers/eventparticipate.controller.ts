@@ -54,7 +54,7 @@ export const participateEvent = async (req: any, res: any) => {
         });
       }
     } else {
-      console.log(err);
+      
       res.status(400).json({
         status: 400,
         message: err,
@@ -85,7 +85,7 @@ export const checkIfAlreadyEnrolled = async (req: any, res: any) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    
     res.status(404).json({
       status: 404,
       message: "Something went wrong",

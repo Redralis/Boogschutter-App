@@ -11,15 +11,15 @@ export default function ResetPassword() {
     const getInputValue = (event) => {
         // show the user input value to console
         userValue = event.target.value;
-        console.log(userValue);
+        
     };
 
     //On click
     function sendValueToAPI() {
-        console.log('test')
+        
         sendEmailToResetPassword(userValue).then(res => {
             localStorage.setItem('mail', userValue)
-            console.log(userValue, 'email first page');
+            
         })
     }
 
@@ -42,7 +42,7 @@ export default function ResetPassword() {
                                 </input>
                             </div> 
                             <Link to="/updatepassword">
-                                <button className="w-100 btn btn-lg agenda-buttons topMargin" type="submit" onClick={sendValueToAPI}>Verstuur me een
+                                <button className="w-100 btn btn-lg agenda-buttons topMargin" type="button" onClick={sendValueToAPI}>Verstuur me een
                                     mail
                                 </button>
                             </Link>

@@ -17,7 +17,7 @@ function EventPopup(props) {
       );
       setEnrolled(resp.data.isEnrolled);
     } catch (err) {
-      console.log(err);
+      
     }
   };
 
@@ -35,7 +35,7 @@ function EventPopup(props) {
       );
       isEnrolledFunc();
     } catch (err) {
-      console.log(err);
+      
     }
   };
 

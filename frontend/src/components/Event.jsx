@@ -5,6 +5,7 @@ function Event(props) {
   const event = props.event;
   const dateObject = new Date(parseInt(event.datePicker));
   const convertedDate = dateObject.toLocaleString("nl-nl", {
+    timeZone: 'Europe/Amsterdam',
     dateStyle: "medium",
     timeStyle: "short",
     hour12: false,

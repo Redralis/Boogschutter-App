@@ -25,7 +25,7 @@ function AddChat() {
                 setUsers(response.data.result);
             })
             .catch(function (error) {
-                console.log(error);
+                
             });
     }, []);
 

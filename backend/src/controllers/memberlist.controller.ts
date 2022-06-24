@@ -5,7 +5,7 @@ require("dotenv").config();
 const getMemberList = async (req: any, res: any) => {
   const firstName = req.query.firstname;
   const lastName = req.query.lastname;
-  console.log(firstName)
+  
 
   if (typeof firstName !== "undefined") {
     if (typeof req.isAdmin !== "undefined" && req.isAdmin) {

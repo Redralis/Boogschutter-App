@@ -5,20 +5,20 @@ import bcrypt, { hash } from "bcrypt";
 const saltRounds = 10;
 
 const resetPassword = async (req: any, res: any) => {
-  console.log("entered resetPassword");
-  console.log(req.body.data, "body.data");
+  
+  
   const { token, email, password } = req.body.data;
-  console.log(token, email, password);
+  
 
   if (password !== undefined && email !== undefined && token !== undefined) {
-    console.log("entered query");
+    
     const user = await prisma.forgotPassword.findMany({
       where: {
         ForgotPasswordUserEmail: email,
         token: token
       },
     })
-    console.log(user, "Did i find the correct user with token?");
+    
 
     if (user.length === 0) {
       res.status(200).json({
@@ -54,8 +54,8 @@ const resetPassword = async (req: any, res: any) => {
 };
 
 const sendEmailForReset = async (req: any, res: any) => {
-  console.log("Trying to send email.");
-  console.log(req.body);
+  
+  
   let mail = req.body.data;
   let token: any;
   const transporter = nodemailer.createTransport({
@@ -72,7 +72,7 @@ const sendEmailForReset = async (req: any, res: any) => {
     3,
     async function (err: any, buffer: { toString: (arg0: string) => any }) {
       token = buffer.toString("hex");
-      console.log(token, "token");
+      
 
       if (req.body.data !== undefined) {
         const mailOptions = {
@@ -98,7 +98,7 @@ const sendEmailForReset = async (req: any, res: any) => {
               token: token,
             },
           });
-          console.log(addTokenToUser, "added to table");
+          
           res.status(200).json({
             response: addTokenToUser,
           });
@@ -107,10 +107,10 @@ const sendEmailForReset = async (req: any, res: any) => {
             mailOptions,
             function (error: any, info: { response: string }) {
               if (error) {
-                console.log(error);
+                
                 res.status(400).json({ status: 400, response: error });
               } else {
-                console.log("Email sent: " + info.response);
+                
                 res.status(200).json({
                   status: 200,
                   response: info.response,
@@ -122,7 +122,7 @@ const sendEmailForReset = async (req: any, res: any) => {
           res.status(400).json({
             response: "DID NOT FIND EMAIL",
           });
-          console.log("DID NOT FIND EMAIL");
+          
         }
       }
     }

@@ -35,7 +35,7 @@ function AddChat() {
                 setUsers(response.data.result);
             })
             .catch(function (error) {
-                console.log(error);
+                
             });
     }, []);
 
@@ -44,6 +44,7 @@ function AddChat() {
     }
 
     function setRights(mail) {
+        
         editUser(mail, TrainerBox.current.checked, AdminBox.current.checked, MatchLeaderBox.current.checked).then(res => {
         })
     }
@@ -152,7 +153,7 @@ function AddChat() {
                         <div className="modal-body">
                             <input
                                 type="button"
-                                value="Save"
+                                value="Opslaan"
                                 className="w-100 btn agenda-buttons"
                                 data-toggle="modal"
                                 data-target="#popup"

@@ -12,7 +12,7 @@ export function Aantekeningen() {
     const [textarea, setTextArea] = useState("");
     function getAPIData() {
         getNote(localStorage.getItem("email")).then(r => {
-            console.log(body)
+            
             body = r.result.body
             setTextArea(body);
         })
@@ -69,7 +69,7 @@ export function Aantekeningen() {
                     </div>
                     <div className="middle">
                         <button type="button " className="save" onClick={setAPIData}>
-                            Save
+                            Opslaan
                         </button>
                     </div>
                 </div>

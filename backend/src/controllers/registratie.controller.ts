@@ -16,7 +16,7 @@ const regUser = async (req: any, res: any, next: any) => {
 
     require("crypto").randomBytes(3, async function (err: any, buffer: { toString: (arg0: string) => any }) {
         newPassword = buffer.toString("hex");
-        console.log(newPassword, "Heb je misschien een wietje?");
+        
 
 
 
@@ -27,13 +27,13 @@ const regUser = async (req: any, res: any, next: any) => {
                     email: email,
                 },
             })
-            console.log(checkMail.length);
-            console.log(checkMail);
+            
+            
             if (checkMail.length === 0) {
-                console.log("Twin not found, creating account");
+                
                 bcrypt.hash(newPassword, saltRounds, async function (err, hash) {
                     // Store hash in your password DB.
-                    console.log(hash)
+                    
                     const data = await prisma.user.create({
                         data: {
                             email: email,
@@ -87,10 +87,10 @@ const regUser = async (req: any, res: any, next: any) => {
                 mailOptions,
                 function (error: any, info: { response: string }) {
                     if (error) {
-                        console.log(error);
+                        
                         res.status(400).json({status: 400, response: error});
                     } else {
-                        console.log("Email sent: " + info.response);
+                        
                         res.status(200).json({
                             status: 200,
                             response: info.response,
