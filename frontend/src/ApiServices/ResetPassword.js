@@ -2,7 +2,7 @@ const axios = require('axios');
 
 export async function queryToUpdatePassword(data) {
     try{
-        const response = await axios.put('https://alliance-damitie-backend.herokuapp.com//api/resetPassword',{
+        const response = await axios.put('https://alliance-damitie-backend.herokuapp.com/api/resetPassword',{
             data: data
         });
         return response.data;
@@ -13,7 +13,7 @@ export async function queryToUpdatePassword(data) {
 
 export async function sendEmailToResetPassword(email) {
     
-    const response = await axios.post('https://alliance-damitie-backend.herokuapp.com//api/sendMailReset', {
+    const response = await axios.post('https://alliance-damitie-backend.herokuapp.com/api/sendMailReset', {
         email
     })
 

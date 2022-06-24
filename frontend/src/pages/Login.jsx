@@ -41,7 +41,7 @@ function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const resp = await axios.post("https://alliance-damitie-backend.herokuapp.com//login", {
+      const resp = await axios.post("https://alliance-damitie-backend.herokuapp.com/login", {
         email,
         password,
       });

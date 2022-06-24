@@ -21,7 +21,7 @@ function AddChat() {
             setUserEmail(res.result.email)
         })
         axios
-            .get("https://alliance-damitie-backend.herokuapp.com//members")
+            .get("https://alliance-damitie-backend.herokuapp.com/members")
             .then(function (response) {
                 setUsers(response.data.result);
             })

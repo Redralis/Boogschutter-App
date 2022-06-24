@@ -12,7 +12,7 @@ function EventPopup(props) {
   const isEnrolledFunc = async (event) => {
     try {
       const resp = await axios.post(
-        "https://alliance-damitie-backend.herokuapp.com//participate/isenrolled/",
+        "https://alliance-damitie-backend.herokuapp.com/participate/isenrolled/",
         { eventid: parseInt(id), email }
       );
       setEnrolled(resp.data.isEnrolled);
@@ -28,7 +28,7 @@ function EventPopup(props) {
   const participateEvent = async () => {
     try {
       const resp = await axios.post(
-        `https://alliance-damitie-backend.herokuapp.com//participate/event/${event.eventId}`,
+        `https://alliance-damitie-backend.herokuapp.com/participate/event/${event.eventId}`,
         {
           email,
         }

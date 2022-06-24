@@ -52,7 +52,7 @@ export function Agenda() {
 
   useEffect(() => {
     axios
-      .get("https://alliance-damitie-backend.herokuapp.com//event/week")
+      .get("https://alliance-damitie-backend.herokuapp.com/event/week")
       .then(function (response) {
         setEvents(response.data.result);
         setTimestamp(response.data.timestamp);
@@ -77,7 +77,7 @@ export function Agenda() {
     date = date.getTime();
 
     axios
-      .get(`https://alliance-damitie-backend.herokuapp.com//event/week?date=${date}`)
+      .get(`https://alliance-damitie-backend.herokuapp.com/event/week?date=${date}`)
       .then(function (response) {
         setEvents(response.data.result);
         setLoading(false);
@@ -102,7 +102,7 @@ export function Agenda() {
     date = date.getTime();
 
     axios
-      .get(`https://alliance-damitie-backend.herokuapp.com//event/week?date=${date}`)
+      .get(`https://alliance-damitie-backend.herokuapp.com/event/week?date=${date}`)
       .then(function (response) {
         setEvents(response.data.result);
         setLoading(false);
@@ -121,7 +121,7 @@ export function Agenda() {
     
     setLoading(true);
     axios
-      .get(`https://alliance-damitie-backend.herokuapp.com//event/week?date=${datePickerValue.getTime()}`)
+      .get(`https://alliance-damitie-backend.herokuapp.com/event/week?date=${datePickerValue.getTime()}`)
       .then(function (response) {
         
         setEvents(response.data.result);
@@ -145,7 +145,7 @@ export function Agenda() {
     e.preventDefault();
     setLoading(true);
     axios
-      .post("https://alliance-damitie-backend.herokuapp.com//event/", {
+      .post("https://alliance-damitie-backend.herokuapp.com/event/", {
         eventName,
         date,
         time,
