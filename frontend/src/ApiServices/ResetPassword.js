@@ -11,10 +11,10 @@ export async function queryToUpdatePassword(data) {
     }
 }
 
-export async function sendEmailToResetPassword(data) {
+export async function sendEmailToResetPassword(email) {
     
     const response = await axios.post('https://boogschutter-api.herokuapp.com/api/sendMailReset', {
-        data: data
+        email
     })
 
     return response.data;
