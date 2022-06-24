@@ -84,7 +84,7 @@ const getAllEvents = async (req: any, res: any) => {
   } catch (error) {
     res.status(400).json({
       status: 400,
-      error: "Something went wrong",
+      error: error,
     });
   }
 };
@@ -116,8 +116,8 @@ const getWeekEvents = async (req: any, res: any) => {
     eventList = await prisma.event.findMany({
       where: {
         datePicker: {
-          gte: currentDateTimestamp,
-          lte: nextWeekDateTimestamp,
+          gte: currentDateTimestamp.toString(),
+          lte: nextWeekDateTimestamp.toString(),
         },
       },
       select: {
@@ -156,14 +156,16 @@ const getWeekEvents = async (req: any, res: any) => {
 const addEvents = async (req: any, res: any) => {
   const { eventName, date, tijd, description, type } = req.body;
   const maxParticipants = parseInt(req.body.maxParticipants);
-  const dateString = `${date}T${tijd}:000`;
+  const dateString = `${date}T${tijd}:00`;
+
   const newDate = new Date(dateString);
+  newDate.setHours(newDate.getHours() - 2);
   
   try {
     const addEvent = await prisma.event.create({
       data: {
         eventName: eventName,
-        datePicker: newDate.getTime(),
+        datePicker: newDate.getTime().toString(),
         description: description,
         maxParticipants: maxParticipants,
         type: type,
@@ -174,7 +176,7 @@ const addEvents = async (req: any, res: any) => {
       result: addEvent,
     });
   } catch (error) {
-    // 
+    console.log(error);
     res.status(400).json({
       status: 400,
       result: "Something went wrong",

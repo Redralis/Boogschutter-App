@@ -1,115 +1,100 @@
-import {PrismaClient} from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-import bcrypt, {hash} from "bcrypt";
+import bcrypt, { hash } from "bcrypt";
 
 const saltRounds = 10;
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
-import {auth} from '../Firebase/firebase'
-
-const nodemailer = require("nodemailer");
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import { auth } from "../Firebase/firebase";
+require("dotenv").config();
+import nodemailer from "nodemailer";
 
 const regUser = async (req: any, res: any, next: any) => {
-    const {email} = req.body;
-    let newPassword = "";
+  const { email } = req.body;
+  let newPassword = "";
 
-    require("crypto").randomBytes(3, async function (err: any, buffer: { toString: (arg0: string) => any }) {
-        newPassword = buffer.toString("hex");
-        
+  require("crypto").randomBytes(
+    3,
+    async function (err: any, buffer: { toString: (arg0: string) => any }) {
+      newPassword = buffer.toString("hex");
 
+      if (email !== undefined) {
+        const checkMail = await prisma.user.findMany({
+          where: {
+            email: email,
+          },
+        });
 
+        if (checkMail.length === 0) {
+          bcrypt.hash(newPassword, saltRounds, async function (err, hash) {
+            // Store hash in your password DB.
 
-
-        if (email !== undefined) {
-            const checkMail = await prisma.user.findMany({
-                where: {
-                    email: email,
-                },
-            })
-            
-            
-            if (checkMail.length === 0) {
-                
-                bcrypt.hash(newPassword, saltRounds, async function (err, hash) {
-                    // Store hash in your password DB.
-                    
-                    const data = await prisma.user.create({
-                        data: {
-                            email: email,
-                            password: hash,
-                            firstName: "Tijdelijke Voornaam",
-                            lastName: "Tijdelijke achternaam",
-                            isAdmin: false,
-                            isTrainer: false,
-                            isMatchLeader: false,
-                        }
-                    });
-                    const user = await prisma.notes.create({
-                        data: {
-                            notesMail: email,
-                            title: "useless column",
-                            body: "Empty"
-                        },
-                    })
-
-                });
-
-
-            } else {
-                return res.status(400).json({
-                    status: 400,
-                    response: "Email already exists is this database."
-                })
-            }
-
-
-            const transporter = nodemailer.createTransport({
-                service: "gmail",
-                auth: {
-                    user: "boogschuttervereniging@gmail.com",
-                    pass: process.env.GMAIL_PASS,
-                },
+            const data = await prisma.user.create({
+              data: {
+                email: email,
+                password: hash,
+                firstName: "Tijdelijke Voornaam",
+                lastName: "Tijdelijke achternaam",
+                isAdmin: false,
+                isTrainer: false,
+                isMatchLeader: false,
+              },
             });
-            // qfwynoehqpcpllug
-
-            const mailOptions = {
-                from: "boogschuttervereniging@gmail.com",
-                to: email,
-                subject: "U heeft een nieuw account bij de boogschuttersvereniging.",
-                text: `U kan inloggen met uw email, en gebruik het wachtwoord ${newPassword}. Wilt u een ander wachtwoord?
-         Klik op "wachtwoord vergeten" bij het inlogscherm`
-            };
-
-
-
-            transporter.sendMail(
-                mailOptions,
-                function (error: any, info: { response: string }) {
-                    if (error) {
-                        
-                        res.status(400).json({status: 400, response: error});
-                    } else {
-                        
-                        res.status(200).json({
-                            status: 200,
-                            response: info.response,
-                        });
-                    }
-                }
-            );
-
-
-
-            res.status(200).json({
-                status: 200,
-                newAccount: "New account created"
-            })
+            const user = await prisma.notes.create({
+              data: {
+                notesMail: email,
+                title: "useless column",
+                body: "Empty",
+              },
+            });
+          });
         } else {
-            res.status(400).json({
-                response: "Be sure to have an email where we can send the data to"
-            })
+          return res.status(400).json({
+            status: 400,
+            response: "Email already exists is this database.",
+          });
         }
-    });
-}
-export {regUser};
+
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: "boogschuttervereniging@gmail.com",
+            pass: process.env.GMAIL_PASS,
+          },
+        });
+
+        const mailOptions = {
+          from: "boogschuttervereniging@gmail.com",
+          to: email,
+          subject: "U heeft een nieuw account bij de boogschuttersvereniging.",
+          text: `U kan inloggen met uw email, en gebruik het wachtwoord ${newPassword}. Wilt u een ander wachtwoord? Klik op "wachtwoord vergeten" bij het inlogscherm`,
+        };
+
+        transporter.sendMail(
+          mailOptions,
+          function (error: any, info: { response: string }) {
+            if (error) {
+              res.status(400).json({ status: 400, response: error });
+            } else {
+              res.status(200).json({
+                status: 200,
+                response: info.response,
+              });
+            }
+          }
+        );
+
+        res.status(200).json({
+          status: 200,
+          newAccount: "New account created",
+        });
+      } else {
+        res.status(400).json({
+          response: "Be sure to have an email where we can send the data to",
+        });
+      }
+    }
+  );
+};
+export { regUser };

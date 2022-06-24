@@ -10,17 +10,17 @@ const getUser = async (req: any, res: any) => {
       },
     });
     if (data == null) {
-      res.status(500).json({
+      return  res.status(500).json({
         status: 500,
         result: "No data found",
       });
     }
-    res.status(200).json({
+   return  res.status(200).json({
       status: 200,
       result: data,
     });
   } catch (error) {
-    res.status(404).json({
+    return res.status(404).json({
       status: 404,
       result: "Failed",
     });

@@ -12,7 +12,7 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = 5000 || process.env.PORT;
+const port =process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

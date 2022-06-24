@@ -1,8 +1,7 @@
 {
     "compilerOptions": {
       "target": "es2016",
-      "module": "commonjs",
-      "watch": true,                               
+      "module": "commonjs",                            
       "skipLibCheck": true,
       "rootDir": "./src",
       "outDir": "./build",
