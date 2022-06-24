@@ -12,12 +12,12 @@ function EventPopup(props) {
   const isEnrolledFunc = async (event) => {
     try {
       const resp = await axios.post(
-        "https://boogschutter-api.herokuapp.com/participate/isenrolled/",
+        "http://localhost:5000/participate/isenrolled/",
         { eventid: parseInt(id), email }
       );
       setEnrolled(resp.data.isEnrolled);
     } catch (err) {
-      console.log(err);
+      
     }
   };
 
@@ -28,14 +28,14 @@ function EventPopup(props) {
   const participateEvent = async () => {
     try {
       const resp = await axios.post(
-        `https://boogschutter-api.herokuapp.com/participate/event/${event.eventId}`,
+        `http://localhost:5000/participate/event/${event.eventId}`,
         {
           email,
         }
       );
       isEnrolledFunc();
     } catch (err) {
-      console.log(err);
+      
     }
   };
 

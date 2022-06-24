@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 export async function regUser(email) {
-    const response = await axios.post('https://boogschutter-api.herokuapp.com/register/', {
+    const response = await axios.post('http://localhost:5000/register/', {
         email: email
     })
     return response.data;

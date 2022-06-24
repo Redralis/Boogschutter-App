@@ -22,7 +22,7 @@ function Login() {
     auth.signInWithEmailAndPassword(process.env.REACT_APP_FIREBASE_ACCOUNT_EMAIL, process.env.REACT_APP_FIREBASE_ACCOUNT_PASSWORD).catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      console.log(errorCode, errorMessage);
+      
     });
   }
 
@@ -41,7 +41,7 @@ function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const resp = await axios.post("https://boogschutter-api.herokuapp.com/login", {
+      const resp = await axios.post("http://localhost:5000/login", {
         email,
         password,
       });

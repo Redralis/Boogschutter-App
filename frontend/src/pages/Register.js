@@ -21,14 +21,14 @@ export function Agenda() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    console.log(email, password);
+    
     try {
       const resp = await axios.post("http://localhost:3000/login", {
         email,
         password,
       });
       setCredentialError(200);
-      console.log(resp.data)
+      
     } catch (err) {
       if (err.request.status === 404) {
         setCredentialError(404);

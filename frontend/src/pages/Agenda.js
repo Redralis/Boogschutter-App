@@ -52,14 +52,14 @@ export function Agenda() {
 
   useEffect(() => {
     axios
-      .get("https://boogschutter-api.herokuapp.com/event/week")
+      .get("http://localhost:5000/event/week")
       .then(function (response) {
         setEvents(response.data.result);
         setTimestamp(response.data.timestamp);
         setLoading(false);
       })
       .catch(function (error) {
-        console.log(error);
+        
       });
     getPriveleges();
   }, []);
@@ -77,7 +77,7 @@ export function Agenda() {
     date = date.getTime();
 
     axios
-      .get(`https://boogschutter-api.herokuapp.com/event/week?date=${date}`)
+      .get(`http://localhost:5000/event/week?date=${date}`)
       .then(function (response) {
         setEvents(response.data.result);
         setLoading(false);
@@ -85,7 +85,7 @@ export function Agenda() {
         // setDatePickerValue();
       })
       .catch(function (error) {
-        console.log(error);
+        
       });
   };
 
@@ -102,34 +102,34 @@ export function Agenda() {
     date = date.getTime();
 
     axios
-      .get(`https://boogschutter-api.herokuapp.com/event/week?date=${date}`)
+      .get(`http://localhost:5000/event/week?date=${date}`)
       .then(function (response) {
         setEvents(response.data.result);
         setLoading(false);
         setTimestamp(date);
       })
       .catch(function (error) {
-        console.log(error);
+        
       });
   };
 
   const datePickerCall = (e) => {
-    console.log(e.target.value);
+    
     setDatePickerValue(new Date(e.target.value));
     datePickerValue.setTime(0, 0, 0, 0);
     setTimestamp(datePickerValue.getTime());
-    console.log(timestamp);
+    
     setLoading(true);
     axios
-      .get(`https://boogschutter-api.herokuapp.com/event/week?date=${datePickerValue.getTime()}`)
+      .get(`http://localhost:5000/event/week?date=${datePickerValue.getTime()}`)
       .then(function (response) {
-        console.log(response.request);
+        
         setEvents(response.data.result);
         setLoading(false);
         // setTimestamp(response.data.timestamp);
       })
       .catch(function (error) {
-        console.log(error);
+        
       });
   };
 
@@ -145,7 +145,7 @@ export function Agenda() {
     e.preventDefault();
     setLoading(true);
     axios
-      .post("https://boogschutter-api.herokuapp.com/event/", {
+      .post("http://localhost:5000/event/", {
         eventName,
         date,
         time,
@@ -160,7 +160,7 @@ export function Agenda() {
         window.location.reload(false);
       })
       .catch(function (error) {
-        console.log(error);
+        
       });
   };
 

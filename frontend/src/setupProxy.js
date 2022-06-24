@@ -12,11 +12,11 @@ module.exports = function(app) {
     app.use(
         '/local',
         createProxyMiddleware({
-            target: 'https://boogschutter-api.herokuapp.com',
+            target: 'http://localhost:5000',
             changeOrigin: true,
         }),
     );
 };
 
-// https://boogschutter-api.herokuapp.com
+// http://localhost:5000
 // www.http://localhost:3060

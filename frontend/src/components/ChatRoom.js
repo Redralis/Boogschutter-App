@@ -68,7 +68,7 @@ function ChatRoom() {
                             <div className='col-12 dateP' style={email === userEmail ? { textAlign: 'right' } : { textAlign: 'left' }}>{createdAt}</div>
                         </div>
 
-                        {console.log(currentChat.usersCanSpeak)}
+                        
                     </div>
                 </div>
 

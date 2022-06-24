@@ -21,12 +21,12 @@ function AddChat() {
             setUserEmail(res.result.email)
         })
         axios
-            .get("https://boogschutter-api.herokuapp.com/members")
+            .get("http://localhost:5000/members")
             .then(function (response) {
                 setUsers(response.data.result);
             })
             .catch(function (error) {
-                console.log(error);
+                
             });
     }, []);
 
@@ -90,7 +90,7 @@ class ChatForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         if(this.state.value !== "" && name !== ""){
-        console.log(this.state.value)
+        
         addChat(this.state.value.value)
         this.setState({ value: ""})
         setName("");
