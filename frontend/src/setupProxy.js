@@ -12,11 +12,11 @@ module.exports = function(app) {
     app.use(
         '/local',
         createProxyMiddleware({
-            target: 'https://boogschutter-api.herokuapp.com',
+            target: 'https://alliance-damitie-backend.herokuapp.com/',
             changeOrigin: true,
         }),
     );
 };
 
-// https://boogschutter-api.herokuapp.com
+// https://alliance-damitie-backend.herokuapp.com/
 // www.http://localhost:3060
