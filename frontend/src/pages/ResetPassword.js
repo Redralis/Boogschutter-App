@@ -11,15 +11,15 @@ export default function ResetPassword() {
     const getInputValue = (event) => {
         // show the user input value to console
         userValue = event.target.value;
-        console.log(userValue);
+        
     };
 
     //On click
     function sendValueToAPI() {
-        console.log('test')
+        
         sendEmailToResetPassword(userValue).then(res => {
             localStorage.setItem('mail', userValue)
-            console.log(userValue, 'email first page');
+            
         })
     }
 

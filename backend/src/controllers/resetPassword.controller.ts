@@ -62,7 +62,7 @@ const sendEmailForReset = async (req: any, res: any) => {
     service: "gmail",
     auth: {
       user: "boogschuttervereniging@gmail.com",
-      pass: "qfwynoehqpcpllug",
+      pass: process.env.GMAIL_PASS,
     },
   });
   // qfwynoehqpcpllug

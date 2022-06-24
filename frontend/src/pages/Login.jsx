@@ -19,10 +19,10 @@ function Login() {
   async function firebaseSignIn() {
 
     await auth.signOut();
-    auth.signInWithEmailAndPassword("alliancedamitie.app@gmail.com", "*K23iJaC6?w#").catch((error) => {
+    auth.signInWithEmailAndPassword(process.env.REACT_APP_FIREBASE_ACCOUNT_EMAIL, process.env.REACT_APP_FIREBASE_ACCOUNT_PASSWORD).catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      console.log(errorCode, errorMessage);
+      
     });
   }
 

@@ -12,7 +12,7 @@ export async function queryToUpdatePassword(data) {
 }
 
 export async function sendEmailToResetPassword(data) {
-    console.log(data , 'aofdsnjfsdafds')
+    
     const response = await axios.post('http://localhost:5000/api/sendMailReset', {
         data: data
     })

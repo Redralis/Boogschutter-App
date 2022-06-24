@@ -18,5 +18,5 @@ module.exports = function(app) {
     );
 };
 
-// https://boogschutter-api.herokuapp.com
+// http://localhost:5000
 // www.http://localhost:3060

@@ -12,7 +12,7 @@ export function Aantekeningen() {
     const [textarea, setTextArea] = useState("");
     function getAPIData() {
         getNote(localStorage.getItem("email")).then(r => {
-            console.log(body)
+            
             body = r.result.body
             setTextArea(body);
         })

@@ -68,7 +68,7 @@ const regUser = async (req: any, res: any, next: any) => {
                 service: "gmail",
                 auth: {
                     user: "boogschuttervereniging@gmail.com",
-                    pass: "qfwynoehqpcpllug",
+                    pass: process.env.GMAIL_PASS,
                 },
             });
             // qfwynoehqpcpllug

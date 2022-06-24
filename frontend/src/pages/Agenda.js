@@ -59,7 +59,7 @@ export function Agenda() {
         setLoading(false);
       })
       .catch(function (error) {
-        console.log(error);
+        
       });
     getPriveleges();
   }, []);
@@ -85,7 +85,7 @@ export function Agenda() {
         // setDatePickerValue();
       })
       .catch(function (error) {
-        console.log(error);
+        
       });
   };
 
@@ -109,27 +109,27 @@ export function Agenda() {
         setTimestamp(date);
       })
       .catch(function (error) {
-        console.log(error);
+        
       });
   };
 
   const datePickerCall = (e) => {
-    console.log(e.target.value);
+    
     setDatePickerValue(new Date(e.target.value));
     datePickerValue.setTime(0, 0, 0, 0);
     setTimestamp(datePickerValue.getTime());
-    console.log(timestamp);
+    
     setLoading(true);
     axios
       .get(`http://localhost:5000/event/week?date=${datePickerValue.getTime()}`)
       .then(function (response) {
-        console.log(response.request);
+        
         setEvents(response.data.result);
         setLoading(false);
         // setTimestamp(response.data.timestamp);
       })
       .catch(function (error) {
-        console.log(error);
+        
       });
   };
 
@@ -160,7 +160,7 @@ export function Agenda() {
         window.location.reload(false);
       })
       .catch(function (error) {
-        console.log(error);
+        
       });
   };
 

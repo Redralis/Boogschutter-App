@@ -56,8 +56,8 @@ export default function ResetPassword() {
             queryToUpdatePassword(data).then(async res => {
                 if (res.status === 200) {
 
-                    console.log(email)
-                    console.log(passwordFromApi)
+                    
+                    
                 } else {
                     alert("Token of het wachtwoord is iets niet goed gegaan. Probeer het opnieuw door terug naar het inlogpagina te gaan, en opnieuw op wachtwoord vergeten te drukken. .")
                 }

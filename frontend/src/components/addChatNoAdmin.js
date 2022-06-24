@@ -26,7 +26,7 @@ function AddChat() {
                 setUsers(response.data.result);
             })
             .catch(function (error) {
-                console.log(error);
+                
             });
     }, []);
 
@@ -90,7 +90,7 @@ class ChatForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         if(this.state.value !== "" && name !== ""){
-        console.log(this.state.value)
+        
         addChat(this.state.value.value)
         this.setState({ value: ""})
         setName("");
